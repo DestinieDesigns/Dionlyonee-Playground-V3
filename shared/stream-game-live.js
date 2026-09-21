@@ -84,6 +84,18 @@
     }
 
     ensureHeartPowerLoaded() {
+      if (!document.querySelector('link[href*="stream-overlay.css"]')) {
+        const overlayLink = document.createElement('link');
+        overlayLink.rel = 'stylesheet';
+        overlayLink.href = '/shared/stream-overlay.css';
+        document.head.appendChild(overlayLink);
+      }
+      if (!window.StreamOverlayAdapter && !document.querySelector('script[src*="stream-overlay.js"]')) {
+        const streamScript = document.createElement('script');
+        streamScript.src = '/shared/stream-overlay.js';
+        document.head.appendChild(streamScript);
+      }
+
       if (!document.querySelector('link[href*="heart-power.css"]')) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';

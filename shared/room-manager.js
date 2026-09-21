@@ -28,7 +28,12 @@
     }
 
     generateRandomRoom() {
-      const code = 'DION' + Math.floor(10 + Math.random() * 90);
+      const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+      let suffix = '';
+      for (let i = 0; i < 4; i++) {
+        suffix += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      const code = 'DION' + suffix;
       try {
         sessionStorage.setItem('dionlyonee_active_room', code);
       } catch (e) {}
@@ -79,7 +84,41 @@
         rootPath = rootPath.substring(0, rootPath.lastIndexOf('/') + 1);
       }
       if (!rootPath.endsWith('/')) rootPath += '/';
-      return `${origin}${rootPath}remote.html?room=${encodeURIComponent(roomId)}&game=${encodeURIComponent(gameType)}`;
+      return `${origin}${rootPath}controller.html?room=${encodeURIComponent(roomId)}&game=${encodeURIComponent(gameType)}`;
+    }
+
+    getPhoneControllerUrl(gameType = 'wheel') {
+      return this.getControllerUrl(gameType);
+    }
+
+    getHostUrl(gameType = 'wheel') {
+      const origin = window.location.origin;
+      const roomId = this.getRoom();
+      const routes = {
+        'wheel': '/wheel/host/index.html',
+        'trivia': '/trivia/host/index.html',
+        'jeopardy': '/jeopardy/jeopardy-host.html',
+        'word-reveal': '/word-reveal/host/index.html',
+        'speak-out': '/speak-out/host/index.html',
+        'guess-lyrics': '/guess-lyrics/host.html'
+      };
+      const path = routes[gameType] || `/${gameType}/host/index.html`;
+      return `${origin}${path}?room=${encodeURIComponent(roomId)}`;
+    }
+
+    getLiveUrl(gameType = 'wheel') {
+      const origin = window.location.origin;
+      const roomId = this.getRoom();
+      const routes = {
+        'wheel': '/wheel/live/index.html',
+        'trivia': '/trivia/live/index.html',
+        'jeopardy': '/jeopardy/jeopardy-live.html',
+        'word-reveal': '/word-reveal/live/index.html',
+        'speak-out': '/speak-out/live/index.html',
+        'guess-lyrics': '/guess-lyrics/live.html'
+      };
+      const path = routes[gameType] || `/${gameType}/live/index.html`;
+      return `${origin}${path}?room=${encodeURIComponent(roomId)}`;
     }
 
     getCohostJoinUrl(gameType = 'wheel') {

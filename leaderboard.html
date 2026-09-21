@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arena Leaderboard & Chat - Dionlyonee Game Show Playground</title>
+    <link rel="stylesheet" href="playground.css">
+    <link rel="stylesheet" href="shared/firebase-leaderboard.css">
+    <link rel="stylesheet" href="shared/heart-power.css">
+</head>
+<body style="background:#020303; color:#fff; min-height:100vh;">
+
+<div class="playground">
+    <header class="playground-header">
+        <a href="index.html" class="brand-wrapper">
+            <div class="brand-mark">D</div>
+            <div>
+                <div class="brand-name">DIONLYONEE</div>
+                <div class="brand-subtitle">ARENA LEADERBOARD & CHAT</div>
+            </div>
+        </a>
+
+        <div class="header-actions">
+            <a href="index.html" class="header-btn" style="border-color:#d4af37; color:#f7e07d;">
+                <span>🎮</span> Back to Games
+            </a>
+            <div class="room-badge-container">
+                <span class="room-indicator-dot" title="Sync Online"></span>
+                <span class="room-label">ROOM:</span>
+                <span id="headerRoomCode" class="room-code-val">DION1</span>
+            </div>
+        </div>
+    </header>
+
+    <main style="max-width: 1350px; margin: 0 auto; padding: 24px 20px 60px;">
+        <div id="lobbyLeaderboardContainer"></div>
+    </main>
+</div>
+
+<script src="sounds.js"></script>
+<script src="shared/heart-power-system.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="shared/firebase-config.js"></script>
+<script src="shared/room-manager.js"></script>
+<script src="shared/firebase-leaderboard.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const room = urlParams.get('room') || localStorage.getItem('dion_current_room') || 'DION1';
+    const roomCodeEl = document.getElementById('headerRoomCode');
+    if (roomCodeEl) roomCodeEl.textContent = room.toUpperCase();
+
+    if (window.FirebaseLeaderboard) {
+        window.FirebaseLeaderboard.mount('lobbyLeaderboardContainer');
+    }
+});
+</script>
+</body>
+</html>

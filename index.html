@@ -45,10 +45,101 @@
         border-radius: 20px;
         box-shadow: 0 0 40px rgba(212, 175, 55, 0.2), 0 20px 50px rgba(0,0,0,0.8);
         width: 100%;
-        max-width: 580px;
-        padding: 32px 28px;
+        max-width: 620px;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 28px 24px;
         text-align: center;
         position: relative;
+      }
+      .modal-stream-section {
+        background: rgba(0, 0, 0, 0.45);
+        border: 1.5px solid rgba(212, 175, 55, 0.25);
+        border-radius: 16px;
+        padding: 16px;
+        margin-bottom: 16px;
+        text-align: left;
+      }
+      .modal-section-title {
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+        color: #f7e07d;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .modal-stream-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      @media (max-width: 520px) {
+        .modal-stream-grid { grid-template-columns: 1fr; }
+      }
+      .modal-btn-tiktok {
+        background: linear-gradient(135deg, rgba(255, 0, 80, 0.12) 0%, rgba(0, 242, 254, 0.12) 100%);
+        border: 1.5px solid rgba(255, 0, 80, 0.5) !important;
+      }
+      .modal-btn-tiktok:hover {
+        border-color: #00f2fe !important;
+        background: linear-gradient(135deg, rgba(255, 0, 80, 0.25) 0%, rgba(0, 242, 254, 0.25) 100%) !important;
+        box-shadow: 0 4px 20px rgba(255, 0, 80, 0.3) !important;
+      }
+      .modal-btn-twitch {
+        background: rgba(145, 70, 255, 0.12);
+        border: 1.5px solid rgba(145, 70, 255, 0.45) !important;
+      }
+      .modal-btn-twitch:hover {
+        border-color: #a855f7 !important;
+        background: rgba(145, 70, 255, 0.25) !important;
+        box-shadow: 0 4px 20px rgba(145, 70, 255, 0.3) !important;
+      }
+      .stream-tools-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .stream-toggle-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #94a3b8;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .stream-toggle-label input {
+        accent-color: #10b981;
+        cursor: pointer;
+      }
+      .stream-copy-group {
+        display: flex;
+        gap: 6px;
+      }
+      .btn-copy-stream-link {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #e2e8f0;
+        font-size: 10px;
+        font-weight: 800;
+        padding: 5px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .btn-copy-stream-link:hover {
+        background: rgba(212, 175, 55, 0.2);
+        border-color: #d4af37;
+        color: #fef08a;
       }
       .modal-close {
         position: absolute;
@@ -158,6 +249,324 @@
         margin-top: 3px;
         letter-spacing: 0.5px;
       }
+
+      /* =========================================
+         HOST ACCESS & ROOM CREATION STYLES
+      ========================================== */
+      .host-access-section {
+        background: radial-gradient(circle at 50% 0%, #15292e 0%, #0c181b 60%, #060e10 100%);
+        border: 2px solid rgba(212, 175, 55, 0.45);
+        border-radius: 20px;
+        padding: 24px 28px;
+        margin: 28px 0 36px 0;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 175, 55, 0.15);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .host-access-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .host-access-title-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .host-access-crown {
+        font-size: 28px;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: radial-gradient(circle, #ca8a04 0%, #172554 100%);
+        border: 1.5px solid #facc15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+      }
+
+      .host-access-title {
+        font-family: 'Cinzel', serif;
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: 2px;
+        color: #ffffff;
+      }
+
+      .host-access-subtitle {
+        font-size: 12px;
+        color: #94a3b8;
+        font-weight: 600;
+        margin-top: 2px;
+      }
+
+      .host-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(250, 204, 21, 0.3);
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #facc15;
+      }
+
+      .host-status-badge.unlocked {
+        background: rgba(16, 185, 129, 0.15);
+        border-color: #34d399;
+        color: #34d399;
+      }
+
+      .host-input-row {
+        display: flex;
+        gap: 12px;
+        max-width: 460px;
+        margin-top: 10px;
+      }
+
+      .host-code-input {
+        flex: 1;
+        background: rgba(0, 0, 0, 0.65);
+        border: 1.5px solid rgba(212, 175, 55, 0.4);
+        border-radius: 12px;
+        padding: 12px 16px;
+        color: #ffffff;
+        font-family: 'Space Grotesk', monospace;
+        font-size: 16px;
+        outline: none;
+        letter-spacing: 2px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      .host-code-input:focus {
+        border-color: #facc15;
+        box-shadow: 0 0 15px rgba(250, 204, 21, 0.3);
+      }
+
+      .btn-unlock-host {
+        background: linear-gradient(135deg, #ca8a04 0%, #a16207 100%);
+        border: 1px solid #facc15;
+        color: #ffffff;
+        padding: 0 24px;
+        border-radius: 12px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 900;
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 14px rgba(202, 138, 4, 0.4);
+        transition: all 0.2s ease;
+      }
+
+      .btn-unlock-host:hover {
+        background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(250, 204, 21, 0.5);
+      }
+
+      /* ROOM CREATED SHOWCASE BANNER */
+      .room-created-banner {
+        background: linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(15, 23, 42, 0.9) 100%);
+        border: 2px solid #facc15;
+        border-radius: 16px;
+        padding: 20px 24px;
+        margin-top: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+        animation: bannerZoom 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes bannerZoom {
+        0% { opacity: 0; transform: translateY(10px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+
+      .room-created-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .room-created-tag {
+        font-size: 11px;
+        font-weight: 900;
+        color: #4ade80;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .room-created-game-title {
+        font-family: 'Cinzel', serif;
+        font-size: 22px;
+        font-weight: 900;
+        color: #ffffff;
+        letter-spacing: 1.5px;
+      }
+
+      .room-code-badge-large {
+        background: rgba(0, 0, 0, 0.7);
+        border: 2px solid #facc15;
+        border-radius: 12px;
+        padding: 8px 20px;
+        font-family: 'Space Grotesk', monospace;
+        font-size: 24px;
+        font-weight: 900;
+        color: #facc15;
+        letter-spacing: 3px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 0 20px rgba(250, 204, 21, 0.25);
+      }
+
+      .room-actions-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .btn-room-action {
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(250, 204, 21, 0.35);
+        color: #ffffff;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .btn-room-action:hover {
+        background: rgba(250, 204, 21, 0.2);
+        border-color: #facc15;
+        color: #fef08a;
+        transform: translateY(-2px);
+      }
+
+      .btn-room-action.primary {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        border-color: #34d399;
+      }
+
+      .btn-room-action.primary:hover {
+        background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+        color: #ffffff;
+      }
+
+      .btn-room-action.phone {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-color: #fde047;
+        color: #1c1917;
+      }
+
+      .btn-room-action.phone:hover {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        color: #000000;
+      }
+
+      /* QUICK GAME SELECT TILES FOR UNLOCKED HOST */
+      .unlocked-game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .game-quick-select-card {
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        padding: 14px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .game-quick-select-card:hover {
+        border-color: #facc15;
+        background: rgba(250, 204, 21, 0.08);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      }
+
+      .game-quick-select-card.coming-soon {
+        opacity: 0.55;
+        cursor: not-allowed;
+        border-style: dashed;
+      }
+
+      .game-quick-select-card.coming-soon:hover {
+        transform: none;
+        border-color: rgba(255, 255, 255, 0.12);
+        background: rgba(15, 23, 42, 0.7);
+      }
+
+      .q-card-icon {
+        font-size: 24px;
+      }
+
+      .q-card-title {
+        font-family: 'Cinzel', serif;
+        font-size: 13px;
+        font-weight: 900;
+        color: #ffffff;
+      }
+
+      .q-card-badge {
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #facc15;
+        text-transform: uppercase;
+      }
+
+      /* QR MODAL */
+      .qr-modal-card {
+        background: #0f172a;
+        border: 2px solid #facc15;
+        border-radius: 20px;
+        padding: 24px;
+        max-width: 420px;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+      }
+
+      .qr-img-box {
+        background: #ffffff;
+        padding: 12px;
+        border-radius: 12px;
+        box-shadow: 0 0 25px rgba(250, 204, 21, 0.3);
+      }
     </style>
 </head>
 <body>
@@ -176,7 +585,7 @@
             </div>
         </a>
 
-        <!-- Header Actions: Room Badge & Quick Actions -->
+        <!-- Header Actions: Room Badge & Audio Test -->
         <div class="header-actions">
             <!-- Active Room Indicator & Switcher -->
             <div class="room-badge-container">
@@ -186,128 +595,12 @@
                 <button type="button" class="btn-change-room" onclick="openRoomModal()">CHANGE</button>
             </div>
 
-            <!-- Host Phone Controller Quick Link -->
-            <a id="headerRemoteLink" href="remote.html?room=DION1" target="_blank" class="header-btn" title="Open Wireless Phone Controller & QR Code" style="border-color: #f59e0b; color: #fef08a; background: rgba(245, 158, 11, 0.12);">
-                <span>📱</span> Phone Controller
-            </a>
-
-            <!-- Co-Host Quick Join -->
-            <a id="headerCohostLink" href="cohost-join.html?room=DION1" target="_blank" class="header-btn" title="Co-Host Buzzers & Desk">
-                <span>👥</span> Co-Host Join
-            </a>
-
-            <!-- Dual View Split Screen -->
-            <a id="headerDualLink" href="dual-view.html?room=DION1" target="_blank" class="header-btn" title="Open Host and Live Stage side-by-side">
-                <span>🎛️</span> Dual View
-            </a>
-
-            <!-- Heart Me Storyboard & Trigger -->
-            <button type="button" class="header-btn" onclick="openHeartStoryboard()" title="View the Host-Triggered Heart Me Live Animation Storyboard" style="border-color: rgba(255, 62, 108, 0.4); color: #ff3e6c;">
-                <span>❤️</span> Heart Me Storyboard
-            </button>
-
             <!-- Sound Test -->
             <button type="button" class="header-btn" onclick="testAudio()" title="Test audio output on this device">
                 <span>🔊</span> Audio Test
             </button>
         </div>
     </header>
-
-    <!-- =========================================
-         HERO SECTION
-    ========================================== -->
-    <section class="hero">
-        <div class="hero-eyebrow">
-            <span>✨</span> THE LIVE STREAM GAMING HUB
-        </div>
-        <h1>
-            LET'S <span>PLAY.</span>
-        </h1>
-        <p>
-            Launch synchronized Host consoles, Live Stage overlays, and audience interactions for your stream. Scalable catalog designed for rapid live production.
-        </p>
-
-        <!-- Quick Metrics -->
-        <div class="hero-stats-row">
-            <div class="hero-stat-pill"><b>16</b> Game Shows Ready</div>
-            <div class="hero-stat-pill"><b>⚡</b> Real-Time Room Sync</div>
-            <div class="hero-stat-pill"><b>📺</b> OBS Overlay Displays</div>
-            <div class="hero-stat-pill"><b>🎯</b> Direct 1-Click Launch</div>
-        </div>
-    </section>
-
-    <!-- =========================================
-         SPOTLIGHT SHOWCASE (FLAGSHIP SHOWS)
-    ========================================== -->
-    <section class="spotlight-section">
-        <div class="spotlight-grid">
-            
-            <!-- Flagship 1: Wheel of Fortune -->
-            <div class="spotlight-card">
-                <div class="spotlight-glow"></div>
-                <div class="spotlight-top">
-                    <div>
-                        <div class="spotlight-badge">FLAGSHIP MAIN EVENT</div>
-                        <h2 class="spotlight-title">WHEEL OF FORTUNE</h2>
-                    </div>
-                    <div class="spotlight-icon">🎡</div>
-                </div>
-                <p class="spotlight-desc">
-                    The classic 24-wedge spinning wheel, 4-row puzzle board, letter reveal engine, and stream contestant buzzers.
-                </p>
-                <div class="spotlight-actions">
-                    <a id="spotlightWheelHost" href="wheel/host/index.html?room=DION1" target="_blank" class="btn-spotlight-primary">
-                        🎤 Host Console
-                    </a>
-                    <a id="spotlightWheelRemote" href="remote.html?game=wheel&room=DION1" target="_blank" class="btn-spotlight-secondary" style="border-color: #f59e0b; color: #fef08a;">
-                        📱 Phone Remote
-                    </a>
-                    <a id="spotlightWheelLive" href="wheel/live/index.html?room=DION1" target="_blank" class="btn-spotlight-secondary">
-                        📺 Live Stage
-                    </a>
-                    <a id="spotlightWheelSingle" href="wheel/index.html?singleplayer=true" target="_blank" class="btn-spotlight-secondary" style="border-color: #10b981; color: #6ee7b7;">
-                        👤 Single Player
-                    </a>
-                    <a id="spotlightWheelSplit" href="dual-view.html?mode=wheel&room=DION1" target="_blank" class="btn-spotlight-secondary">
-                        🎛️ Dual-View
-                    </a>
-                </div>
-            </div>
-
-            <!-- Flagship 2: Dion Jeopardy -->
-            <div class="spotlight-card">
-                <div class="spotlight-glow"></div>
-                <div class="spotlight-top">
-                    <div>
-                        <div class="spotlight-badge">FLAGSHIP QUIZ ARENA</div>
-                        <h2 class="spotlight-title">DION JEOPARDY</h2>
-                    </div>
-                    <div class="spotlight-icon">🏆</div>
-                </div>
-                <p class="spotlight-desc">
-                    Full 25-clue TV Jeopardy game board, lockout buzzers, clue audio reveal, Daily Doubles, and Final Jeopardy showdown.
-                </p>
-                <div class="spotlight-actions">
-                    <a id="spotlightJeopardyHost" href="jeopardy/jeopardy-host.html?room=DION1" target="_blank" class="btn-spotlight-primary">
-                        🎤 Host Console
-                    </a>
-                    <a id="spotlightJeopardyRemote" href="remote.html?game=jeopardy&room=DION1" target="_blank" class="btn-spotlight-secondary" style="border-color: #f59e0b; color: #fef08a;">
-                        📱 Phone Remote
-                    </a>
-                    <a id="spotlightJeopardyLive" href="jeopardy/jeopardy-live.html?room=DION1" target="_blank" class="btn-spotlight-secondary">
-                        📺 Live Stage
-                    </a>
-                    <a id="spotlightJeopardySingle" href="jeopardy/jeopardy.html?singleplayer=true" target="_blank" class="btn-spotlight-secondary" style="border-color: #10b981; color: #6ee7b7;">
-                        👤 Single Player
-                    </a>
-                    <a id="spotlightJeopardySplit" href="dual-view.html?mode=jeopardy&room=DION1" target="_blank" class="btn-spotlight-secondary">
-                        🎛️ Dual-View
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </section>
 
     <!-- =========================================
          GAME CATALOG SECTION (RESPONSIVE GRID)
@@ -428,6 +721,46 @@
             Syncing to Room: <b id="modalRoomCode">DION1</b>
         </div>
 
+        <!-- STREAM BROADCAST OVERLAYS (TIKTOK LIVE & TWITCH / OBS) -->
+        <div class="modal-stream-section">
+            <div class="modal-section-title">
+                <span>📡 LIVE STREAM OVERLAYS (OBS & TIKTOK)</span>
+                <span style="color:#38bdf8; font-size:9.5px; font-weight:800;">BROWSER SOURCE READY</span>
+            </div>
+            
+            <div class="modal-stream-grid">
+                <a id="btnTiktokLive" href="#" target="_blank" class="modal-btn modal-btn-tiktok">
+                    <div class="modal-btn-icon">🎵</div>
+                    <div class="modal-btn-title" style="color: #00f2fe;">TIKTOK LIVE (9:16)</div>
+                    <div class="modal-btn-sub" style="color: #cbd5e1;">Vertical overlay with safe margins for comments & gifts</div>
+                </a>
+                <a id="btnTwitchLive" href="#" target="_blank" class="modal-btn modal-btn-twitch">
+                    <div class="modal-btn-icon">🟣</div>
+                    <div class="modal-btn-title" style="color: #c084fc;">TWITCH / OBS (16:9)</div>
+                    <div class="modal-btn-sub" style="color: #cbd5e1;">Widescreen HD stage display for OBS Browser Source</div>
+                </a>
+            </div>
+
+            <div class="stream-tools-bar">
+                <label class="stream-toggle-label">
+                    <input type="checkbox" id="chkTransparentOverlay" onchange="updateModalStreamUrls()" />
+                    <span>Transparent Background (Camera Overlay)</span>
+                </label>
+                <div class="stream-copy-group">
+                    <button type="button" class="btn-copy-stream-link" onclick="copyStreamOverlayUrl('tiktok')" title="Copy TikTok Live Studio URL (1080x1920)">
+                        📋 Copy TikTok (9:16)
+                    </button>
+                    <button type="button" class="btn-copy-stream-link" onclick="copyStreamOverlayUrl('twitch')" title="Copy Twitch OBS Browser Source URL (1920x1080)">
+                        📋 Copy Twitch (16:9)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- HOST & CONTESTANT LAUNCHERS -->
+        <div class="modal-section-title" style="text-align:left; margin: 12px 4px 8px;">
+            <span>🎮 HOST & CONTESTANT CONTROLS</span>
+        </div>
         <div class="modal-grid">
             <a id="btnHost" href="#" target="_blank" class="modal-btn">
                 <div class="modal-btn-icon">🎤</div>
@@ -438,11 +771,6 @@
                 <div class="modal-btn-icon">📱</div>
                 <div class="modal-btn-title" style="color: #f59e0b;">PHONE CONTROLLER</div>
                 <div class="modal-btn-sub">Wireless phone controller & QR Code</div>
-            </a>
-            <a id="btnLive" href="#" target="_blank" class="modal-btn">
-                <div class="modal-btn-icon">📺</div>
-                <div class="modal-btn-title">LIVE STAGE</div>
-                <div class="modal-btn-sub">Audience screen for OBS / TikTok live overlay</div>
             </a>
             <a id="btnSinglePlayer" href="#" target="_blank" class="modal-btn" style="border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.08);">
                 <div class="modal-btn-icon">👤</div>
@@ -458,6 +786,11 @@
                 <div class="modal-btn-icon">🎛️</div>
                 <div class="modal-btn-title">SPLIT SCREEN</div>
                 <div class="modal-btn-sub">Host + Live side-by-side on 1 screen</div>
+            </a>
+            <a id="btnLive" href="#" target="_blank" class="modal-btn">
+                <div class="modal-btn-icon">📺</div>
+                <div class="modal-btn-title">STANDARD STAGE</div>
+                <div class="modal-btn-sub">Original full audience screen</div>
             </a>
         </div>
     </div>
@@ -783,27 +1116,14 @@ function initRoom() {
 }
 
 function updateRoomDisplays() {
-  document.getElementById('headerRoomCode').textContent = currentRoom;
-  document.getElementById('modalRoomCode').textContent = currentRoom;
-  document.getElementById('customRoomInput').value = currentRoom;
+  const headerRoomCode = document.getElementById('headerRoomCode');
+  if (headerRoomCode) headerRoomCode.textContent = currentRoom;
 
-  // Update spotlight links
-  const query = `?room=${encodeURIComponent(currentRoom)}`;
-  document.getElementById('headerDualLink').href = `dual-view.html${query}`;
-  document.getElementById('headerRemoteLink').href = `remote.html${query}`;
-  document.getElementById('headerCohostLink').href = `cohost-join.html${query}`;
+  const modalRoomCode = document.getElementById('modalRoomCode');
+  if (modalRoomCode) modalRoomCode.textContent = currentRoom;
 
-  document.getElementById('spotlightWheelHost').href = `wheel/host/index.html${query}`;
-  document.getElementById('spotlightWheelRemote').href = `remote.html?game=wheel&room=${encodeURIComponent(currentRoom)}`;
-  document.getElementById('spotlightWheelLive').href = `wheel/live/index.html${query}`;
-  document.getElementById('spotlightWheelSingle').href = `wheel/index.html?singleplayer=true`;
-  document.getElementById('spotlightWheelSplit').href = `dual-view.html?mode=wheel&room=${encodeURIComponent(currentRoom)}`;
-  
-  document.getElementById('spotlightJeopardyHost').href = `jeopardy/jeopardy-host.html${query}`;
-  document.getElementById('spotlightJeopardyRemote').href = `remote.html?game=jeopardy&room=${encodeURIComponent(currentRoom)}`;
-  document.getElementById('spotlightJeopardyLive').href = `jeopardy/jeopardy-live.html${query}`;
-  document.getElementById('spotlightJeopardySingle').href = `jeopardy/jeopardy.html?singleplayer=true`;
-  document.getElementById('spotlightJeopardySplit').href = `dual-view.html?mode=jeopardy&room=${encodeURIComponent(currentRoom)}`;
+  const customRoomInput = document.getElementById('customRoomInput');
+  if (customRoomInput) customRoomInput.value = currentRoom;
 
   // Re-render catalog so card URLs have the new room
   renderCatalog();
@@ -1038,11 +1358,62 @@ function handleCardClick(event, gameKey) {
 }
 
 /* =========================================
-   LAUNCHER MODAL
+   LAUNCHER MODAL & STREAM OVERLAY INTEGRATION
 ========================================= */
+let currentModalGameKey = null;
+
+function updateModalStreamUrls() {
+  if (!currentModalGameKey) return;
+  const g = GAME_DIRECTORY[currentModalGameKey];
+  if (!g) return;
+
+  const chkTrans = document.getElementById('chkTransparentOverlay');
+  const isTrans = chkTrans && chkTrans.checked;
+  const transParam = isTrans ? '&transparent=true' : '';
+  const query = `?room=${encodeURIComponent(currentRoom)}`;
+
+  const btnTiktok = document.getElementById('btnTiktokLive');
+  if (btnTiktok) {
+    btnTiktok.href = `${g.live}${query}&platform=tiktok${transParam}`;
+  }
+
+  const btnTwitch = document.getElementById('btnTwitchLive');
+  if (btnTwitch) {
+    btnTwitch.href = `${g.live}${query}&platform=twitch${transParam}`;
+  }
+}
+
+function copyStreamOverlayUrl(platform) {
+  if (!currentModalGameKey) return;
+  const g = GAME_DIRECTORY[currentModalGameKey];
+  if (!g) return;
+
+  const chkTrans = document.getElementById('chkTransparentOverlay');
+  const isTrans = chkTrans && chkTrans.checked;
+  const transParam = isTrans ? '&transparent=true' : '';
+  const query = `?room=${encodeURIComponent(currentRoom)}`;
+
+  const origin = window.location.origin || '';
+  const path = g.live.startsWith('/') ? g.live : `/${g.live}`;
+  const fullUrl = `${origin}${path}${query}&platform=${platform}${transParam}&clean=1`;
+
+  const platLabel = platform === 'tiktok' ? 'TikTok Live Studio (1080x1920)' : 'Twitch OBS Browser Source (1920x1080)';
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(fullUrl).then(() => {
+      alert(`Copied ${platLabel} URL!\n\nPaste into your streaming software Browser Source: \n${fullUrl}`);
+    }).catch(() => {
+      prompt(`Copy ${platLabel} URL:`, fullUrl);
+    });
+  } else {
+    prompt(`Copy ${platLabel} URL:`, fullUrl);
+  }
+}
+
 function openGame(gameKey) {
   const g = GAME_DIRECTORY[gameKey];
   if (!g) return;
+  currentModalGameKey = gameKey;
 
   const modal = document.getElementById('gameLauncherModal');
   const query = `?room=${encodeURIComponent(currentRoom)}`;
@@ -1062,6 +1433,8 @@ function openGame(gameKey) {
   if (document.getElementById('btnSinglePlayer')) document.getElementById('btnSinglePlayer').href = singleUrl;
   if (document.getElementById('btnCohost')) document.getElementById('btnCohost').href = cohostUrl;
   document.getElementById('btnSplit').href = `${g.split}${query.replace('?', '&')}`;
+
+  updateModalStreamUrls();
 
   modal.classList.add('active');
 }
@@ -1086,20 +1459,28 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// Setup on Page Load
-document.addEventListener('DOMContentLoaded', () => {
-  initRoom();
-  document.getElementById('gameSearchInput').addEventListener('input', handleSearchInput);
-});
-
-function openHeartStoryboard() {
+function openGiftSoundboard() {
   if (window.HeartPowerSystem) {
     window.HeartPowerSystem.injectStoryboardModal();
-    window.HeartPowerSystem.openStoryboardModal();
+    window.HeartPowerSystem.openStoryboardModal('soundboard');
   }
 }
+
+function openHeartStoryboard() {
+  openGiftSoundboard();
+}
+
+// Attach to setup on page load
+document.addEventListener('DOMContentLoaded', () => {
+  initRoom();
+  const searchInput = document.getElementById('gameSearchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearchInput);
+  }
+});
 </script>
 
 <script src="shared/heart-power-system.js"></script>
+<script src="shared/room-manager.js"></script>
 </body>
 </html>

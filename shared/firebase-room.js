@@ -322,6 +322,30 @@
         try { cb(state); } catch (e) {}
       });
     }
+
+    recordWin(player, score = 0, game = null) {
+      const g = game || this.gameType || 'wheel';
+      if (window.FirebaseLeaderboard) {
+        return window.FirebaseLeaderboard.recordWin(g, player, score);
+      }
+      fetch('/api/leaderboard/record', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: player, score, game: g, isWin: true })
+      }).catch(() => {});
+    }
+
+    recordScore(player, score = 0, game = null) {
+      const g = game || this.gameType || 'trivia';
+      if (window.FirebaseLeaderboard) {
+        return window.FirebaseLeaderboard.recordScore(g, player, score);
+      }
+      fetch('/api/leaderboard/record', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: player, score, game: g, isWin: false })
+      }).catch(() => {});
+    }
   }
 
   window.FirebaseRoom = new FirebaseRoom();

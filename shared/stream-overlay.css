@@ -1,0 +1,278 @@
+/* ==========================================================================
+   Dionlyonee Game Show Playground - Stream Overlay System
+   Support for TikTok Live (9:16 Vertical), Twitch / OBS (16:9 Landscape),
+   and Transparent OBS Browser Source Overlays
+   ========================================================================== */
+
+/* --- Transparent Browser Source Mode --- */
+body.stream-transparent {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.stream-transparent .live-header,
+body.stream-transparent header {
+  background: rgba(3, 15, 12, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+body.stream-transparent .live-stage,
+body.stream-transparent main,
+body.stream-transparent .game-container,
+body.stream-transparent .jeopardy-board,
+body.stream-transparent .board-frame {
+  background-color: transparent !important;
+}
+
+body.stream-transparent .live-card,
+body.stream-transparent .wait-screen-card,
+body.stream-transparent .category-marquee-frame,
+body.stream-transparent .stage-contestants-bar,
+body.stream-transparent .pon-di-waiting {
+  background: rgba(4, 12, 16, 0.88) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-color: rgba(250, 204, 21, 0.6) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75), 0 0 20px rgba(250, 204, 21, 0.25) !important;
+}
+
+/* Text glow & legibility over live camera feeds */
+body.stream-transparent h1,
+body.stream-transparent h2,
+body.stream-transparent h3,
+body.stream-transparent .hud-val,
+body.stream-transparent .brand-title {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* ==========================================================================
+   TIKTOK LIVE MODE (9:16 Vertical / Portrait / Mobile OBS)
+   Optimal Canvas: 1080 x 1920
+   Safe Zones: Top 80px (username/stats), Bottom 160px (live comments & gifts)
+   ========================================================================== */
+body.platform-tiktok {
+  padding-top: max(16px, env(safe-area-inset-top));
+  padding-bottom: max(120px, env(safe-area-inset-bottom));
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/* Vertical Stacking & Scaling for 9:16 */
+body.platform-tiktok .live-header {
+  padding: 10px 14px !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+}
+
+body.platform-tiktok .brand-title {
+  font-size: 18px !important;
+}
+
+body.platform-tiktok .brand-sub {
+  font-size: 9px !important;
+}
+
+body.platform-tiktok .brand-icon {
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 22px !important;
+}
+
+body.platform-tiktok .hud-stats {
+  gap: 12px !important;
+}
+
+body.platform-tiktok .hud-val {
+  font-size: 18px !important;
+}
+
+/* TikTok Contestants Bar: Compact Grid instead of wide row */
+body.platform-tiktok .stage-contestants-bar,
+body.platform-tiktok #live-contestants-bar {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
+  gap: 8px !important;
+  padding: 10px !important;
+  width: 100% !important;
+}
+
+/* Wheel of Fortune specific 9:16 adjustments */
+body.platform-tiktok .category-marquee-frame {
+  padding: 8px 16px !important;
+  margin: 10px auto !important;
+}
+
+body.platform-tiktok .category-text {
+  font-size: clamp(16px, 4vw, 24px) !important;
+}
+
+body.platform-tiktok .big-wheel-canvas-wrapper {
+  width: min(340px, 85vw) !important;
+  height: min(340px, 85vw) !important;
+}
+
+body.platform-tiktok .big-wheel-stage-box {
+  padding: 16px 18px !important;
+  max-width: 95vw !important;
+}
+
+/* TikTok Live Interactive Engagement Ticker */
+.tiktok-engagement-bar {
+  display: none;
+  background: linear-gradient(90deg, #ff0050 0%, #00f2fe 100%);
+  color: #ffffff;
+  padding: 8px 14px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-align: center;
+  border-radius: 999px;
+  margin: 8px auto 14px;
+  width: fit-content;
+  max-width: 95%;
+  box-shadow: 0 4px 15px rgba(255, 0, 80, 0.4);
+  animation: pulseTiktok 2.5s infinite ease-in-out;
+}
+
+body.platform-tiktok .tiktok-engagement-bar {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@keyframes pulseTiktok {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.02); filter: brightness(1.15); }
+}
+
+/* ==========================================================================
+   TWITCH / OBS MODE (16:9 Landscape Widescreen)
+   Optimal Canvas: 1920 x 1080
+   ========================================================================== */
+body.platform-twitch .live-header {
+  border-bottom-color: #9146ff !important;
+}
+
+.twitch-engagement-bar {
+  display: none;
+  background: rgba(145, 70, 255, 0.2);
+  border: 1px solid #9146ff;
+  color: #e9d5ff;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 800;
+  border-radius: 999px;
+  margin: 6px auto;
+  width: fit-content;
+}
+
+body.platform-twitch .twitch-engagement-bar {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   STREAMER QUICK-HUD CONTROLLER (Floating toolbar on live displays)
+   ========================================================================== */
+.stream-hud-pill {
+  position: fixed;
+  bottom: 14px;
+  right: 14px;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(4, 9, 14, 0.92);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 5px 10px;
+  border-radius: 999px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #cbd5e1;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.stream-hud-pill.hidden-hud {
+  opacity: 0.15;
+  transform: translateY(18px);
+}
+
+.stream-hud-pill.hidden-hud:hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stream-hud-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 800;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.stream-hud-btn:hover {
+  background: rgba(250, 204, 21, 0.2);
+  border-color: #facc15;
+  color: #fef08a;
+}
+
+.stream-hud-btn.active {
+  background: #facc15;
+  color: #000000;
+  border-color: #facc15;
+}
+
+.stream-hud-btn.tiktok-active {
+  background: linear-gradient(90deg, #ff0050, #00f2fe);
+  color: #ffffff;
+  border-color: #ff0050;
+}
+
+.stream-hud-btn.twitch-active {
+  background: #9146ff;
+  color: #ffffff;
+  border-color: #9146ff;
+}
+
+/* Toast notification */
+.stream-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  background: #064e2e;
+  border: 1.5px solid #10b981;
+  color: #ffffff;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(16, 185, 129, 0.4);
+  z-index: 100000;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.stream-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}

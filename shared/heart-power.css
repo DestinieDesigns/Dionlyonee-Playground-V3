@@ -1,5 +1,218 @@
 /* ==========================================================================
-   DIONLYONEE PLAYGROUND — HEART POWER & HOST LIVE INTERACTION SYSTEM
+   TIKTOK STREAM OVERLAY & LIVE GIFT ALERT ENGINE
+   Optimized for TikTok Studio, OBS, and mobile browser overlays
+   ========================================================================== */
+
+.tiktok-gift-alert-container {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+  width: 90%;
+  max-width: 480px;
+}
+
+.tiktok-gift-pill {
+  background: rgba(15, 23, 42, 0.95);
+  border: 2px solid #f43f5e;
+  border-radius: 999px;
+  padding: 12px 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 10px 35px rgba(244, 63, 94, 0.45), 0 0 20px rgba(250, 204, 21, 0.3);
+  animation: giftPillEnter 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  will-change: transform, opacity;
+}
+
+.tiktok-gift-pill.exit {
+  animation: giftPillExit 0.3s ease-in forwards;
+}
+
+.tiktok-gift-icon-bubble {
+  font-size: 28px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f43f5e 0%, #881337 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px rgba(244, 63, 94, 0.6);
+  flex-shrink: 0;
+}
+
+.tiktok-gift-content {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.tiktok-gift-thanks {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.tiktok-gift-thanks strong {
+  color: #facc15;
+  font-family: 'Space Grotesk', monospace;
+}
+
+.tiktok-gift-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #fda4af;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+@keyframes giftPillEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes giftPillExit {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-25px) scale(0.9);
+  }
+}
+
+/* Stream Callout Ticker / Floating Announcement */
+.tiktok-callout-pill {
+  background: rgba(15, 23, 42, 0.94);
+  border: 1.5px solid #facc15;
+  border-radius: 999px;
+  padding: 10px 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 15px rgba(250, 204, 21, 0.25);
+  animation: calloutBounce 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes calloutBounce {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* HOST MOMENT OVERLAY (Talking to TikTok Chat) */
+.host-moment-stage-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 10, 19, 0.88);
+  backdrop-filter: blur(12px);
+  z-index: 9990;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.host-moment-stage-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.host-moment-card {
+  background: rgba(15, 23, 42, 0.95);
+  border: 3px solid #facc15;
+  border-radius: 28px;
+  padding: 36px 28px;
+  max-width: 540px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(250, 204, 21, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: hostCardZoom 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes hostCardZoom {
+  0% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.host-moment-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(250, 204, 21, 0.5);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #facc15;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.host-moment-title {
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
+
+.host-moment-desc {
+  font-size: 15px;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.host-moment-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.host-moment-action-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
    Host-Triggered "Heart Me" sequence, Global Control Bar & 9-Panel Live Stage
    ========================================================================== */
 

@@ -9,6 +9,7 @@
     storageBucket: "dionlyonee-playground.appspot.com",
     messagingSenderId: "706573125919",
     appId: "1:706573125919:web:dionlyonee001",
+    databaseURL: "https://dionlyonee-playground-default-rtdb.firebaseio.com",
     // Fallback sync options
     syncMode: "hybrid", // "websocket" | "broadcast_channel" | "http" | "firebase"
     defaultRoom: "DION1",

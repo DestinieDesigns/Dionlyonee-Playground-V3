@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#070a13" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Dionlyonee Host Controller • Phone Remote</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/heart-power.css">
+
+  <style>
+    :root {
+      --bg: #070a13;
+      --card-bg: #0f172a;
+      --card-border: rgba(250, 204, 21, 0.25);
+      --gold: #facc15;
+      --gold-dark: #ca8a04;
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --rose: #f43f5e;
+      --rose-dark: #e11d48;
+      --blue: #3b82f6;
+      --amber: #f59e0b;
+      --purple: #a855f7;
+      --text: #ffffff;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      padding-bottom: max(36px, env(safe-area-inset-bottom, 36px));
+    }
+
+    /* TOP HEADER */
+    .top-bar {
+      background: rgba(15, 23, 42, 0.96);
+      border-bottom: 2px solid rgba(250, 204, 21, 0.35);
+      padding: max(12px, env(safe-area-inset-top, 12px)) 16px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #ca8a04 0%, #1e1b4b 100%);
+      border: 1.5px solid var(--gold);
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(250, 204, 21, 0.35);
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 1px;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #eab308;
+      box-shadow: 0 0 8px #eab308;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .status-dot.connected {
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+    }
+
+    .status-dot.disconnected {
+      background: #ef4444;
+      box-shadow: 0 0 10px #ef4444;
+    }
+
+    /* STATUS HUD BAR */
+    .hud-bar {
+      background: linear-gradient(180deg, rgba(234, 179, 8, 0.12) 0%, rgba(15, 23, 42, 0.85) 100%);
+      border-bottom: 1px solid rgba(250, 204, 21, 0.2);
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .hud-box {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hud-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hud-val {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--gold);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hud-val.player {
+      color: #38bdf8;
+    }
+
+    .hud-val.score {
+      color: #4ade80;
+    }
+
+    /* MAIN CONTAINER */
+    .controller-body {
+      flex: 1;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 540px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* SECTION TITLES */
+    .section-title {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(250, 204, 21, 0.25);
+    }
+
+    /* TOUCH GRIDS */
+    .btn-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .btn-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    /* BIG TOUCH BUTTONS */
+    .ctrl-btn {
+      appearance: none;
+      border: none;
+      border-radius: 14px;
+      min-height: 60px;
+      padding: 12px 14px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      color: #ffffff;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      transition: transform 0.08s ease, filter 0.15s ease, box-shadow 0.08s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ctrl-btn:active {
+      transform: scale(0.96);
+      filter: brightness(1.2);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .ctrl-btn span.icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    /* BUTTON PALETTES */
+    .btn-green {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border: 1px solid #34d399;
+    }
+
+    .btn-amber {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      border: 1px solid #fbbf24;
+      color: #1c1917;
+    }
+
+    .btn-blue {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      border: 1px solid #60a5fa;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+      border: 1px solid #fef08a;
+      color: #0f172a;
+    }
+
+    .btn-rose {
+      background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+      border: 1px solid #fb7185;
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+      border: 1px solid #c084fc;
+    }
+
+    .btn-slate {
+      background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f1f5f9;
+    }
+
+    /* TIKTOK STREAM SUPPORT PANEL */
+    .tiktok-panel {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(244, 63, 94, 0.35);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(244, 63, 94, 0.12);
+    }
+
+    .tiktok-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tiktok-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #fda4af;
+      letter-spacing: 0.5px;
+    }
+
+    .user-input-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .user-input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 10px 14px;
+      color: #ffffff;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .user-input:focus {
+      border-color: var(--rose);
+      box-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
+    }
+
+    .gift-btn {
+      min-height: 48px;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 8px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .gift-btn span.emoji {
+      font-size: 20px;
+    }
+
+    /* ACTION FEEDBACK TOAST */
+    .ctrl-toast {
+      position: fixed;
+      bottom: max(20px, env(safe-area-inset-bottom, 20px));
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(15, 23, 42, 0.95);
+      border: 1.5px solid var(--gold);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .ctrl-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* MODAL POPUPS */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: #0f172a;
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="top-bar">
+    <div class="brand-group">
+      <div class="brand-icon">👑</div>
+      <div>
+        <div class="brand-title">DIONLYONEE</div>
+        <div class="brand-sub">HOST CONTROLLER</div>
+      </div>
+    </div>
+    <div class="status-badge" id="statusBadge">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">CONNECTING...</span>
+    </div>
+  </header>
+
+  <!-- HUD STATUS BAR -->
+  <section class="hud-bar">
+    <div class="hud-box">
+      <span class="hud-label">GAME</span>
+      <span class="hud-val" id="hudGame">Wheel of Fortune</span>
+    </div>
+    <div class="hud-box">
+      <span class="hud-label">ROOM</span>
+      <span class="hud-val" id="hudRoom">DION1</span>
+    </div>
+    <div class="hud-box">
+      <span class="hud-label">CURRENT PLAYER</span>
+      <span class="hud-val player" id="hudPlayer">Marcus</span>
+    </div>
+    <div class="hud-box">
+      <span class="hud-label">CURRENT SCORE</span>
+      <span class="hud-val score" id="hudScore">$0</span>
+    </div>
+  </section>
+
+  <!-- MAIN CONTROLLER BODY -->
+  <main class="controller-body">
+
+    <!-- PRIMARY GAMEPLAY CONTROLS -->
+    <div class="section-title">⚡ Core Flow Controls</div>
+    <div class="btn-grid-2">
+      <button type="button" class="ctrl-btn btn-green" id="btnStart" onclick="triggerAction('START_ROUND')">
+        <span class="icon">▶</span>
+        <span>START</span>
+      </button>
+      <button type="button" class="ctrl-btn btn-amber" id="btnPause" onclick="triggerAction('PAUSE_ROUND')">
+        <span class="icon">⏸</span>
+        <span>PAUSE</span>
+      </button>
+    </div>
+
+    <div class="btn-grid-2">
+      <button type="button" class="ctrl-btn btn-slate" id="btnPrevPlayer" onclick="triggerAction('PREV_PLAYER')">
+        <span class="icon">⬅</span>
+        <span>PREV PLAYER</span>
+      </button>
+      <button type="button" class="ctrl-btn btn-blue" id="btnNextPlayer" onclick="triggerAction('NEXT_PLAYER')">
+        <span class="icon">➡</span>
+        <span>NEXT PLAYER</span>
+      </button>
+    </div>
+
+    <!-- PUZZLE & REVEAL CONTROLS -->
+    <div class="section-title">💡 Clues, Reveal & Wheel</div>
+    <div class="btn-grid-2">
+      <button type="button" class="ctrl-btn btn-slate" id="btnHint" onclick="triggerAction('REVEAL_HINT')">
+        <span class="icon">💡</span>
+        <span>HINT</span>
+      </button>
+      <button type="button" class="ctrl-btn btn-purple" id="btnAnswer" onclick="triggerAction('REVEAL_ANSWER')">
+        <span class="icon">👁</span>
+        <span>ANSWER</span>
+      </button>
+    </div>
+
+    <div class="btn-grid-2">
+      <button type="button" class="ctrl-btn btn-gold" id="btnSolve" onclick="triggerAction('SOLVE_PUZZLE')">
+        <span class="icon">🏆</span>
+        <span>SOLVE</span>
+      </button>
+      <button type="button" class="ctrl-btn btn-rose" id="btnSpin" onclick="triggerAction('SPIN_WHEEL')">
+        <span class="icon">🎡</span>
+        <span>SPIN</span>
+      </button>
+    </div>
+
+    <!-- PLAYER & SCORE MANAGEMENT -->
+    <div class="section-title">👥 Contestants & Score</div>
+    <div class="btn-grid-2">
+      <button type="button" class="ctrl-btn btn-slate" onclick="openAddPlayerModal()">
+        <span class="icon">➕</span>
+        <span>ADD PLAYER</span>
+      </button>
+      <button type="button" class="ctrl-btn btn-green" onclick="openAwardMoneyModal()">
+        <span class="icon">💰</span>
+        <span>AWARD MONEY</span>
+      </button>
+    </div>
+
+    <!-- TIKTOK LIVE SUPPORT & GIFTS -->
+    <section class="tiktok-panel">
+      <div class="tiktok-header">
+        <div class="tiktok-badge">
+          <span>📱</span>
+          <span>TIKTOK LIVE GIFTS</span>
+        </div>
+        <button type="button" class="ctrl-btn btn-purple" style="min-height:36px; padding: 4px 10px; font-size:11px;" onclick="openSoundboard()">
+          <span>🎁</span> GIFT SOUNDBOARD
+        </button>
+      </div>
+
+      <div class="user-input-group">
+        <input type="text" id="viewerUsername" class="user-input" placeholder="@viewername" value="@TikTokFan" />
+        <button type="button" class="ctrl-btn btn-rose" style="min-height:44px; padding:0 14px; font-size:13px;" onclick="triggerQuickGift('rose')">
+          <span>🌹 SEND</span>
+        </button>
+      </div>
+
+      <div class="btn-grid-4">
+        <button type="button" class="ctrl-btn btn-slate gift-btn" onclick="triggerSupportEvent('rose', '🌹 Rose')">
+          <span class="emoji">🌹</span>
+          <span>ROSE</span>
+        </button>
+        <button type="button" class="ctrl-btn btn-slate gift-btn" onclick="triggerSupportEvent('hand_heart', '💖 Hand Heart')">
+          <span class="emoji">💖</span>
+          <span>HAND HEART</span>
+        </button>
+        <button type="button" class="ctrl-btn btn-slate gift-btn" onclick="triggerSupportEvent('heart', '❤️ Heart')">
+          <span class="emoji">❤️</span>
+          <span>HEART</span>
+        </button>
+        <button type="button" class="ctrl-btn btn-slate gift-btn" onclick="triggerSupportEvent('gift', '🎁 Gift')">
+          <span class="emoji">🎁</span>
+          <span>GIFT</span>
+        </button>
+      </div>
+
+      <div class="btn-grid-4">
+        <button type="button" class="ctrl-btn btn-slate gift-btn" onclick="triggerSupportEvent('supporter', '⭐ Supporter')">
+          <span class="emoji">⭐</span>
+          <span>SUPPORTER</span>
+        </button>
+        <button type="button" class="ctrl-btn btn-slate gift-btn" onclick="triggerSupportEvent('big_support', '🔥 Big Support')">
+          <span class="emoji">🔥</span>
+          <span>BIG SUPPORT</span>
+        </button>
+        <button type="button" class="ctrl-btn btn-slate gift-btn" onclick="triggerSupportEvent('vip_support', '💎 VIP Support')">
+          <span class="emoji">💎</span>
+          <span>VIP SUPPORT</span>
+        </button>
+        <button type="button" class="ctrl-btn btn-slate gift-btn" onclick="triggerCustomSupportPrompt()">
+          <span class="emoji">➕</span>
+          <span>CUSTOM</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- STREAM ENGAGEMENT CALLOUTS -->
+    <div class="section-title">📢 Stream Engagement</div>
+    <div class="btn-grid-2">
+      <button type="button" class="ctrl-btn btn-rose" onclick="triggerEngagement('SUPPORT_LIVE', '❤️ SUPPORT THE LIVE')">
+        <span class="icon">❤️</span>
+        <span>SUPPORT LIVE</span>
+      </button>
+      <button type="button" class="ctrl-btn btn-gold" onclick="triggerEngagement('JOIN_CLUB', '⭐ JOIN THE CLUB')">
+        <span class="icon">⭐</span>
+        <span>JOIN CLUB</span>
+      </button>
+    </div>
+
+    <div class="btn-grid-2">
+      <button type="button" class="ctrl-btn btn-blue" onclick="triggerEngagement('TAP_LIVE', '👆 TAP UP THE LIVE')">
+        <span class="icon">👆</span>
+        <span>TAP LIVE</span>
+      </button>
+      <button type="button" class="ctrl-btn btn-slate" onclick="triggerEngagement('HELLO_CHAT', '💬 SAY HELLO')">
+        <span class="icon">💬</span>
+        <span>SAY HELLO</span>
+      </button>
+    </div>
+
+    <!-- HOST MOMENT TALKING MODE OVERLAY -->
+    <button type="button" class="ctrl-btn btn-amber" style="min-height:54px;" onclick="triggerAction('TOGGLE_HOST_MOMENT')">
+      <span class="icon">🎤</span>
+      <span>HOST MOMENT (TALKING TO CHAT)</span>
+    </button>
+
+  </main>
+
+  <!-- ACTION TOAST -->
+  <div class="ctrl-toast" id="actionToast">
+    <span id="toastIcon">⚡</span>
+    <span id="toastMsg">Action Sent!</span>
+  </div>
+
+  <!-- ADD PLAYER MODAL -->
+  <div class="modal-backdrop" id="addPlayerModal">
+    <div class="modal-card">
+      <h3 class="modal-title">➕ Add Contestant</h3>
+      <input type="text" id="newPlayerName" class="user-input" placeholder="Contestant Name" />
+      <div class="btn-grid-2">
+        <button type="button" class="ctrl-btn btn-slate" onclick="closeModal('addPlayerModal')">CANCEL</button>
+        <button type="button" class="ctrl-btn btn-green" onclick="confirmAddPlayer()">ADD</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AWARD MONEY MODAL -->
+  <div class="modal-backdrop" id="awardMoneyModal">
+    <div class="modal-card">
+      <h3 class="modal-title">💰 Award Money</h3>
+      <div class="btn-grid-3">
+        <button type="button" class="ctrl-btn btn-green" onclick="awardAmount(100)">+$100</button>
+        <button type="button" class="ctrl-btn btn-green" onclick="awardAmount(250)">+$250</button>
+        <button type="button" class="ctrl-btn btn-green" onclick="awardAmount(500)">+$500</button>
+      </div>
+      <div class="btn-grid-2">
+        <button type="button" class="ctrl-btn btn-green" onclick="awardAmount(1000)">+$1,000</button>
+        <button type="button" class="ctrl-btn btn-gold" onclick="awardAmount(2500)">+$2,500</button>
+      </div>
+      <button type="button" class="ctrl-btn btn-slate" onclick="closeModal('awardMoneyModal')">CANCEL</button>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="/shared/room-manager.js"></script>
+  <script src="/sync-client.js"></script>
+  <script src="/shared/heart-power-system.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      // 1. Resolve Room & Game
+      const params = new URLSearchParams(window.location.search);
+      const roomId = (params.get('room') || sessionStorage.getItem('dionlyonee_active_room') || 'DION1').toUpperCase();
+      const gameParam = params.get('game') || 'wheel';
+
+      const gameTitles = {
+        'wheel': 'Wheel of Fortune',
+        'trivia': 'Dionlyonee Trivia',
+        'jeopardy': 'Jeopardy',
+        'word-reveal': 'Word Reveal',
+        'speak-out': 'Tongue Twister',
+        'guess-lyrics': 'Guess the Lyrics'
+      };
+
+      document.getElementById('hudRoom').textContent = roomId;
+      document.getElementById('hudGame').textContent = gameTitles[gameParam] || gameParam.toUpperCase();
+
+      // Audio click
+      function playTouchClick() {
+        if (navigator.vibrate) {
+          try { navigator.vibrate(15); } catch (e) {}
+        }
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) {
+            const ctx = new AudioCtx();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.frequency.setValueAtTime(800, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.05);
+            gain.gain.setValueAtTime(0.12, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.06);
+          }
+        } catch (e) {}
+      }
+
+      // Show Toast
+      let toastTimer = null;
+      function showToast(icon, msg) {
+        const toast = document.getElementById('actionToast');
+        document.getElementById('toastIcon').textContent = icon;
+        document.getElementById('toastMsg').textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2000);
+      }
+
+      // Setup RoomSyncClient
+      let syncClient = null;
+      const statusDot = document.getElementById('statusDot');
+      const statusText = document.getElementById('statusText');
+
+      function updateStatus(connected) {
+        if (connected) {
+          statusDot.className = 'status-dot connected';
+          statusText.textContent = 'CONNECTED';
+        } else {
+          statusDot.className = 'status-dot disconnected';
+          statusText.textContent = 'RECONNECTING...';
+        }
+      }
+
+      if (window.RoomSyncClient) {
+        syncClient = new RoomSyncClient({
+          roomId,
+          gameType: gameParam,
+          role: 'controller',
+          onState: (state) => {
+            if (!state) return;
+            if (state.activePlayerName || (state.contestants && state.contestants[state.activeContestantIndex]?.name)) {
+              const name = state.activePlayerName || state.contestants[state.activeContestantIndex]?.name;
+              document.getElementById('hudPlayer').textContent = name;
+            }
+            if (typeof state.activePlayerScore === 'number' || (state.contestants && typeof state.contestants[state.activeContestantIndex]?.score === 'number')) {
+              const score = typeof state.activePlayerScore === 'number' ? state.activePlayerScore : state.contestants[state.activeContestantIndex]?.score;
+              document.getElementById('hudScore').textContent = '$' + score.toLocaleString();
+            }
+          },
+          onAction: (action, payload) => {
+            // handle incoming actions
+          },
+          onStatusChange: (status) => {
+            updateStatus(status === 'connected');
+          }
+        });
+      } else {
+        updateStatus(true);
+      }
+
+      // BroadcastChannel Fallback
+      let broadcastChan = null;
+      try {
+        broadcastChan = new BroadcastChannel(`dion_room_${roomId}`);
+      } catch (e) {}
+
+      // Trigger Action Function
+      window.triggerAction = function (action, payload = {}) {
+        playTouchClick();
+
+        if (syncClient) {
+          syncClient.sendAction(action, payload);
+        }
+
+        if (broadcastChan) {
+          try {
+            broadcastChan.postMessage({ type: 'HOST_ACTION', action, ...payload });
+          } catch (e) {}
+        }
+
+        // Post to HTTP API
+        fetch(`/api/rooms/${encodeURIComponent(roomId)}/action`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action, payload })
+        }).catch(() => {});
+
+        const labels = {
+          'START_ROUND': '▶ Game Started!',
+          'PAUSE_ROUND': '⏸ Game Paused',
+          'NEXT_PLAYER': '➡ Next Player Called',
+          'PREV_PLAYER': '⬅ Previous Player Called',
+          'REVEAL_HINT': '💡 Stage Clue Revealed',
+          'REVEAL_ANSWER': '👁 Answer Revealed',
+          'SOLVE_PUZZLE': '🏆 Puzzle Solved!',
+          'SPIN_WHEEL': '🎡 Wheel Spinning!',
+          'TOGGLE_HOST_MOMENT': '🎤 Host Moment Toggled'
+        };
+
+        showToast('⚡', labels[action] || action);
+      };
+
+      // TikTok Support Trigger
+      window.triggerSupportEvent = function (giftType, label) {
+        playTouchClick();
+        const usernameInput = document.getElementById('viewerUsername');
+        let viewerName = (usernameInput.value || '@Viewer').trim();
+        if (!viewerName.startsWith('@')) viewerName = '@' + viewerName;
+
+        const payload = {
+          giftType,
+          label,
+          viewerName,
+          timestamp: Date.now()
+        };
+
+        window.triggerAction('SUPPORT_EVENT', payload);
+
+        // Also broadcast via HeartPowerSystem if present
+        if (window.HeartPower) {
+          try {
+            window.HeartPower.broadcast('SUPPORT_EVENT', payload);
+          } catch (e) {}
+        }
+
+        showToast('🎁', `${label} sent for ${viewerName}!`);
+      };
+
+      window.triggerQuickGift = function (giftType) {
+        window.triggerSupportEvent(giftType, '🌹 Rose');
+      };
+
+      window.triggerCustomSupportPrompt = function () {
+        const gift = prompt('Enter Custom Gift Name (e.g. Galaxy, Lion, Cap):', 'Galaxy');
+        if (gift && gift.trim()) {
+          window.triggerSupportEvent('custom', `💎 ${gift.trim()}`);
+        }
+      };
+
+      // Stream Engagement Callouts
+      window.triggerEngagement = function (actionType, title) {
+        playTouchClick();
+        window.triggerAction('STREAM_CALLOUT', { callout: actionType, title });
+        showToast('📢', title);
+      };
+
+      // Modals
+      window.openAddPlayerModal = function () {
+        playTouchClick();
+        document.getElementById('addPlayerModal').classList.add('open');
+        document.getElementById('newPlayerName').focus();
+      };
+
+      window.confirmAddPlayer = function () {
+        const name = document.getElementById('newPlayerName').value.trim();
+        if (name) {
+          window.triggerAction('ADD_PLAYER', { name });
+          document.getElementById('newPlayerName').value = '';
+          closeModal('addPlayerModal');
+          showToast('👤', `Added ${name}!`);
+        }
+      };
+
+      window.openAwardMoneyModal = function () {
+        playTouchClick();
+        document.getElementById('awardMoneyModal').classList.add('open');
+      };
+
+      window.awardAmount = function (amount) {
+        playTouchClick();
+        window.triggerAction('AWARD_MONEY', { amount });
+        closeModal('awardMoneyModal');
+        showToast('💰', `Awarded +$${amount}!`);
+      };
+
+      window.closeModal = function (id) {
+        document.getElementById(id).classList.remove('open');
+      };
+
+      window.openSoundboard = function () {
+        if (window.HeartPower && typeof window.HeartPower.openModal === 'function') {
+          window.HeartPower.openModal();
+        } else {
+          showToast('🎁', 'Gift Soundboard Loaded');
+        }
+      };
+
+    })();
+  </script>
+</body>
+</html>

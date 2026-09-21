@@ -38,6 +38,11 @@
       this.audioCtx = null;
       this.isLiveOverlayRunning = false;
 
+      // TikTok Stream Support Queue & Host Moment State
+      this.tiktokSupportQueue = [];
+      this.isProcessingSupportQueue = false;
+      this.isHostMomentActive = false;
+
       this.initChannels();
       this.initStorageListener();
       this.initRoomSyncListener();
@@ -150,6 +155,18 @@
       if (!data) return;
       const action = data.action || data.type;
       if (!action) return;
+
+      // TikTok Stream Support Events (Sequentially Queued)
+      if (action === 'SUPPORT_EVENT' || action === 'TIKTOK_GIFT') {
+        this.enqueueSupportEvent(data);
+        return;
+      } else if (action === 'STREAM_CALLOUT') {
+        this.showStreamCallout(data.callout, data.title);
+        return;
+      } else if (action === 'TOGGLE_HOST_MOMENT') {
+        this.toggleHostMomentOverlay();
+        return;
+      }
 
       // Soundboard sound broadcast
       if (action === 'PLAY_SOUND' && data.sound) {
@@ -2416,6 +2433,157 @@
           const defaultTab = document.getElementById('tab-btn-soundboard') || document.getElementById('tab-btn-rose');
           if (defaultTab) defaultTab.click();
         }
+      }
+    }
+
+    /* ------------------------------------------------------------------------
+       TIKTOK STREAM SUPPORT QUEUE & VIEWER RECOGNITION ENGINE
+       ------------------------------------------------------------------------ */
+    enqueueSupportEvent(data) {
+      const giftType = data.giftType || 'rose';
+      const label = data.label || '🌹 Rose';
+      let viewerName = (data.viewerName || '@PlaygroundFan').trim();
+      if (!viewerName.startsWith('@')) viewerName = '@' + viewerName;
+
+      this.tiktokSupportQueue.push({
+        giftType,
+        label,
+        viewerName,
+        amount: data.amount || 1,
+        timestamp: Date.now()
+      });
+
+      if (!this.isProcessingSupportQueue) {
+        this.processSupportQueue();
+      }
+    }
+
+    processSupportQueue() {
+      if (!this.tiktokSupportQueue || this.tiktokSupportQueue.length === 0) {
+        this.isProcessingSupportQueue = false;
+        return;
+      }
+
+      this.isProcessingSupportQueue = true;
+      const current = this.tiktokSupportQueue.shift();
+      this.renderSupportAlert(current);
+    }
+
+    renderSupportAlert(item) {
+      let container = document.getElementById('tiktok-gift-alert-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'tiktok-gift-alert-container';
+        container.className = 'tiktok-gift-alert-container';
+        document.body.appendChild(container);
+      }
+
+      const icons = {
+        'rose': '🌹',
+        'hand_heart': '💖',
+        'heart': '❤️',
+        'gift': '🎁',
+        'supporter': '⭐',
+        'big_support': '🔥',
+        'vip_support': '💎',
+        'custom': '✨'
+      };
+
+      const icon = icons[item.giftType] || '🎁';
+
+      // Play audio
+      if (item.giftType === 'rose') {
+        this.playRoseBloom();
+      } else if (item.giftType === 'heart' || item.giftType === 'hand_heart') {
+        this.playSparkleChime();
+      } else {
+        this.playGiftFanfare();
+      }
+
+      const pill = document.createElement('div');
+      pill.className = 'tiktok-gift-pill';
+      pill.innerHTML = `
+        <div class="tiktok-gift-icon-bubble">${icon}</div>
+        <div class="tiktok-gift-content">
+          <div class="tiktok-gift-thanks">THANK YOU <strong>${item.viewerName}</strong>!</div>
+          <div class="tiktok-gift-label">${item.label.toUpperCase()} RECEIVED</div>
+        </div>
+      `;
+
+      container.appendChild(pill);
+
+      // Trigger Rose animation if it's a rose
+      if (item.giftType === 'rose' && typeof this.onViewerSentRose === 'function') {
+        try { this.onViewerSentRose(item.viewerName, 1); } catch (e) {}
+      }
+
+      // Schedule exit and advance queue
+      setTimeout(() => {
+        pill.classList.add('exit');
+        setTimeout(() => {
+          pill.remove();
+          this.processSupportQueue();
+        }, 320);
+      }, 2400);
+    }
+
+    showStreamCallout(callout, title) {
+      let container = document.getElementById('tiktok-gift-alert-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'tiktok-gift-alert-container';
+        container.className = 'tiktok-gift-alert-container';
+        document.body.appendChild(container);
+      }
+
+      this.playSparkleChime();
+
+      const pill = document.createElement('div');
+      pill.className = 'tiktok-callout-pill';
+      pill.innerHTML = `<span>📢</span> <span>${title || callout}</span>`;
+      container.appendChild(pill);
+
+      setTimeout(() => {
+        pill.style.opacity = '0';
+        pill.style.transform = 'translateY(-20px)';
+        pill.style.transition = 'all 0.3s ease';
+        setTimeout(() => pill.remove(), 320);
+      }, 2800);
+    }
+
+    toggleHostMomentOverlay() {
+      let overlay = document.getElementById('host-moment-stage-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'host-moment-stage-overlay';
+        overlay.className = 'host-moment-stage-overlay';
+        overlay.innerHTML = `
+          <div class="host-moment-card">
+            <div class="host-moment-badge">
+              <span>🎤</span>
+              <span>HOST MOMENT • TALKING TO CHAT</span>
+            </div>
+            <h2 class="host-moment-title">LIVE WITH DIONLYONEE</h2>
+            <p class="host-moment-desc">
+              The host is taking the stage to chat with the live viewers! Drop your comments, tap up the screen, and get ready for the next round!
+            </p>
+            <div class="host-moment-actions-grid">
+              <div class="host-moment-action-item"><span>👆</span><span>TAP SCREEN RAPIDLY</span></div>
+              <div class="host-moment-action-item"><span>💬</span><span>COMMENT YOUR CITY</span></div>
+              <div class="host-moment-action-item"><span>⭐</span><span>JOIN THE STREAM CLUB</span></div>
+              <div class="host-moment-action-item"><span>🌹</span><span>SEND ROSES & GIFTS</span></div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+      }
+
+      this.isHostMomentActive = !this.isHostMomentActive;
+      if (this.isHostMomentActive) {
+        overlay.classList.add('active');
+        this.playDrumRoll();
+      } else {
+        overlay.classList.remove('active');
       }
     }
 

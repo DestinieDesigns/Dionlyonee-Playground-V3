@@ -32,8 +32,59 @@ interface RoomData {
   lastUpdate: number;
 }
 
+export interface LeaderboardRecord {
+  id: string; // key: `${game}_${username.toLowerCase()}`
+  username: string;
+  avatar: string;
+  game: string;
+  wins: number;
+  highScore: number;
+  totalScore: number;
+  gamesPlayed: number;
+  lastUpdated: number;
+  verifiedWin?: boolean;
+}
+
+export interface ChatMessage {
+  id: string;
+  roomId: string;
+  username: string;
+  avatar: string;
+  text: string;
+  type: "chat" | "win" | "score" | "system" | "cheer";
+  game?: string;
+  score?: number;
+  timestamp: number;
+  badge?: string;
+}
+
 const rooms = new Map<string, RoomData>();
 const roomClients = new Map<string, Set<WebSocket>>();
+const allClients = new Set<WebSocket>();
+const leaderboardRecords = new Map<string, LeaderboardRecord>();
+const chatHistory: ChatMessage[] = [];
+
+// Seed default champions
+const INITIAL_CHAMPIONS: LeaderboardRecord[] = [
+  { id: 'wheel_dionlyonee', username: 'Dionlyonee', avatar: '👑', game: 'wheel', wins: 14, highScore: 54200, totalScore: 142500, gamesPlayed: 18, lastUpdated: Date.now() - 3600000 },
+  { id: 'wheel_spinqueen', username: 'SpinQueen', avatar: '🎡', game: 'wheel', wins: 9, highScore: 38500, totalScore: 89000, gamesPlayed: 12, lastUpdated: Date.now() - 7200000 },
+  { id: 'wheel_puzzlemaster', username: 'PuzzleMaster', avatar: '🧩', game: 'wheel', wins: 6, highScore: 27000, totalScore: 61500, gamesPlayed: 9, lastUpdated: Date.now() - 14400000 },
+  { id: 'trivia_brainiacdion', username: 'BrainiacDion', avatar: '🧠', game: 'trivia', wins: 16, highScore: 4800, totalScore: 19200, gamesPlayed: 20, lastUpdated: Date.now() - 5400000 },
+  { id: 'trivia_quickdraw', username: 'QuickDraw', avatar: '🎯', game: 'trivia', wins: 10, highScore: 3900, totalScore: 14100, gamesPlayed: 13, lastUpdated: Date.now() - 10800000 },
+  { id: 'jeopardy_triviaking', username: 'TriviaKing', avatar: '🏆', game: 'jeopardy', wins: 11, highScore: 28400, totalScore: 94000, gamesPlayed: 15, lastUpdated: Date.now() - 9000000 },
+  { id: 'jeopardy_buzzerbeast', username: 'BuzzerBeast', avatar: '⚡', game: 'jeopardy', wins: 7, highScore: 19600, totalScore: 52000, gamesPlayed: 11, lastUpdated: Date.now() - 18000000 },
+  { id: 'word-reveal_cluehunter', username: 'ClueHunter', avatar: '🟩', game: 'word-reveal', wins: 8, highScore: 3200, totalScore: 11500, gamesPlayed: 10, lastUpdated: Date.now() - 21600000 },
+  { id: 'speak-out_rapidtongue', username: 'RapidTongue', avatar: '🎤', game: 'speak-out', wins: 12, highScore: 5100, totalScore: 16800, gamesPlayed: 14, lastUpdated: Date.now() - 28800000 },
+  { id: 'guess-lyrics_melodysoul', username: 'MelodySoul', avatar: '🎵', game: 'guess-lyrics', wins: 9, highScore: 4200, totalScore: 12600, gamesPlayed: 11, lastUpdated: Date.now() - 36000000 },
+  { id: 'hangman_noslimedunk', username: 'NoSlimeDunk', avatar: '🔤', game: 'hangman', wins: 7, highScore: 2800, totalScore: 9400, gamesPlayed: 9, lastUpdated: Date.now() - 43200000 },
+];
+INITIAL_CHAMPIONS.forEach(c => leaderboardRecords.set(c.id, c));
+
+chatHistory.push(
+  { id: 'msg_init_1', roomId: 'DION1', username: 'SYSTEM', avatar: '👑', text: 'Welcome to Dionlyonee Live Game Show Arena! Syncing real-time scores & chat.', type: 'system', timestamp: Date.now() - 300000 },
+  { id: 'msg_init_2', roomId: 'DION1', username: 'TikTokFan_22', avatar: '🔥', text: 'Hyped for the next live showdown!', type: 'chat', timestamp: Date.now() - 120000 },
+  { id: 'msg_init_3', roomId: 'DION1', username: 'SpinQueen', avatar: '🎡', text: 'Just logged $38,500 on Wheel of Fortune! 🏆', type: 'win', game: 'wheel', score: 38500, timestamp: Date.now() - 60000 }
+);
 
 async function startServer() {
   const app = express();
@@ -49,6 +100,28 @@ async function startServer() {
   // API: Verify Host Passcode (unlocked per user request)
   app.post("/api/verify-host", (_req, res) => {
     res.json({ success: true, authorized: true, message: "Authorized as Host (Unlocked)" });
+  });
+
+  // API: Create or initialize a room
+  app.post("/api/rooms/create", (req, res) => {
+    const roomId = (req.body.roomId || "DION1").toUpperCase();
+    const gameType = req.body.gameType || "wheel";
+
+    let room = rooms.get(roomId);
+    if (!room) {
+      room = {
+        id: roomId,
+        gameType: gameType as any,
+        state: {},
+        lastUpdate: Date.now(),
+      };
+      rooms.set(roomId, room);
+    } else {
+      room.gameType = gameType as any;
+      room.lastUpdate = Date.now();
+    }
+
+    res.json({ success: true, roomId, gameType: room.gameType, room });
   });
 
   // API: Get Room State (supports HTTP polling for mobile browsers)
@@ -278,6 +351,7 @@ async function startServer() {
     { path: "/most-likely-live", file: "most-likely-live.html" },
     { path: "/dual-view", file: "dual-view.html" },
     { path: "/split-screen", file: "dual-view.html" },
+    { path: "/leaderboard", file: "leaderboard.html" },
     { path: "/hub", file: "index.html" },
   ];
 
@@ -287,6 +361,177 @@ async function startServer() {
 
   app.get(["/dionlyonee-pon-di-app.svg", "*/dionlyonee-pon-di-app.svg"], (_req, res) => {
     res.sendFile(path.join(process.cwd(), "dionlyonee-pon-di-app.svg"));
+  });
+
+  // =========================================
+  // API: REAL-TIME LEADERBOARD & CHAT ENDPOINTS
+  // =========================================
+
+  // Get Leaderboard (supports per-game filtering and sorting)
+  app.get("/api/leaderboard", (req, res) => {
+    const game = req.query.game ? String(req.query.game).toLowerCase() : "all";
+    const sortBy = String(req.query.sortBy || "wins");
+    let records = Array.from(leaderboardRecords.values());
+
+    if (game !== "all") {
+      records = records.filter((r) => r.game.toLowerCase() === game);
+    }
+
+    records.sort((a, b) => {
+      if (sortBy === "highScore") {
+        return b.highScore - a.highScore || b.wins - a.wins;
+      } else if (sortBy === "totalScore") {
+        return b.totalScore - a.totalScore || b.wins - a.wins;
+      } else {
+        return b.wins - a.wins || b.highScore - a.highScore;
+      }
+    });
+
+    const totalWins = records.reduce((acc, r) => acc + (r.wins || 0), 0);
+    const highestScore = records.reduce((max, r) => Math.max(max, r.highScore || 0), 0);
+
+    res.json({
+      success: true,
+      game,
+      count: records.length,
+      stats: { totalWins, highestScore, topPlayer: records[0]?.username || null },
+      records,
+    });
+  });
+
+  // Record a Win or Score for any player & game
+  app.post("/api/leaderboard/record", (req, res) => {
+    const { username, avatar, game, score, isWin, verifiedWin } = req.body;
+    const cleanUser = String(username || "Contestant").replace(/^@/, "").trim();
+    const cleanGame = String(game || "wheel").toLowerCase();
+    const numScore = Number(score) || 0;
+    const key = `${cleanGame}_${cleanUser.toLowerCase()}`;
+
+    let record = leaderboardRecords.get(key);
+    if (!record) {
+      record = {
+        id: key,
+        username: cleanUser,
+        avatar: avatar || "⭐",
+        game: cleanGame,
+        wins: isWin ? 1 : 0,
+        highScore: numScore,
+        totalScore: numScore,
+        gamesPlayed: 1,
+        lastUpdated: Date.now(),
+        verifiedWin: Boolean(verifiedWin || isWin),
+      };
+    } else {
+      if (isWin) record.wins += 1;
+      record.highScore = Math.max(record.highScore, numScore);
+      record.totalScore += numScore;
+      record.gamesPlayed += 1;
+      record.lastUpdated = Date.now();
+      if (isWin) record.verifiedWin = true;
+      if (avatar) record.avatar = avatar;
+    }
+
+    leaderboardRecords.set(key, record);
+
+    // Auto-create celebratory chat message
+    const chatMsg: ChatMessage = {
+      id: "msg_" + Date.now() + "_" + Math.random().toString(36).substring(2, 6),
+      roomId: "DION1",
+      username: "ARENA SYSTEM",
+      avatar: isWin ? "🏆" : "⚡",
+      text: isWin
+        ? `🏆 VICTORY! @${cleanUser} conquered ${cleanGame.toUpperCase()} with ${numScore.toLocaleString()}! 👑`
+        : `⚡ SCORE! @${cleanUser} achieved ${numScore.toLocaleString()} in ${cleanGame.toUpperCase()}!`,
+      type: isWin ? "win" : "score",
+      game: cleanGame,
+      score: numScore,
+      timestamp: Date.now(),
+      badge: isWin ? "CHAMPION" : "SCORE",
+    };
+
+    chatHistory.push(chatMsg);
+    if (chatHistory.length > 150) chatHistory.shift();
+
+    // Broadcast in real-time to all connected WebSocket clients
+    broadcastToAll({
+      type: "LEADERBOARD_UPDATE",
+      record,
+      timestamp: Date.now(),
+    });
+
+    broadcastToAll({
+      type: "CHAT_MESSAGE",
+      message: chatMsg,
+      timestamp: Date.now(),
+    });
+
+    res.json({ success: true, record, chatMessage: chatMsg });
+  });
+
+  // Reset or re-seed leaderboard (Host admin action)
+  app.post("/api/leaderboard/reset", (req, res) => {
+    const game = req.body.game ? String(req.body.game).toLowerCase() : null;
+    if (game && game !== "all") {
+      Array.from(leaderboardRecords.keys()).forEach((key) => {
+        if (key.startsWith(`${game}_`)) {
+          leaderboardRecords.delete(key);
+        }
+      });
+    } else {
+      leaderboardRecords.clear();
+      INITIAL_CHAMPIONS.forEach((c) => leaderboardRecords.set(c.id, { ...c }));
+    }
+
+    broadcastToAll({
+      type: "LEADERBOARD_RESET",
+      game,
+      records: Array.from(leaderboardRecords.values()),
+      timestamp: Date.now(),
+    });
+
+    res.json({ success: true, count: leaderboardRecords.size });
+  });
+
+  // Get Lobby & Stream Chat
+  app.get("/api/chat", (req, res) => {
+    const roomId = req.query.roomId ? String(req.query.roomId).toUpperCase() : null;
+    let list = chatHistory;
+    if (roomId) {
+      list = chatHistory.filter((m) => !m.roomId || m.roomId === roomId || m.roomId === "DION1");
+    }
+    res.json({ success: true, count: list.length, messages: list.slice(-80) });
+  });
+
+  // Post Chat Message
+  app.post("/api/chat/message", (req, res) => {
+    const { username, avatar, text, roomId, type, game, score, badge } = req.body;
+    if (!text || !String(text).trim()) {
+      return res.status(400).json({ error: "Message text is required" });
+    }
+
+    const msg: ChatMessage = {
+      id: "msg_" + Date.now() + "_" + Math.random().toString(36).substring(2, 6),
+      roomId: String(roomId || "DION1").toUpperCase(),
+      username: String(username || "Contestant").replace(/^@/, "").trim(),
+      avatar: avatar || "👤",
+      text: String(text).trim(),
+      type: type || "chat",
+      game,
+      score: score ? Number(score) : undefined,
+      timestamp: Date.now(),
+      badge: badge || (String(username).toLowerCase().includes("host") ? "HOST" : "PLAYER"),
+    };
+
+    chatHistory.push(msg);
+    if (chatHistory.length > 150) chatHistory.shift();
+
+    broadcastToAll({
+      type: "CHAT_MESSAGE",
+      message: msg,
+      timestamp: Date.now(),
+    });
+
+    res.json({ success: true, message: msg });
   });
 
   routes.forEach((r) => {
@@ -322,6 +567,7 @@ async function startServer() {
 
   wss.on("connection", (ws: WebSocket) => {
     let currentRoomId = "";
+    allClients.add(ws);
 
     ws.on("message", (rawMessage: string) => {
       try {
@@ -348,6 +594,35 @@ async function startServer() {
                 timestamp: existingRoom.lastUpdate,
               })
             );
+          }
+        } else if (message.type === "GET_LEADERBOARD") {
+          ws.send(
+            JSON.stringify({
+              type: "LEADERBOARD_SYNC",
+              records: Array.from(leaderboardRecords.values()),
+              timestamp: Date.now(),
+            })
+          );
+        } else if (message.type === "LEADERBOARD_UPDATE" || message.type === "RECORD_WIN" || message.type === "RECORD_SCORE") {
+          const rec = message.record || message;
+          if (rec && rec.id) {
+            leaderboardRecords.set(rec.id, rec);
+            broadcastToAll({
+              type: "LEADERBOARD_UPDATE",
+              record: rec,
+              timestamp: Date.now(),
+            }, ws);
+          }
+        } else if (message.type === "CHAT_MESSAGE") {
+          const msg = message.message || message;
+          if (msg && msg.text) {
+            chatHistory.push(msg);
+            if (chatHistory.length > 150) chatHistory.shift();
+            broadcastToAll({
+              type: "CHAT_MESSAGE",
+              message: msg,
+              timestamp: Date.now(),
+            }, ws);
           }
         } else if (message.type === "UPDATE_STATE") {
           const roomId = (message.roomId || currentRoomId || "DION1").toUpperCase();
@@ -458,6 +733,7 @@ async function startServer() {
     });
 
     ws.on("close", () => {
+      allClients.delete(ws);
       if (currentRoomId && roomClients.has(currentRoomId)) {
         roomClients.get(currentRoomId)!.delete(ws);
         if (roomClients.get(currentRoomId)!.size === 0) {
@@ -466,6 +742,19 @@ async function startServer() {
       }
     });
   });
+
+  function broadcastToAll(data: Record<string, unknown>, senderWs?: WebSocket) {
+    const payload = JSON.stringify(data);
+    allClients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN && client !== senderWs) {
+        try {
+          client.send(payload);
+        } catch (e) {
+          console.warn("WS broadcastAll error:", e);
+        }
+      }
+    });
+  }
 
   function broadcastToRoom(roomId: string, data: Record<string, unknown>, senderWs?: WebSocket) {
     const clients = roomClients.get(roomId);
