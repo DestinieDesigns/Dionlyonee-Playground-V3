@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dionlyonee Playground LIVE</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/shared/heart-power.css">
+</head>
+<body class="live-page">
+<div class="live-screen">
+  <div class="live-topbar">
+    <div class="live-brand">
+      <div class="live-logo">D</div>
+      <div>
+        <div class="live-brand-name">DIONLYONEE PLAYGROUND</div>
+        <div class="live-brand-game">WHEEL OF FORTUNE</div>
+      </div>
+    </div>
+    <div class="live-status"><span class="live-dot"></span>LIVE</div>
+  </div>
+  <main class="live-main">
+    <div class="live-category-label">CATEGORY</div>
+    <div id="category" class="live-category">WAITING FOR GAME</div>
+    <div id="puzzle" class="puzzle"></div>
+    <div class="timer-label">NEXT LETTER</div>
+    <div id="timer" class="live-timer">—</div>
+    <div class="timer-seconds">SECONDS</div>
+    <div id="message" class="live-message">WAITING FOR HOST</div>
+  </main>
+  <footer class="live-footer">
+    <span>GUESS IN CHAT</span><b>◆</b><span>DIONLYONEE</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const channel = new BroadcastChannel('dionlyonee-wheel-game');
+  const categoryElement = document.getElementById('category');
+  const puzzleElement = document.getElementById('puzzle');
+  const timerElement = document.getElementById('timer');
+  const messageElement = document.getElementById('message');
+
+  function drawPuzzle(answer, revealed) {
+    puzzleElement.innerHTML = '';
+    if (!answer) return;
+
+    answer.split(' ').forEach((word, wordIndex) => {
+      const wordElement = document.createElement('div');
+      wordElement.className = 'word';
+
+      for (const letter of word) {
+        const box = document.createElement('div');
+        box.className = 'box';
+
+        if (revealed.includes(letter)) {
+          box.textContent = letter;
+          box.classList.add('revealed');
+        }
+
+        wordElement.appendChild(box);
+      }
+
+      puzzleElement.appendChild(wordElement);
+    });
+  }
+
+  channel.onmessage = function (event) {
+    const game = event.data || {};
+
+    categoryElement.textContent = game.category || 'WAITING FOR GAME';
+    drawPuzzle(game.answer || '', game.revealed || []);
+
+    if (game.phase === 'complete') {
+      timerElement.textContent = '✓';
+      messageElement.textContent = 'PUZZLE COMPLETE';
+      return;
+    }
+
+    if (game.running) {
+      timerElement.textContent = typeof game.seconds === 'number' ? game.seconds : '—';
+      messageElement.textContent = 'GUESS THE ANSWER IN CHAT';
+    } else {
+      timerElement.textContent = '—';
+      messageElement.textContent = 'GET READY FOR THE NEXT PUZZLE';
+    }
+  };
+
+  try {
+    const cached = sessionStorage.getItem('dion_live_wheel');
+    if (cached) {
+      const g = JSON.parse(cached);
+      categoryElement.textContent = g.category || 'WAITING FOR GAME';
+      drawPuzzle(g.answer || '', g.revealed || []);
+      if (g.running) {
+        timerElement.textContent = typeof g.seconds === 'number' ? g.seconds : '—';
+        messageElement.textContent = 'GUESS THE ANSWER IN CHAT';
+      }
+    }
+  } catch (e) {}
+
+  try {
+    channel.postMessage({ type: 'REQUEST_STATE' });
+  } catch (e) {}
+
+  window.addEventListener('beforeunload', () => channel.close());
+})();
+</script>
+<script src="/shared/heart-power-system.js"></script>
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dionlyonee — Hot Take Host</title>
+
+    <link rel="stylesheet" href="hot-take-host.css">
+</head>
+
+<body class="hot-take-host-page">
+
+<div class="host-board">
+
+    <!-- HEADER -->
+
+    <header class="host-header">
+
+        <div class="host-brand">
+
+            <div class="host-logo">D</div>
+
+            <div>
+                <h1>DIONLYONEE</h1>
+                <span>HOT TAKE • HOST CONTROL</span>
+            </div>
+
+        </div>
+
+        <div class="host-status">
+            <span id="statusDot"></span>
+            <span id="statusText">WAITING</span>
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="host-main">
+
+        <!-- LEFT SIDE -->
+
+        <section class="host-panel">
+
+            <div class="panel-heading">
+                <span>🔥 HOT TAKE LIBRARY</span>
+                <small>BUILT-IN PROMPTS</small>
+            </div>
+
+
+            <select id="promptSelect" class="host-select">
+
+                <option value="">
+                    SELECT A HOT TAKE
+                </option>
+
+                <option>
+                    Pineapple belongs on pizza.
+                </option>
+
+                <option>
+                    The movie was better than the book.
+                </option>
+
+                <option>
+                    Money can buy happiness.
+                </option>
+
+                <option>
+                    Breakfast food is better at night.
+                </option>
+
+                <option>
+                    Social media has made us less social.
+                </option>
+
+                <option>
+                    Being late is sometimes unavoidable.
+                </option>
+
+                <option>
+                    Summer is overrated.
+                </option>
+
+                <option>
+                    Texting is better than calling.
+                </option>
+
+                <option>
+                    Everybody should know how to cook at least one meal.
+                </option>
+
+                <option>
+                    Having too many choices makes life harder.
+                </option>
+
+                <option>
+                    Cats are better pets than dogs.
+                </option>
+
+                <option>
+                    Dogs are better pets than cats.
+                </option>
+
+                <option>
+                    Video games are a better way to relax than watching TV.
+                </option>
+
+                <option>
+                    The friend who always says "I'm on my way" is never actually on the way.
+                </option>
+
+                <option>
+                    Group chats are more entertaining than television.
+                </option>
+
+            </select>
+
+
+            <button
+                id="usePromptButton"
+                class="host-button secondary">
+
+                USE SELECTED HOT TAKE
+
+            </button>
+
+
+            <div class="divider">
+                OR
+            </div>
+
+
+            <!-- CUSTOM -->
+
+            <div class="panel-heading">
+                <span>✍️ CUSTOM HOT TAKE</span>
+                <small>HOST CREATED</small>
+            </div>
+
+
+            <textarea
+                id="customPrompt"
+                class="host-textarea"
+                placeholder="Type your own Hot Take here..."></textarea>
+
+
+            <button
+                id="useCustomButton"
+                class="host-button secondary">
+
+                USE CUSTOM HOT TAKE
+
+            </button>
+
+        </section>
+
+
+        <!-- CENTER -->
+
+        <section class="host-panel center-panel">
+
+            <div class="panel-heading">
+                <span>🎤 CURRENT HOT TAKE</span>
+                <small>LIVE PREVIEW</small>
+            </div>
+
+
+            <div
+                id="currentPrompt"
+                class="current-prompt">
+
+                WAITING FOR HOT TAKE
+
+            </div>
+
+
+            <!-- HOST COMMENTARY -->
+
+            <div class="panel-heading commentary-heading">
+
+                <span>🗣️ HOST'S TAKE</span>
+
+                <small>
+                    OPTIONAL
+                </small>
+
+            </div>
+
+
+            <textarea
+                id="commentary"
+                class="host-textarea commentary-box"
+                placeholder="Add your own thoughts, reaction, or commentary..."></textarea>
+
+
+            <!-- MAIN ACTION -->
+
+            <button
+                id="showButton"
+                class="host-button show-button"
+                disabled>
+
+                🔥 SHOW HOT TAKE
+
+            </button>
+
+
+            <div class="action-row">
+
+                <button
+                    id="waitingButton"
+                    class="host-button">
+
+                    ⏸ WAITING SCREEN
+
+                </button>
+
+
+                <button
+                    id="nextButton"
+                    class="host-button">
+
+                    ⏭ NEXT HOT TAKE
+
+                </button>
+
+            </div>
+
+
+            <button
+                id="clearButton"
+                class="clear-button">
+
+                ✕ CLEAR CURRENT TAKE
+
+            </button>
+
+        </section>
+
+
+        <!-- RIGHT -->
+
+        <section class="host-panel instructions-panel">
+
+            <div class="panel-heading">
+                <span>💬 HOW TO PLAY</span>
+                <small>CHAT</small>
+            </div>
+
+
+            <div class="instruction">
+
+                <div class="instruction-number">
+                    01
+                </div>
+
+                <div>
+                    <strong>SHOW A HOT TAKE</strong>
+                    <p>
+                        Pick one from the library or create your own.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="instruction">
+
+                <div class="instruction-number">
+                    02
+                </div>
+
+                <div>
+                    <strong>READ THE CHAT</strong>
+                    <p>
+                        Let viewers share their opinions.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="instruction">
+
+                <div class="instruction-number">
+                    03
+                </div>
+
+                <div>
+                    <strong>TALK ABOUT IT</strong>
+                    <p>
+                        React, debate, laugh, and keep the conversation going.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="instruction">
+
+                <div class="instruction-number">
+                    04
+                </div>
+
+                <div>
+                    <strong>NEXT TAKE</strong>
+                    <p>
+                        Move on whenever the conversation is finished.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="host-tip">
+
+                💡 <strong>HOST TIP:</strong>
+
+                There are no right or wrong answers.
+                The goal is to get the chat talking.
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="host-footer">
+
+        <span>DIONLYONEE</span>
+
+        <b>◆</b>
+
+        <span>JUST TALKING</span>
+
+        <b>◆</b>
+
+        <span>HOT TAKE</span>
+
+    </footer>
+
+</div>
+
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    /* ==========================================
+       CHANNEL
+    ========================================== */
+
+    const channel =
+        new BroadcastChannel(
+            "dionlyonee-hot-take"
+        );
+
+
+    /* ==========================================
+       ELEMENTS
+    ========================================== */
+
+    const promptSelect =
+        document.getElementById(
+            "promptSelect"
+        );
+
+    const customPrompt =
+        document.getElementById(
+            "customPrompt"
+        );
+
+    const commentary =
+        document.getElementById(
+            "commentary"
+        );
+
+    const currentPrompt =
+        document.getElementById(
+            "currentPrompt"
+        );
+
+    const showButton =
+        document.getElementById(
+            "showButton"
+        );
+
+    const usePromptButton =
+        document.getElementById(
+            "usePromptButton"
+        );
+
+    const useCustomButton =
+        document.getElementById(
+            "useCustomButton"
+        );
+
+    const nextButton =
+        document.getElementById(
+            "nextButton"
+        );
+
+    const waitingButton =
+        document.getElementById(
+            "waitingButton"
+        );
+
+    const clearButton =
+        document.getElementById(
+            "clearButton"
+        );
+
+    const statusDot =
+        document.getElementById(
+            "statusDot"
+        );
+
+    const statusText =
+        document.getElementById(
+            "statusText"
+        );
+
+
+    /* ==========================================
+       CURRENT PROMPT
+    ========================================== */
+
+    let selectedPrompt = "";
+
+
+    /* ==========================================
+       UPDATE PREVIEW
+    ========================================== */
+
+    function updatePreview() {
+
+        if (!selectedPrompt) {
+
+            currentPrompt.textContent =
+                "WAITING FOR HOT TAKE";
+
+            showButton.disabled = true;
+
+            return;
+
+        }
+
+
+        currentPrompt.textContent =
+            selectedPrompt;
+
+        showButton.disabled = false;
+
+    }
+
+
+    /* ==========================================
+       USE LIBRARY PROMPT
+    ========================================== */
+
+    usePromptButton.addEventListener(
+        "click",
+        function () {
+
+            const value =
+                promptSelect.value.trim();
+
+
+            if (!value) {
+
+                alert(
+                    "Please select a Hot Take first."
+                );
+
+                return;
+
+            }
+
+
+            selectedPrompt = value;
+
+            customPrompt.value = "";
+
+            updatePreview();
+
+        }
+    );
+
+
+    /* ==========================================
+       USE CUSTOM PROMPT
+    ========================================== */
+
+    useCustomButton.addEventListener(
+        "click",
+        function () {
+
+            const value =
+                customPrompt.value.trim();
+
+
+            if (!value) {
+
+                alert(
+                    "Please type your own Hot Take first."
+                );
+
+                return;
+
+            }
+
+
+            selectedPrompt = value;
+
+            promptSelect.value = "";
+
+            updatePreview();
+
+        }
+    );
+
+
+    /* ==========================================
+       SHOW HOT TAKE
+    ========================================== */
+
+    showButton.addEventListener(
+        "click",
+        function () {
+
+            if (!selectedPrompt) {
+                return;
+            }
+
+
+            const hostComment =
+                commentary.value.trim();
+
+
+            channel.postMessage({
+
+                type: "show",
+
+                prompt: selectedPrompt,
+
+                commentary: hostComment
+
+            });
+
+
+            statusDot.classList.add(
+                "active"
+            );
+
+            statusText.textContent =
+                "LIVE";
+
+        }
+    );
+
+
+    /* ==========================================
+       NEXT HOT TAKE
+    ========================================== */
+
+    nextButton.addEventListener(
+        "click",
+        function () {
+
+            /*
+             * If a library prompt is selected,
+             * automatically choose another one.
+             */
+
+            const options =
+                Array.from(
+                    promptSelect.options
+                ).filter(
+                    option =>
+                        option.value &&
+                        option.value !== selectedPrompt
+                );
+
+
+            if (options.length === 0) {
+
+                return;
+
+            }
+
+
+            const randomOption =
+                options[
+                    Math.floor(
+                        Math.random()
+                        * options.length
+                    )
+                ];
+
+
+            selectedPrompt =
+                randomOption.value;
+
+
+            promptSelect.value =
+                selectedPrompt;
+
+
+            customPrompt.value =
+                "";
+
+
+            updatePreview();
+
+
+            channel.postMessage({
+
+                type: "show",
+
+                prompt: selectedPrompt,
+
+                commentary:
+                    commentary.value.trim()
+
+            });
+
+
+            statusDot.classList.add(
+                "active"
+            );
+
+            statusText.textContent =
+                "LIVE";
+
+        }
+    );
+
+
+    /* ==========================================
+       WAITING SCREEN
+    ========================================== */
+
+    waitingButton.addEventListener(
+        "click",
+        function () {
+
+            channel.postMessage({
+
+                type: "waiting"
+
+            });
+
+
+            statusDot.classList.remove(
+                "active"
+            );
+
+            statusText.textContent =
+                "WAITING";
+
+        }
+    );
+
+
+    /* ==========================================
+       CLEAR
+    ========================================== */
+
+    clearButton.addEventListener(
+        "click",
+        function () {
+
+            selectedPrompt = "";
+
+            promptSelect.value = "";
+
+            customPrompt.value = "";
+
+            commentary.value = "";
+
+
+            updatePreview();
+
+
+            channel.postMessage({
+
+                type: "waiting"
+
+            });
+
+
+            statusDot.classList.remove(
+                "active"
+            );
+
+            statusText.textContent =
+                "WAITING";
+
+        }
+    );
+
+
+    /* ==========================================
+       KEYBOARD SHORTCUTS
+    ========================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.target.tagName === "TEXTAREA" ||
+                event.target.tagName === "INPUT" ||
+                event.target.tagName === "SELECT"
+            ) {
+                return;
+            }
+
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                if (!showButton.disabled) {
+
+                    showButton.click();
+
+                }
+
+            }
+
+
+            if (
+                event.key.toLowerCase() === "n"
+            ) {
+
+                nextButton.click();
+
+            }
+
+
+            if (
+                event.key.toLowerCase() === "w"
+            ) {
+
+                waitingButton.click();
+
+            }
+
+        }
+    );
+
+
+    /* ==========================================
+       INITIALIZE
+    ========================================== */
+
+    updatePreview();
+
+
+    /* ==========================================
+       CLEANUP
+    ========================================== */
+
+    window.addEventListener(
+        "beforeunload",
+        function () {
+
+            channel.close();
+
+        }
+    );
+
+})();
+
+</script>
+
+</body>
+</html>

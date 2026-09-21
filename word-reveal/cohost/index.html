@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Reveal Co-Host | Dionlyonee Stream</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="word-cohost.css" />
+</head>
+<body style="padding: 16px; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; background: #071518; color: #fff;">
+  <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">
+    <div style="font-family: 'Cinzel', serif; font-weight: 900; color: #fbbf24; font-size: 16px;">
+      🔤 PHONE REMOTE
+    </div>
+    <div style="font-size: 12px; color: #94a3b8;">
+      ROOM: <b id="cohost-room" style="color: #34d399;">DION1</b>
+    </div>
+  </header>
+
+  <div style="margin: 16px 0; text-align: center;">
+    <div id="cohost-puzzle-preview" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px; margin-bottom: 18px; font-size: 13px; color: #e2e8f0; text-align: left;">
+      <div style="font-weight: 800; color: #34d399; font-size: 11px; letter-spacing: 1px; margin-bottom: 4px;">CURRENT MYSTERY:</div>
+      <div id="cohost-category" style="font-weight: 700; color: #fbbf24; margin-bottom: 4px;">Category: Awaiting host...</div>
+      <div id="cohost-hint" style="color: #cbd5e1; font-style: italic;">Hint: Connecting to broadcast...</div>
+    </div>
+
+    <!-- BUZZ BUTTON -->
+    <button id="btn-buzz" style="
+      width: 180px; height: 180px; border-radius: 50%;
+      background: radial-gradient(circle, #10b981, #047857);
+      border: 5px solid rgba(255,255,255,0.3);
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.4);
+      color: #fff; font-family: 'Cinzel', serif; font-size: 24px; font-weight: 900;
+      cursor: pointer; transition: transform 0.1s; margin-bottom: 20px;
+    ">
+      I KNOW IT!
+    </button>
+
+    <!-- MOBILE GUESS FORM -->
+    <form id="cohost-guess-form" style="display: flex; gap: 6px; max-width: 320px; margin: 0 auto;">
+      <input 
+        type="text" 
+        id="cohost-guess-input" 
+        placeholder="Type guess from phone..." 
+        style="flex: 1; background: rgba(0,0,0,0.6); border: 1px solid rgba(52,211,153,0.4); border-radius: 8px; color: #fff; font-size: 13px; font-weight: 700; padding: 10px 12px;" 
+        required 
+      />
+      <button 
+        type="submit" 
+        style="background: #fbbf24; color: #000; border: none; border-radius: 8px; font-weight: 900; font-size: 12px; padding: 0 14px; cursor: pointer;"
+      >
+        SEND
+      </button>
+    </form>
+    <div id="cohost-feedback" style="display: none; font-size: 11.5px; font-weight: 800; color: #34d399; margin-top: 8px;"></div>
+  </div>
+
+  <div style="text-align: center; font-size: 11px; color: #64748b; padding-bottom: 8px;">
+    Dionlyonee Multi-Device Companion
+  </div>
+
+  <script src="../../shared/sound-manager.js"></script>
+  <script src="../../shared/room-manager.js"></script>
+  <script src="../../shared/firebase-room.js"></script>
+  <script src="word-cohost.js"></script>
+</body>
+</html>

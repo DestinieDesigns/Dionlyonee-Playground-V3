@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wheel of Fortune Host Console | Dionlyonee Stream</title>
+  <meta name="description" content="Host control console for Dionlyonee Wheel of Fortune stream game show." />
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="wheel-host.css" />
+  <script src="../../shared/host-auth.js"></script>
+</head>
+
+<body>
+
+  <!-- TOP APP BAR -->
+  <header class="host-header">
+    <div class="brand-wrapper">
+      <div class="brand-logo">🎡</div>
+      <div>
+        <div class="brand-title">WHEEL OF FORTUNE</div>
+        <div class="brand-badge">HOST DESK CONSOLE</div>
+      </div>
+    </div>
+
+    <!-- QUICK NAVIGATION -->
+    <nav class="nav-links">
+      <a href="../../index.html" class="nav-btn">🏠 Hub</a>
+      <a href="../live/index.html" target="_blank" rel="noopener noreferrer" class="nav-btn">📺 Live Stage ↗</a>
+      <a href="../cohost/index.html" target="_blank" rel="noopener noreferrer" class="nav-btn">🎤 Co-Host ↗</a>
+      <a href="../../jeopardy/host/index.html" target="_blank" rel="noopener noreferrer" class="nav-btn">🏆 Jeopardy Host ↗</a>
+      <a href="../../dual-view.html?mode=wheel" target="_blank" rel="noopener noreferrer" class="nav-btn" style="color: var(--gold-bright); border-color: var(--border-gold);">🎛️ Split Screen ↗</a>
+    </nav>
+  </header>
+
+  <!-- MAIN DUAL-PANEL HOST LAYOUT -->
+  <main class="host-container">
+
+    <!-- LEFT COLUMN: LIVE BOARD PREVIEW & INTERACTIVE CALLERS -->
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+
+      <!-- ACTIVE PUZZLE 4-ROW PREVIEW BOARD -->
+      <section class="panel highlight">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>📺</span> 4-ROW PUZZLE BOARD PREVIEW
+          </div>
+          <div id="host-status-badge" class="badge-status">WAITING</div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+          <div>
+            <span style="color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">CATEGORY:</span>
+            <strong id="host-category-display" style="color: #fef08a; margin-left: 6px; font-family: 'Cinzel', serif;">JAMAICAN PHRASES</strong>
+          </div>
+          <div id="host-round-display" style="color: var(--gold-bright); font-weight: 800;">ROUND 1</div>
+        </div>
+
+        <!-- 4-ROW MATRIX CONTAINER -->
+        <div id="wheel-board-host-preview" class="wheel-board-wrapper">
+          <!-- Rendered dynamically by WheelEngine -->
+        </div>
+
+        <!-- HINT & FULL ANSWER BAR -->
+        <div id="host-hint-box" class="hint-preview-box">
+          💡 <span id="host-hint-text">Secret clue loaded for host.</span>
+        </div>
+      </section>
+
+      <!-- ACTIVE CONTESTANTS & CALLER PODIUMS -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>👥</span> CONTESTANT CALLERS & TURN DESK
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button id="btn-add-contestant" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px;">
+              ➕ Add Contestant
+            </button>
+            <div id="active-turn-badge" class="badge-status active">TURN: CONTESTANT 1</div>
+          </div>
+        </div>
+
+        <!-- DYNAMIC CONTESTANTS CONTAINER -->
+        <div id="contestants-container" class="contestants-grid">
+          <!-- Rendered dynamically by wheel-host.js -->
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+          <button id="btn-prev-player" class="btn btn-secondary" style="flex: 1;">
+            ⏪ Previous Turn
+          </button>
+          <button id="btn-next-player" class="btn btn-secondary" style="flex: 1;">
+            ⏩ Pass Turn to Next Contestant
+          </button>
+          <button id="btn-bank-scores" class="btn btn-primary" style="flex: 1;">
+            💰 Bank Round Cash into Total
+          </button>
+        </div>
+
+        <!-- SOLVE REWARD CONFIGURATION -->
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; padding: 10px 14px; background: rgba(0,0,0,0.3); border: 1px solid rgba(250,204,21,0.3); border-radius: 8px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 11px; font-weight: 800; color: var(--gold-bright);">🏆 SOLVE REWARD:</span>
+            <span style="font-size: 13px; font-weight: 900; color: #fff;">$</span>
+            <input id="input-solve-reward" type="number" value="500" min="0" step="100" style="width: 80px; background: #0f172a; border: 1px solid #ca8a04; color: #facc15; font-weight: 800; font-size: 13px; padding: 4px 8px; border-radius: 6px;" />
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">AWARD MODE:</span>
+            <select id="select-solve-mode" style="background: #0f172a; border: 1px solid #ca8a04; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 6px;">
+              <option value="guaranteed">Guaranteed $500 Cash</option>
+              <option value="bonus_spin">Bonus Wheel Spin</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE 24-WEDGE WHEEL CONTROL PANEL -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🎡</span> 24-WEDGE SPINNING WHEEL
+          </div>
+          <div id="wheel-status-tag" style="font-size: 12px; font-weight: 800; color: #38bdf8;">READY TO SPIN</div>
+        </div>
+
+        <div class="wheel-control-layout">
+          <!-- WHEEL CANVAS PREVIEW -->
+          <div class="wheel-canvas-box">
+            <canvas id="host-wheel-canvas" width="280" height="280"></canvas>
+            <div class="wheel-center-hub">🎡</div>
+            <div class="wheel-top-pointer">▼</div>
+          </div>
+
+          <!-- WHEEL CONTROLS -->
+          <div class="wheel-action-group">
+            <div style="display: flex; gap: 8px; flex-direction: column;">
+              <button id="btn-spin-wheel" class="btn btn-spin">
+                💫 SPIN THE WHEEL!
+              </button>
+              <button id="btn-call-and-spin" class="btn btn-primary" style="font-weight: 900; background: #047857; border: 1px solid #10b981;">
+                📞 CALL CONTESTANT & SPIN
+              </button>
+            </div>
+
+            <div class="wheel-result-card">
+              <div style="font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">LAST WHEEL LANDING</div>
+              <div id="wheel-result-display" class="wheel-result-text">$1,000</div>
+            </div>
+
+            <div style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+              ⚡ When the wheel lands on a cash wedge, the turn timer starts automatically so the called contestant can pick a letter!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- A-Z LETTER CALLING KEYBOARD -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🔤</span> LETTER CALLER KEYBOARD
+          </div>
+          <span style="font-size: 11px; color: var(--text-muted);">Click or press keys on physical keyboard</span>
+        </div>
+
+        <div id="letter-keyboard" class="letter-keyboard-grid">
+          <!-- Rendered dynamically A-Z -->
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
+          <button id="btn-call-random" class="btn btn-secondary" style="flex: 1;">
+            🎲 Reveal 1 Random
+          </button>
+          <button id="btn-call-vowels" class="btn btn-secondary" style="flex: 1;">
+            🅰️ Reveal All Vowels
+          </button>
+          <button id="btn-call-consonants" class="btn btn-secondary" style="flex: 1;">
+            🅱️ Reveal All Consonants
+          </button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT COLUMN: GAME SETUP, TIMER, & SOUNDBOARD -->
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+
+      <!-- ROUND TIMER & PROGRESS -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>⏱️</span> ROUND TIMER CLOCK
+          </div>
+          <div id="timer-number" class="timer-display">30s</div>
+        </div>
+
+        <div class="progress-bar-bg">
+          <div id="timer-progress-fill" class="progress-bar-fill" style="width: 100%;"></div>
+        </div>
+
+        <div style="display: flex; gap: 6px; margin-top: 10px;">
+          <button class="btn btn-secondary btn-timer-preset" data-seconds="15" style="flex: 1; padding: 6px 8px; font-size: 11px;">⏱️ 15s Turn</button>
+          <button class="btn btn-secondary btn-timer-preset" data-seconds="30" style="flex: 1; padding: 6px 8px; font-size: 11px;">⏱️ 30s Turn</button>
+          <button class="btn btn-secondary btn-timer-preset" data-seconds="45" style="flex: 1; padding: 6px 8px; font-size: 11px;">⏱️ 45s Turn</button>
+        </div>
+
+        <div class="button-group" style="margin-top: 14px;">
+          <button id="btn-timer-start" class="btn btn-primary">
+            ▶ START
+          </button>
+          <button id="btn-timer-pause" class="btn btn-secondary">
+            ⏸ PAUSE
+          </button>
+          <button id="btn-timer-reset" class="btn btn-secondary">
+            ↺ RESET
+          </button>
+        </div>
+      </section>
+
+      <!-- PUZZLE SELECTION & DECK -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>📂</span> PUZZLE SELECTION & MASTER DECK
+          </div>
+          <span id="deck-stats-tag" style="font-size: 11px; font-weight: 800; color: var(--gold-bright);">DECK: 50+ PUZZLES</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="form-group">
+            <label class="form-label" for="select-difficulty">Difficulty Tier</label>
+            <select id="select-difficulty" class="form-select">
+              <option value="all">All Difficulties</option>
+              <option value="easy">🟢 Easy</option>
+              <option value="medium">🟡 Medium</option>
+              <option value="hard">🔴 Hard</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="select-category">Category (18 Total)</label>
+            <select id="select-category" class="form-select">
+              <!-- Populated from data -->
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-puzzle">Choose Preset Puzzle</label>
+          <select id="select-puzzle" class="form-select">
+            <!-- Populated from category -->
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+          <button id="btn-load-puzzle" class="btn btn-primary" style="flex: 1;">
+            📥 Load Selected
+          </button>
+          <button id="btn-random-puzzle" class="btn btn-secondary" style="flex: 1;" title="Picks fresh puzzle with no repeats">
+            🎲 Draw Random
+          </button>
+        </div>
+
+        <div class="divider">OR ENTER CUSTOM</div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-custom-answer">Custom Answer / Phrase</label>
+          <input id="input-custom-answer" type="text" class="form-input" placeholder="e.g. WAH GWAAN" maxlength="40" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-custom-hint">Custom Secret Clue (Optional)</label>
+          <input id="input-custom-hint" type="text" class="form-input" placeholder="e.g. Popular Jamaican greeting" />
+        </div>
+
+        <button id="btn-apply-custom" class="btn btn-secondary" style="width: 100%;">
+          ✨ Apply Custom Puzzle
+        </button>
+      </section>
+
+      <!-- MASTER GAME ACTIONS -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🎮</span> MASTER STAGE CONTROLS
+          </div>
+          <span id="master-phase-indicator" style="font-size: 11px; font-weight: 800; color: #94a3b8;">PHASE: WAITING</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <button id="btn-start-round" class="btn btn-primary" style="background: #047857; border: 1px solid #10b981; font-weight: 800;">
+              🟢 START ROUND (LIVE)
+            </button>
+            <button id="btn-cooldown-round" class="btn btn-secondary" style="background: #78350f; border: 1px solid #d97706; font-weight: 800; color: #fef08a;">
+              🟡 ROUND COOLDOWN
+            </button>
+          </div>
+
+          <button id="btn-toggle-hint" class="btn btn-secondary" style="width: 100%;">
+            💡 Show / Hide Clue on Stage
+          </button>
+
+          <button id="btn-reveal-all" class="btn btn-solve" style="width: 100%;">
+            🏆 SOLVE & AWARD REWARD ($500)
+          </button>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <button id="btn-next-round" class="btn btn-primary">
+              ⏩ Next Round (+1)
+            </button>
+            <button id="btn-reset-board" class="btn btn-danger">
+              ⚠️ Reset Board
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOUNDBOARD -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🔊</span> SOUNDBOARD FX
+          </div>
+        </div>
+
+        <div class="soundboard-grid">
+          <button class="btn-sfx" data-sound="correct">🔔 Ding</button>
+          <button class="btn-sfx" data-sound="buzzer">❌ Buzzer</button>
+          <button class="btn-sfx" data-sound="wheel">🎡 Wheel</button>
+          <button class="btn-sfx" data-sound="cheer">🎉 Cheer</button>
+          <button class="btn-sfx" data-sound="reveal">✨ Reveal</button>
+          <button class="btn-sfx" data-sound="tick">⏳ Tick</button>
+          <button class="btn-sfx" data-sound="timeup">🚨 Time's Up</button>
+          <button class="btn-sfx" data-sound="countdown">🔥 Count</button>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- STICKY QUICK CONTROL DOCK (MOBILE & TABLET ACCESSIBLE) -->
+  <div id="host-quick-dock" class="host-quick-dock">
+    <button id="dock-btn-spin" class="dock-btn btn-dock-spin" title="Spin Wheel">
+      <span class="dock-icon">🎡</span>
+      <span class="dock-label">SPIN</span>
+    </button>
+    <button id="dock-btn-next" class="dock-btn btn-dock-next" title="Next Player Turn">
+      <span class="dock-icon">⏭</span>
+      <span class="dock-label">NEXT TURN</span>
+    </button>
+    <button id="dock-btn-wrong" class="dock-btn btn-dock-wrong" title="Wrong Letter / Advance Turn">
+      <span class="dock-icon">❌</span>
+      <span class="dock-label">WRONG</span>
+    </button>
+    <button id="dock-btn-hint" class="dock-btn btn-dock-hint" title="Hint Status">
+      <span class="dock-icon">🔒</span>
+      <span class="dock-label">LOCKED</span>
+    </button>
+    <button id="dock-btn-solve" class="dock-btn btn-dock-solve" title="Solve Full Puzzle">
+      <span class="dock-icon">🏆</span>
+      <span class="dock-label">SOLVE</span>
+    </button>
+    <button id="dock-btn-pause" class="dock-btn btn-dock-pause" title="Pause / Resume Timer">
+      <span class="dock-icon">⏸</span>
+      <span class="dock-label">PAUSE</span>
+    </button>
+  </div>
+
+  <!-- SAFETY CONFIRMATION MODAL -->
+  <div id="safety-modal-overlay" class="modal-overlay hidden">
+    <div class="safety-modal-box">
+      <div class="safety-modal-icon">⚠️</div>
+      <div id="safety-modal-title" class="safety-modal-title">Confirm Action</div>
+      <div id="safety-modal-desc" class="safety-modal-desc">Are you sure you want to perform this action? This will affect the live game.</div>
+      <div class="safety-modal-actions">
+        <button id="btn-safety-cancel" class="btn btn-secondary">Cancel</button>
+        <button id="btn-safety-confirm" class="btn btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PURE VANILLA JAVASCRIPT -->
+  <script src="../../shared/hint-validator.js"></script>
+  <script src="../../shared/game-transitions.js"></script>
+  <script src="sounds.js"></script>
+  <script src="wheel-engine.js"></script>
+  <script src="wheel-puzzles-data.js"></script>
+  <script src="jeopardy-data.js"></script>
+  <script src="sync-client.js"></script>
+  <script src="wheel-host.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,452 @@
+const fs = require('fs');
+const path = require('path');
+const sharp = require('sharp');
+
+const W = 1920;
+const H = 1080;
+
+const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#070913" />
+      <stop offset="40%" stop-color="#121128" />
+      <stop offset="70%" stop-color="#1e183a" />
+      <stop offset="100%" stop-color="#0b1724" />
+    </linearGradient>
+
+    <!-- Mountain Gradient -->
+    <linearGradient id="mountGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3b2d54" />
+      <stop offset="100%" stop-color="#131024" />
+    </linearGradient>
+
+    <!-- Gold Text Gradients -->
+    <linearGradient id="goldTextGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEA" />
+      <stop offset="15%" stop-color="#FFE169" />
+      <stop offset="50%" stop-color="#F5B700" />
+      <stop offset="85%" stop-color="#D48B00" />
+      <stop offset="100%" stop-color="#995D00" />
+    </linearGradient>
+
+    <linearGradient id="goldStrokeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF099" />
+      <stop offset="100%" stop-color="#6B3F00" />
+    </linearGradient>
+
+    <!-- Button Gradient -->
+    <linearGradient id="btnGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1f1807" />
+      <stop offset="100%" stop-color="#0d0a02" />
+    </linearGradient>
+
+    <!-- Laser Glow Filter -->
+    <filter id="laserGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur1" />
+      <feGaussianBlur stdDeviation="20" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Text 3D Shadow -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#F5B700" flood-opacity="0.45" />
+      <feDropShadow dx="0" dy="18" stdDeviation="28" flood-color="#000000" flood-opacity="0.9" />
+    </filter>
+
+    <!-- Pixel Grid Pattern for buildings -->
+    <pattern id="pixelGrid" width="12" height="12" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#ffe066" opacity="0.6" />
+      <rect x="6" y="6" width="6" height="6" fill="#38bdf8" opacity="0.4" />
+    </pattern>
+
+    <!-- Jamaican Flag Clip Path -->
+    <clipPath id="circleClip">
+      <circle cx="960" cy="115" r="105" />
+    </clipPath>
+  </defs>
+
+  <!-- ================= BACKGROUND ================= -->
+  <rect width="${W}" height="${H}" fill="url(#skyGrad)" />
+
+  <!-- Distant Mountains -->
+  <polygon points="0,580 160,510 320,550 480,470 640,530 800,490 960,540 1120,480 1280,530 1440,460 1600,520 1760,490 1920,560 1920,700 0,700" fill="url(#mountGrad)" opacity="0.75" />
+  <polygon points="0,620 220,560 420,600 680,540 920,590 1180,530 1420,590 1680,540 1920,610 1920,740 0,740" fill="#0d0d1f" opacity="0.9" />
+
+  <!-- ================= GREEN LASER BEAMS ================= -->
+  <g filter="url(#laserGlow)" opacity="0.85">
+    <!-- Top-Left Lasers -->
+    <line x1="960" y1="115" x2="-100" y2="280" stroke="#70e000" stroke-width="6" />
+    <line x1="960" y1="115" x2="-100" y2="560" stroke="#38b000" stroke-width="9" />
+    <line x1="960" y1="115" x2="200" y2="-50" stroke="#aacc00" stroke-width="5" />
+
+    <!-- Top-Right Lasers -->
+    <line x1="960" y1="115" x2="2020" y2="240" stroke="#70e000" stroke-width="7" />
+    <line x1="960" y1="115" x2="2020" y2="540" stroke="#38b000" stroke-width="10" />
+    <line x1="960" y1="115" x2="1720" y2="-50" stroke="#aacc00" stroke-width="5" />
+  </g>
+
+  <!-- ================= LEFT PIXEL SKYLINE ================= -->
+  <g id="leftSkyline">
+    <!-- Building 1 (Far left) -->
+    <rect x="0" y="240" width="130" height="700" fill="#0d1527" stroke="#1e293b" stroke-width="2" />
+    <!-- Glowing Windows -->
+    <g opacity="0.75">
+      ${Array.from({ length: 18 }, (_, i) => `
+        <rect x="20" y="${280 + i * 28}" width="16" height="14" fill="${i % 3 === 0 ? '#38bdf8' : i % 2 === 0 ? '#fbbf24' : '#f472b6'}" />
+        <rect x="46" y="${280 + i * 28}" width="16" height="14" fill="${(i + 1) % 3 === 0 ? '#fbbf24' : '#38bdf8'}" />
+        <rect x="72" y="${280 + i * 28}" width="16" height="14" fill="${(i + 2) % 3 === 0 ? '#f472b6' : '#f8fafc'}" />
+      `).join('')}
+    </g>
+
+    <!-- Neon LIVE Sign 1 -->
+    <rect x="18" y="320" width="80" height="38" rx="6" fill="#180c24" stroke="#ec4899" stroke-width="3" />
+    <text x="58" y="346" font-family="'Courier New', monospace" font-weight="900" font-size="20" fill="#f472b6" text-anchor="middle" letter-spacing="3">LIVE</text>
+
+    <!-- Building 2 (Mid left) -->
+    <rect x="120" y="160" width="180" height="780" fill="#090f1d" stroke="#1e293b" stroke-width="2" />
+    <!-- Spire -->
+    <line x1="210" y1="90" x2="210" y2="160" stroke="#38bdf8" stroke-width="4" />
+    <circle cx="210" cy="88" r="6" fill="#ef4444" />
+    <g opacity="0.8">
+      ${Array.from({ length: 22 }, (_, i) => `
+        <rect x="140" y="${200 + i * 26}" width="18" height="12" fill="${i % 2 === 0 ? '#fbbf24' : '#38bdf8'}" />
+        <rect x="170" y="${200 + i * 26}" width="18" height="12" fill="${(i + 1) % 2 === 0 ? '#f472b6' : '#fbbf24'}" />
+        <rect x="200" y="${200 + i * 26}" width="18" height="12" fill="${i % 3 === 0 ? '#38bdf8' : '#f8fafc'}" />
+        <rect x="230" y="${200 + i * 26}" width="18" height="12" fill="${(i + 2) % 3 === 0 ? '#fbbf24' : '#a855f7'}" />
+      `).join('')}
+    </g>
+
+    <!-- Building 3 (Foreground left) -->
+    <rect x="280" y="310" width="160" height="630" fill="#050914" stroke="#334155" stroke-width="2" />
+    <!-- Crown Sign -->
+    <rect x="305" y="380" width="110" height="60" rx="8" fill="#141103" stroke="#eab308" stroke-width="3" />
+    <text x="360" y="422" font-size="34" text-anchor="middle">👑</text>
+
+    <!-- Building 4 (Lower left front) -->
+    <rect x="0" y="660" width="480" height="420" fill="#03060c" stroke="#1e293b" stroke-width="3" />
+  </g>
+
+  <!-- ================= RIGHT PIXEL SKYLINE ================= -->
+  <g id="rightSkyline">
+    <!-- Building 1 (Far right) -->
+    <rect x="1780" y="220" width="140" height="720" fill="#0d1527" stroke="#1e293b" stroke-width="2" />
+    <g opacity="0.75">
+      ${Array.from({ length: 20 }, (_, i) => `
+        <rect x="1805" y="${260 + i * 28}" width="18" height="14" fill="${i % 2 === 0 ? '#fbbf24' : '#38bdf8'}" />
+        <rect x="1835" y="${260 + i * 28}" width="18" height="14" fill="${(i + 1) % 2 === 0 ? '#f472b6' : '#f8fafc'}" />
+        <rect x="1865" y="${260 + i * 28}" width="18" height="14" fill="${i % 3 === 0 ? '#38bdf8' : '#fbbf24'}" />
+      `).join('')}
+    </g>
+
+    <!-- Building 2 (Mid right tower) -->
+    <rect x="1600" y="140" width="200" height="800" fill="#090f1d" stroke="#1e293b" stroke-width="2" />
+    <line x1="1700" y1="60" x2="1700" y2="140" stroke="#38bdf8" stroke-width="5" />
+    <circle cx="1700" cy="58" r="7" fill="#ef4444" />
+    <!-- Giant Neon LIVE Sign -->
+    <rect x="1635" y="240" width="130" height="54" rx="8" fill="#20061e" stroke="#f43f5e" stroke-width="4" />
+    <text x="1700" y="278" font-family="'Courier New', monospace" font-weight="900" font-size="30" fill="#fb7185" text-anchor="middle" letter-spacing="4">LIVE</text>
+
+    <!-- VIP Neon Billboard -->
+    <rect x="1645" y="390" width="110" height="46" rx="6" fill="#041f29" stroke="#06b6d4" stroke-width="3" />
+    <text x="1700" y="423" font-family="'Courier New', monospace" font-weight="900" font-size="24" fill="#38bdf8" text-anchor="middle" letter-spacing="3">VIP</text>
+
+    <!-- Building 3 (Foreground right) -->
+    <rect x="1440" y="290" width="180" height="650" fill="#050914" stroke="#334155" stroke-width="2" />
+    <rect x="1470" y="350" width="120" height="50" rx="8" fill="#141103" stroke="#eab308" stroke-width="3" />
+    <text x="1530" y="385" font-family="'Courier New', monospace" font-weight="900" font-size="24" fill="#facc15" text-anchor="middle" letter-spacing="2">VIP</text>
+
+    <!-- Building 4 (Lower right front) -->
+    <rect x="1440" y="680" width="480" height="400" fill="#03060c" stroke="#1e293b" stroke-width="3" />
+  </g>
+
+  <!-- ================= TOP CENTER JAMAICAN MEDALLION ================= -->
+  <g id="jamaicanMedallion">
+    <!-- Outer Glow Ring -->
+    <circle cx="960" cy="115" r="124" fill="none" stroke="#22d3ee" stroke-width="8" opacity="0.6" filter="url(#laserGlow)" />
+    <circle cx="960" cy="115" r="114" fill="none" stroke="#facc15" stroke-width="5" />
+    <circle cx="960" cy="115" r="106" fill="#000" />
+
+    <!-- Flag within Circle Clip -->
+    <g clip-path="url(#circleClip)">
+      <!-- Background Black Triangles -->
+      <rect x="850" y="5" width="220" height="220" fill="#0a0a0a" />
+
+      <!-- Top and Bottom Green Triangles -->
+      <polygon points="855,10 1065,10 960,115" fill="#009B3A" />
+      <polygon points="855,220 1065,220 960,115" fill="#009B3A" />
+
+      <!-- Yellow Saltire (Cross) -->
+      <line x1="840" y1="-5" x2="1080" y2="235" stroke="#FED100" stroke-width="38" />
+      <line x1="1080" y1="-5" x2="840" y2="235" stroke="#FED100" stroke-width="38" />
+    </g>
+
+    <!-- Gold Edge Trim -->
+    <circle cx="960" cy="115" r="105" fill="none" stroke="#FED100" stroke-width="6" />
+
+    <!-- Floating Sparkles around Medallion -->
+    <text x="815" y="105" font-size="28">💎</text>
+    <text x="850" y="55" font-size="28">🪙</text>
+    <text x="960" y="0" font-size="32" text-anchor="middle">👑</text>
+    <text x="1070" y="55" font-size="28">🪙</text>
+    <text x="1105" y="105" font-size="28">💎</text>
+  </g>
+
+  <!-- ================= CYBER STAGE PLATFORM ================= -->
+  <g id="cyberStage">
+    <!-- Isometric Stage Base -->
+    <polygon points="960,610 1340,690 960,770 580,690" fill="#0c1726" stroke="#22d3ee" stroke-width="3" />
+    <polygon points="580,690 960,770 960,810 580,730" fill="#060c14" stroke="#0e7490" stroke-width="2" />
+    <polygon points="960,770 1340,690 1340,730 960,810" fill="#08101a" stroke="#0e7490" stroke-width="2" />
+
+    <!-- Neon Grid lines on Stage -->
+    <line x1="675" y1="670" x2="1055" y2="750" stroke="#06b6d4" stroke-width="2" opacity="0.7" />
+    <line x1="770" y1="650" x2="1150" y2="730" stroke="#06b6d4" stroke-width="2" opacity="0.7" />
+    <line x1="865" y1="630" x2="1245" y2="710" stroke="#06b6d4" stroke-width="2" opacity="0.7" />
+    <line x1="1245" y1="670" x2="865" y2="750" stroke="#06b6d4" stroke-width="2" opacity="0.7" />
+    <line x1="1150" y1="650" x2="770" y2="730" stroke="#06b6d4" stroke-width="2" opacity="0.7" />
+    <line x1="1055" y1="630" x2="675" y2="710" stroke="#06b6d4" stroke-width="2" opacity="0.7" />
+  </g>
+
+  <!-- ================= FOREGROUND FLOATING ISLE ================= -->
+  <g id="tropicalIsle" transform="translate(0, 140)">
+    <!-- Water base -->
+    <polygon points="960,700 1180,750 960,800 740,750" fill="#0284c7" stroke="#38bdf8" stroke-width="3" />
+    <polygon points="740,750 960,800 960,835 740,785" fill="#0369a1" stroke="#0284c7" stroke-width="2" />
+    <polygon points="960,800 1180,750 1180,785 960,835" fill="#075985" stroke="#0284c7" stroke-width="2" />
+
+    <!-- Sandy Beach -->
+    <polygon points="960,710 1140,750 960,790 780,750" fill="#fef08a" stroke="#facc15" stroke-width="2" />
+
+    <!-- Lush Green Grass -->
+    <polygon points="960,720 1100,750 960,780 820,750" fill="#15803d" stroke="#22c55e" stroke-width="2" />
+
+    <!-- Two Palm Trees -->
+    <!-- Tree 1 -->
+    <path d="M 940,750 Q 930,700 920,660" stroke="#78350f" stroke-width="7" stroke-linecap="round" fill="none" />
+    <circle cx="920" cy="655" r="5" fill="#451a03" />
+    <!-- Fronds -->
+    <path d="M 920,655 Q 890,640 870,660" stroke="#16a34a" stroke-width="6" stroke-linecap="round" fill="none" />
+    <path d="M 920,655 Q 910,625 900,620" stroke="#16a34a" stroke-width="6" stroke-linecap="round" fill="none" />
+    <path d="M 920,655 Q 940,630 955,640" stroke="#16a34a" stroke-width="6" stroke-linecap="round" fill="none" />
+    <path d="M 920,655 Q 935,665 945,675" stroke="#16a34a" stroke-width="6" stroke-linecap="round" fill="none" />
+
+    <!-- Tree 2 -->
+    <path d="M 975,750 Q 990,705 1005,665" stroke="#78350f" stroke-width="7" stroke-linecap="round" fill="none" />
+    <circle cx="1005" cy="660" r="5" fill="#451a03" />
+    <!-- Fronds -->
+    <path d="M 1005,660 Q 980,635 965,645" stroke="#16a34a" stroke-width="6" stroke-linecap="round" fill="none" />
+    <path d="M 1005,660 Q 1020,630 1040,635" stroke="#16a34a" stroke-width="6" stroke-linecap="round" fill="none" />
+    <path d="M 1005,660 Q 1035,660 1050,670" stroke="#16a34a" stroke-width="6" stroke-linecap="round" fill="none" />
+
+    <!-- Mini Jamaican Flag on Pole -->
+    <line x1="1045" y1="745" x2="1045" y2="690" stroke="#e2e8f0" stroke-width="3" />
+    <rect x="1045" y="690" width="38" height="24" fill="#000" rx="2" />
+    <polygon points="1045,690 1083,690 1064,702" fill="#009B3A" />
+    <polygon points="1045,714 1083,714 1064,702" fill="#009B3A" />
+    <line x1="1045" y1="690" x2="1083" y2="714" stroke="#FED100" stroke-width="4" />
+    <line x1="1083" y1="690" x2="1045" y2="714" stroke="#FED100" stroke-width="4" />
+  </g>
+
+  <!-- ================= FLOATING REACTION EMOJIS (LEFT) ================= -->
+  <g id="leftEmojis">
+    <!-- OMG Badge -->
+    <g transform="translate(470, 290)">
+      <rect width="115" height="52" rx="14" fill="#fb7185" stroke="#ffe4e6" stroke-width="3" />
+      <text x="57" y="36" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="28" fill="#ffffff" text-anchor="middle" letter-spacing="2">OMG!</text>
+    </g>
+
+    <!-- HYPE Badge -->
+    <g transform="translate(475, 365)">
+      <rect width="115" height="50" rx="14" fill="#f59e0b" stroke="#fef3c7" stroke-width="3" />
+      <text x="57" y="35" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="26" fill="#ffffff" text-anchor="middle" letter-spacing="2">HYPE</text>
+    </g>
+
+    <!-- Big Laughing Tears Emoji -->
+    <text x="415" y="445" font-size="75">😂</text>
+
+    <!-- Chat speech bubble -->
+    <g transform="translate(440, 465)">
+      <rect width="52" height="42" rx="10" fill="#f59e0b" />
+      <circle cx="16" cy="21" r="3" fill="#111" />
+      <circle cx="26" cy="21" r="3" fill="#111" />
+      <circle cx="36" cy="21" r="3" fill="#111" />
+      <polygon points="16,42 26,42 16,50" fill="#f59e0b" />
+    </g>
+
+    <!-- Clapping Hands -->
+    <text x="490" y="505" font-size="65">👏</text>
+
+    <!-- Heart Eyes Emoji -->
+    <text x="410" y="590" font-size="70">😍</text>
+
+    <!-- LOL Badge -->
+    <g transform="translate(470, 565)">
+      <rect width="105" height="48" rx="12" fill="#06b6d4" stroke="#cffafe" stroke-width="3" />
+      <text x="52" y="34" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="26" fill="#ffffff" text-anchor="middle" letter-spacing="2">LOL!</text>
+    </g>
+
+    <!-- W! Badge -->
+    <g transform="translate(435, 630)">
+      <rect width="70" height="46" rx="12" fill="#22c55e" stroke="#dcfce7" stroke-width="3" />
+      <text x="35" y="33" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="26" fill="#ffffff" text-anchor="middle" letter-spacing="1">W!</text>
+    </g>
+
+    <!-- Rose, Diamond, Gift -->
+    <text x="380" y="375" font-size="44">🌹</text>
+    <text x="635" y="565" font-size="44">💎</text>
+    <text x="630" y="505" font-size="46">🎁</text>
+    <text x="630" y="615" font-size="40">🪙</text>
+  </g>
+
+  <!-- ================= FLOATING REACTION EMOJIS (RIGHT) ================= -->
+  <g id="rightEmojis">
+    <!-- Crying Face Top -->
+    <text x="1330" y="320" font-size="70">😭</text>
+
+    <!-- Screaming Face -->
+    <text x="1440" y="375" font-size="70">😱</text>
+
+    <!-- Chat bubble -->
+    <g transform="translate(1340, 335)">
+      <rect width="52" height="42" rx="10" fill="#f59e0b" />
+      <circle cx="16" cy="21" r="3" fill="#111" />
+      <circle cx="26" cy="21" r="3" fill="#111" />
+      <circle cx="36" cy="21" r="3" fill="#111" />
+      <polygon points="36,42 26,42 36,50" fill="#f59e0b" />
+    </g>
+
+    <!-- Dancing/Jumping person -->
+    <text x="1445" y="465" font-size="65">🕺</text>
+
+    <!-- Flame / Fire Emoji -->
+    <text x="1340" y="490" font-size="75">🔥</text>
+
+    <!-- Clapping Hands Right -->
+    <text x="1435" y="565" font-size="70">👏</text>
+
+    <!-- Second Crying Emoji -->
+    <text x="1550" y="610" font-size="65">😭</text>
+
+    <!-- LET'S GO! Badge -->
+    <g transform="translate(1310, 580)">
+      <rect width="155" height="50" rx="14" fill="#15803d" stroke="#86efac" stroke-width="3" />
+      <text x="77" y="35" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="23" fill="#ffffff" text-anchor="middle" letter-spacing="1">LET'S GO!</text>
+    </g>
+
+    <!-- Jamaican flag badge -->
+    <g transform="translate(1440, 605)">
+      <rect width="56" height="38" rx="6" fill="#000" stroke="#fde047" stroke-width="2" />
+      <polygon points="0,0 56,0 28,19" fill="#009B3A" />
+      <polygon points="0,38 56,38 28,19" fill="#009B3A" />
+      <line x1="0" y1="0" x2="56" y2="38" stroke="#FED100" stroke-width="5" />
+      <line x1="56" y1="0" x2="0" y2="38" stroke="#FED100" stroke-width="5" />
+    </g>
+
+    <!-- Microphone & Gold Coins -->
+    <text x="1275" y="375" font-size="44">🎤</text>
+    <text x="1260" y="475" font-size="44">🔥</text>
+    <text x="895" y="675" font-size="34">🎤</text>
+    <text x="965" y="675" font-size="34">🪙</text>
+  </g>
+
+  <!-- ================= CENTER TITLE: DIONLYONEE PON DI APP ================= -->
+  <g id="centerTitle" filter="url(#goldGlow)">
+    <!-- 3D Extrusion Behind Text (Deep Shadows) -->
+    ${Array.from({ length: 14 }, (_, i) => `
+      <text x="960" y="${460 + i}" font-family="'Arial Black', 'Impact', sans-serif" font-size="118" font-weight="900" fill="#2d1700" text-anchor="middle" letter-spacing="3">Dionlyonee</text>
+      <text x="960" y="${580 + i}" font-family="'Arial Black', 'Impact', sans-serif" font-size="130" font-weight="900" fill="#2d1700" text-anchor="middle" letter-spacing="4">Pon Di App</text>
+    `).join('')}
+
+    <!-- Midtone Gold Extrusion -->
+    ${Array.from({ length: 6 }, (_, i) => `
+      <text x="960" y="${454 + i}" font-family="'Arial Black', 'Impact', sans-serif" font-size="118" font-weight="900" fill="#784000" text-anchor="middle" letter-spacing="3">Dionlyonee</text>
+      <text x="960" y="${574 + i}" font-family="'Arial Black', 'Impact', sans-serif" font-size="130" font-weight="900" fill="#784000" text-anchor="middle" letter-spacing="4">Pon Di App</text>
+    `).join('')}
+
+    <!-- Thick Dark Outline -->
+    <text x="960" y="450" font-family="'Arial Black', 'Impact', sans-serif" font-size="118" font-weight="900" fill="none" stroke="#170c00" stroke-width="22" stroke-linejoin="round" text-anchor="middle" letter-spacing="3">Dionlyonee</text>
+    <text x="960" y="570" font-family="'Arial Black', 'Impact', sans-serif" font-size="130" font-weight="900" fill="none" stroke="#170c00" stroke-width="24" stroke-linejoin="round" text-anchor="middle" letter-spacing="4">Pon Di App</text>
+
+    <!-- Warm Gold Outline -->
+    <text x="960" y="450" font-family="'Arial Black', 'Impact', sans-serif" font-size="118" font-weight="900" fill="none" stroke="url(#goldStrokeGrad)" stroke-width="8" stroke-linejoin="round" text-anchor="middle" letter-spacing="3">Dionlyonee</text>
+    <text x="960" y="570" font-family="'Arial Black', 'Impact', sans-serif" font-size="130" font-weight="900" fill="none" stroke="url(#goldStrokeGrad)" stroke-width="9" stroke-linejoin="round" text-anchor="middle" letter-spacing="4">Pon Di App</text>
+
+    <!-- Metallic Gold Face Gradient Fill -->
+    <text x="960" y="450" font-family="'Arial Black', 'Impact', sans-serif" font-size="118" font-weight="900" fill="url(#goldTextGrad)" text-anchor="middle" letter-spacing="3">Dionlyonee</text>
+    <text x="960" y="570" font-family="'Arial Black', 'Impact', sans-serif" font-size="130" font-weight="900" fill="url(#goldTextGrad)" text-anchor="middle" letter-spacing="4">Pon Di App</text>
+  </g>
+
+  <!-- ================= BOTTOM ARCADE BUTTONS ================= -->
+  <g id="bottomButtons" transform="translate(0, 10)">
+    <!-- Button 1: SUPPORT THE LIVE -->
+    <g transform="translate(420, 830)">
+      <rect width="350" height="74" rx="37" fill="url(#btnGrad)" stroke="#FED100" stroke-width="5" />
+      <rect x="5" y="5" width="340" height="64" rx="32" fill="none" stroke="#684200" stroke-width="2" />
+      <text x="175" y="47" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="28" fill="#FFFBEA" text-anchor="middle" letter-spacing="2">SUPPORT THE LIVE</text>
+    </g>
+
+    <!-- Button 2: JOIN THE CLUB -->
+    <g transform="translate(795, 830)">
+      <rect width="330" height="74" rx="37" fill="url(#btnGrad)" stroke="#FED100" stroke-width="5" />
+      <rect x="5" y="5" width="320" height="64" rx="32" fill="none" stroke="#684200" stroke-width="2" />
+      <text x="165" y="47" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="28" fill="#FFFBEA" text-anchor="middle" letter-spacing="2">JOIN THE CLUB</text>
+    </g>
+
+    <!-- Button 3: TAP THE LIVE -->
+    <g transform="translate(1150, 830)">
+      <rect width="350" height="74" rx="37" fill="url(#btnGrad)" stroke="#FED100" stroke-width="5" />
+      <rect x="5" y="5" width="340" height="64" rx="32" fill="none" stroke="#684200" stroke-width="2" />
+      <text x="145" y="47" font-size="26">👏</text>
+      <text x="200" y="47" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="28" fill="#FFFBEA" text-anchor="middle" letter-spacing="2">TAP THE LIVE</text>
+    </g>
+  </g>
+</svg>
+`;
+
+async function main() {
+  console.log('Generating high-res vector waiting screen...');
+  const svgPath = path.join(process.cwd(), 'dionlyonee-pon-di-app.svg');
+  fs.writeFileSync(svgPath, svgContent);
+  console.log('Saved SVG to', svgPath);
+
+  const pngBuffer = await sharp(Buffer.from(svgContent))
+    .png({ quality: 95, compressionLevel: 8 })
+    .toBuffer();
+
+  const targetDirs = [
+    process.cwd(),
+    path.join(process.cwd(), 'jeopardy'),
+    path.join(process.cwd(), 'wheel'),
+    path.join(process.cwd(), 'wheel', 'waiting'),
+    path.join(process.cwd(), 'jeopardy', 'waiting'),
+    path.join(process.cwd(), 'trivia', 'waiting'),
+    path.join(process.cwd(), 'word-reveal', 'waiting'),
+    path.join(process.cwd(), 'assets', 'images'),
+    path.join(process.cwd(), 'dist'),
+    path.join(process.cwd(), 'dist', 'jeopardy'),
+  ];
+
+  for (const dir of targetDirs) {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    const pngDest = path.join(dir, 'dionlyonee-pon-di-app.png');
+    const svgDest = path.join(dir, 'dionlyonee-pon-di-app.svg');
+    fs.writeFileSync(pngDest, pngBuffer);
+    fs.writeFileSync(svgDest, svgContent);
+    console.log('Written to:', pngDest);
+  }
+
+  console.log('All waiting screen assets generated successfully!');
+}
+
+main().catch((err) => {
+  console.error('Error generating assets:', err);
+  process.exit(1);
+});

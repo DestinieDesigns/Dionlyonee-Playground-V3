@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Reveal Mystery Host | Dionlyonee Stream</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="../css/word-reveal.css" />
+  <link rel="stylesheet" href="../css/word-animations.css" />
+  <link rel="stylesheet" href="word-host.css" />
+</head>
+<body>
+  <header class="main-header">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon" style="background: linear-gradient(135deg, #10b981, #047857); color: #fff;">🔤</div>
+      <div>
+        <div class="brand-title">WORD REVEAL MYSTERY</div>
+        <div class="brand-tag">HOST & STREAM BROADCAST CONSOLE</div>
+      </div>
+    </a>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <a href="../live/index.html" target="_blank" class="action-btn btn-sky" style="padding: 6px 14px; font-size: 11px;">
+        📺 OPEN LIVE STAGE ↗
+      </a>
+      <div id="header-hud"></div>
+    </div>
+  </header>
+
+  <main class="hub-container" style="max-width: 1280px; padding: 20px 16px;">
+    <!-- CATEGORY FILTER & TOP CONTROLS -->
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 20px; background: rgba(10,25,29,0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 12px 18px;">
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <label for="category-select" style="font-size: 12px; font-weight: 800; color: #fbbf24; letter-spacing: 1px;">
+          CATEGORY:
+        </label>
+        <select id="category-select" style="background: #051316; border: 1px solid rgba(212,175,55,0.4); border-radius: 8px; color: #fff; font-weight: 700; font-size: 13px; padding: 8px 12px; cursor: pointer;">
+          <!-- Dynamically populated -->
+        </select>
+        <button id="btn-random-puzzle" class="action-btn btn-dark" style="padding: 8px 14px; font-size: 12px;">
+          🎲 SHUFFLE ALL
+        </button>
+      </div>
+
+      <!-- STREAM AUTOPILOT TOGGLE -->
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div id="autopilot-badge" class="autopilot-indicator">
+          <span>⚡</span> AUTOPILOT: <strong id="autopilot-status">OFF</strong>
+        </div>
+        <select id="autopilot-pace-select" style="background: #051316; border: 1px solid rgba(16,185,129,0.4); border-radius: 8px; color: #34d399; font-weight: 700; font-size: 12px; padding: 6px 10px;">
+          <option value="3">Every 3 sec (Fast)</option>
+          <option value="5" selected>Every 5 sec (Balanced)</option>
+          <option value="8">Every 8 sec (Stream Banter)</option>
+          <option value="12">Every 12 sec (Chill)</option>
+        </select>
+        <button id="btn-toggle-autopilot" class="action-btn btn-emerald" style="padding: 8px 14px; font-size: 12px;">
+          ▶ START AUTOPILOT
+        </button>
+      </div>
+    </div>
+
+    <div class="host-control-grid">
+      <!-- MAIN BROADCAST COLUMN -->
+      <div>
+        <!-- CURRENT MYSTERY CARD -->
+        <div class="mystery-header-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="mystery-category-badge" style="display: inline-block; padding: 4px 12px; border-radius: 9999px; background: rgba(251,191,36,0.15); border: 1px solid #fbbf24; color: #fbbf24; font-size: 11px; font-weight: 900; letter-spacing: 1px;">
+                CATEGORY
+              </span>
+              <span id="mystery-difficulty-badge" style="display: inline-block; padding: 4px 10px; border-radius: 9999px; background: rgba(56,189,248,0.15); border: 1px solid #38bdf8; color: #38bdf8; font-size: 10.5px; font-weight: 800;">
+                MEDIUM
+              </span>
+            </div>
+
+            <div style="display: flex; gap: 14px; font-size: 12px; color: #94a3b8; font-weight: 700;">
+              <span>WORDS: <strong id="stat-words" style="color: #fff;">0</strong></span>
+              <span>LETTERS: <strong id="stat-letters" style="color: #fff;">0</strong></span>
+              <span>HIDDEN: <strong id="stat-hidden" style="color: #fbbf24;">0</strong></span>
+              <span>VALUE: <strong id="stat-points" style="color: #34d399;">+600 PTS</strong></span>
+            </div>
+          </div>
+
+          <!-- SOLUTION REVEAL BOX -->
+          <div class="mystery-solution-box">
+            <div>
+              <div style="font-size: 10.5px; font-weight: 800; color: #94a3b8; letter-spacing: 1.5px; text-transform: uppercase;">
+                CURRENT MYSTERY ANSWER (CLICK TILES BELOW TO REVEAL)
+              </div>
+              <div id="mystery-answer-text" class="mystery-solution-text">
+                LOADING...
+              </div>
+            </div>
+            <button id="btn-toggle-blur" class="action-btn btn-dark" style="padding: 6px 12px; font-size: 11px;">
+              👁️ HIDE/SHOW
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D TILES BOARD PREVIEW -->
+        <div style="background: rgba(4,14,16,0.85); border: 1.5px solid rgba(212,175,55,0.3); border-radius: 18px; padding: 20px 14px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; margin-bottom: 10px;">
+            <span style="font-size: 12px; font-weight: 800; color: #34d399; letter-spacing: 1px;">
+              🔤 INTERACTIVE LETTER BOARD (CLICK INDIVIDUAL TILE TO UNMASK)
+            </span>
+            <span id="reveal-percentage" style="font-size: 12px; font-weight: 900; color: #fbbf24;">
+              0% UNCOVERED
+            </span>
+          </div>
+
+          <div class="word-tiles-wrap" id="host-tiles-grid"></div>
+
+          <!-- AUTOPILOT NEXT TICK PROGRESS -->
+          <div id="autopilot-progress-container" style="display: none; margin-top: 14px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #34d399; margin-bottom: 4px;">
+              <span>NEXT AUTO-LETTER IN: <strong id="auto-seconds-count">5s</strong></span>
+              <span>STREAM AUTOPILOT ACTIVE</span>
+            </div>
+            <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 9999px; overflow: hidden;">
+              <div id="auto-progress-bar" style="height: 100%; width: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: width 1s linear;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REVEAL CONTROLS DECK -->
+        <div class="deck-buttons-grid">
+          <button id="btn-reveal-one" class="action-btn btn-gold">
+            🔤 REVEAL 1 RANDOM
+          </button>
+          <button id="btn-reveal-vowels" class="action-btn btn-sky">
+            🅰️ REVEAL VOWELS
+          </button>
+          <button id="btn-reveal-first-last" class="action-btn btn-amber">
+            💡 1ST & LAST LETTERS
+          </button>
+          <button id="btn-reveal-all" class="action-btn btn-emerald">
+            ✨ REVEAL ALL (SOLVE)
+          </button>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px;">
+          <button id="btn-unlock-hint" class="action-btn btn-dark" style="flex: 1;">
+            💡 UNLOCK NEXT CLUE (TIER 1/2/3)
+          </button>
+          <button id="btn-next-phrase" class="action-btn btn-gold" style="flex: 1;">
+            ⏩ NEXT MYSTERY →
+          </button>
+        </div>
+
+        <!-- PROGRESSIVE CLUES CONTAINER -->
+        <div id="host-hints-container"></div>
+
+        <!-- GUESS TESTER BOX (FOR HOST OR SOLO PRACTICE) -->
+        <div style="background: rgba(10,24,28,0.7); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 18px; margin-top: 20px;">
+          <div style="font-family: 'Cinzel', serif; font-size: 14px; font-weight: 800; color: #34d399; margin-bottom: 10px; letter-spacing: 1px;">
+            🎯 TEST / DIRECT SOLVE GUESS
+          </div>
+          <form id="form-host-guess" style="display: flex; gap: 10px;">
+            <input 
+              type="text" 
+              id="host-guess-input" 
+              placeholder="Type player or host guess here..." 
+              style="flex: 1; background: rgba(0,0,0,0.6); border: 1.5px solid rgba(52,211,153,0.4); border-radius: 10px; color: #fff; font-size: 14px; font-weight: 700; padding: 12px 16px;" 
+            />
+            <button type="submit" class="action-btn btn-emerald" style="padding: 0 22px;">
+              SOLVE ✓
+            </button>
+          </form>
+          <div id="host-guess-feedback" style="display: none; margin-top: 10px; font-size: 13px; font-weight: 800; padding: 8px 14px; border-radius: 8px;"></div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR: STREAM CHAT, CONTESTANTS & LEADERBOARD -->
+      <div>
+        <!-- STREAM CHAT GUESS & WINNER AWARD -->
+        <div class="sidebar-panel">
+          <div class="sidebar-title">
+            <span>💬 STREAM CHAT GUESSES</span>
+            <span style="font-size: 10px; color: #34d399;">REAL-TIME</span>
+          </div>
+
+          <!-- Quick Award Winner Input -->
+          <div style="margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">
+              🏆 QUICK-AWARD CHATTER WINNER:
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <input 
+                type="text" 
+                id="quick-chatter-input" 
+                placeholder="@username" 
+                style="flex: 1; background: rgba(0,0,0,0.6); border: 1px solid rgba(251,191,36,0.4); border-radius: 8px; color: #fbbf24; font-size: 12px; font-weight: 700; padding: 8px 12px;"
+              />
+              <button id="btn-quick-award-chatter" class="action-btn btn-gold" style="padding: 0 14px; font-size: 11px;">
+                AWARD
+              </button>
+            </div>
+          </div>
+
+          <!-- Chat Sim Toggle -->
+          <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px;">
+            <span style="font-size: 11.5px; font-weight: 700; color: #e2e8f0;">🤖 Stream Chat Bot Simulation:</span>
+            <input type="checkbox" id="toggle-chat-sim" style="cursor: pointer; transform: scale(1.2);" />
+          </div>
+
+          <!-- Chat Guess Feed -->
+          <div class="chat-log-box" id="host-chat-feed">
+            <div style="text-align: center; color: #64748b; padding: 20px 0;">
+              Chat guesses will appear here in real time...
+            </div>
+          </div>
+        </div>
+
+        <!-- TOP CHATTERS LEADERBOARD -->
+        <div class="sidebar-panel">
+          <div class="sidebar-title">
+            <span>🏆 TOP STREAM CHATTERS</span>
+            <button id="btn-reset-leaderboard" style="background: none; border: none; color: #ef4444; font-size: 10px; font-weight: 800; cursor: pointer;">
+              RESET
+            </button>
+          </div>
+          <div id="host-leaderboard-list">
+            <div style="text-align: center; color: #64748b; padding: 14px 0; font-size: 12px;">
+              No chat winner logged yet this stream.
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTESTANT SCORE ROSTER -->
+        <div class="sidebar-panel">
+          <div class="sidebar-title">
+            <span>👤 CONTESTANTS & TURNS</span>
+            <button id="btn-next-turn" class="action-btn btn-dark" style="padding: 4px 10px; font-size: 10px;">
+              NEXT TURN ↻
+            </button>
+          </div>
+          <div id="host-contestants-list"></div>
+
+          <div style="display: flex; gap: 8px; margin-top: 12px;">
+            <button id="btn-award-contestant" class="action-btn btn-emerald" style="flex: 1; padding: 8px; font-size: 11px;">
+              +500 PTS
+            </button>
+            <button id="btn-penalize-contestant" class="action-btn btn-danger" style="flex: 1; padding: 8px; font-size: 11px;">
+              -100 PTS
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="confetti-holder" class="confetti-container"></div>
+
+  <script src="../../shared/sound-manager.js"></script>
+  <script src="../../shared/room-manager.js"></script>
+  <script src="../../shared/firebase-room.js"></script>
+  <script src="../../shared/host-auth.js"></script>
+  <script src="../../shared/room-ui.js"></script>
+  <script src="../../shared/contestant-manager.js"></script>
+  <script src="../data/categories.js"></script>
+  <script src="../data/words.js"></script>
+  <script src="../data/phrases.js"></script>
+  <script src="../data/hints.js"></script>
+  <script src="../js/word-engine.js"></script>
+  <script src="../js/reveal-engine.js"></script>
+  <script src="../js/hint-engine.js"></script>
+  <script src="../js/word-timer.js"></script>
+  <script src="../js/word-scoring.js"></script>
+  <script src="word-host.js"></script>
+</body>
+</html>

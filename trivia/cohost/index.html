@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trivia Co-Host Buzzer | Dionlyonee Stream</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="trivia-cohost.css" />
+</head>
+<body style="padding: 16px; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between;">
+  <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
+    <div style="font-family: 'Cinzel', serif; font-weight: 900; color: #fff; font-size: 16px;">
+      ⚡ TRIVIA BUZZER
+    </div>
+    <div style="font-size: 12px; color: #94a3b8;">
+      ROOM: <b id="cohost-room" style="color: #f7e07d;">DION1</b>
+    </div>
+  </header>
+
+  <div style="margin: 20px 0; text-align: center;">
+    <div id="cohost-q-preview" style="color: #94a3b8; font-size: 14px; margin-bottom: 24px; min-height: 48px;">
+      Awaiting question from host...
+    </div>
+
+    <!-- HUGE MOBILE BUZZER BUTTON -->
+    <button id="btn-buzz" style="
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, #f43f5e, #be123c);
+      border: 6px solid rgba(255,255,255,0.3);
+      box-shadow: 0 0 45px rgba(244, 63, 94, 0.6);
+      color: #fff; font-family: 'Cinzel', serif; font-size: 32px; font-weight: 900;
+      cursor: pointer; active: scale(0.95); transition: transform 0.1s;
+    ">
+      BUZZ IN!
+    </button>
+  </div>
+
+  <div style="text-align: center; font-size: 12px; color: #64748b;">
+    Dionlyonee Multi-Device Stream Controller
+  </div>
+
+  <script src="../../shared/sound-manager.js"></script>
+  <script src="../../shared/room-manager.js"></script>
+  <script src="../../shared/firebase-room.js"></script>
+  <script src="trivia-cohost.js"></script>
+</body>
+</html>

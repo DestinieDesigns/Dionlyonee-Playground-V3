@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeopardy Host Console | Dionlyonee Stream</title>
+  <meta name="description" content="Host control console for Dionlyonee Jeopardy stream game show." />
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="jeopardy-host.css" />
+</head>
+
+<body>
+
+  <!-- TOP APP BAR -->
+  <header class="host-header">
+    <div class="brand-wrapper">
+      <div class="brand-logo">🏆</div>
+      <div>
+        <div class="brand-title">DIONLYONEE JEOPARDY</div>
+        <div class="brand-badge">HOST CONTROL DESK</div>
+      </div>
+    </div>
+
+    <!-- QUICK NAVIGATION -->
+    <nav class="nav-links">
+      <a href="index.html" class="nav-btn">🏠 Hub</a>
+      <a href="jeopardy-live.html" target="_blank" rel="noopener noreferrer" class="nav-btn">📺 Live Stage ↗</a>
+      <a href="jeopardy-cohost.html" target="_blank" rel="noopener noreferrer" class="nav-btn">🎤 Co-Host ↗</a>
+      <a href="wheel-host.html" target="_blank" rel="noopener noreferrer" class="nav-btn">🎡 Wheel Host ↗</a>
+      <a href="dual-view.html?game=jeopardy" target="_blank" rel="noopener noreferrer" class="nav-btn" style="color: var(--gold-bright); border-color: var(--border-gold);">🎛️ Split Screen ↗</a>
+    </nav>
+  </header>
+
+  <!-- MAIN DUAL-PANEL HOST LAYOUT -->
+  <main class="host-container">
+
+    <!-- LEFT COLUMN: LIVE BOARD PREVIEW & LETTER CALLERS -->
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+
+      <!-- ACTIVE PUZZLE 4-ROW PREVIEW BOARD -->
+      <section class="panel highlight">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>📺</span> JEOPARDY PUZZLE BOARD PREVIEW
+          </div>
+          <div id="host-status-badge" class="badge-status">WAITING</div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+          <div>
+            <span style="color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">CATEGORY:</span>
+            <strong id="host-category-display" style="color: #fef08a; margin-left: 6px; font-family: 'Cinzel', serif;">JAMAICAN / PATWA PHRASES</strong>
+          </div>
+          <div id="host-value-display" style="color: var(--gold-bright); font-weight: 900; font-family: 'Space Grotesk', sans-serif;">$400</div>
+        </div>
+
+        <!-- 4-ROW MATRIX CONTAINER -->
+        <div id="jeopardy-board-host-preview" class="jeopardy-board-wrapper">
+          <!-- Rendered dynamically by WheelEngine -->
+        </div>
+
+        <!-- HINT & FULL ANSWER BAR -->
+        <div id="host-hint-box" class="hint-preview-box">
+          💡 <span id="host-hint-text">Secret clue loaded for host.</span>
+        </div>
+      </section>
+
+      <!-- POINT VALUE / WAGER SELECTOR -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>💰</span> CLUE POINT VALUE / WAGER
+          </div>
+          <span style="font-size: 11px; color: var(--text-muted);">Current Active Value</span>
+        </div>
+
+        <div class="values-grid">
+          <button class="btn-value" data-value="200">$200</button>
+          <button class="btn-value active" data-value="400">$400</button>
+          <button class="btn-value" data-value="600">$600</button>
+          <button class="btn-value" data-value="800">$800</button>
+          <button class="btn-value" data-value="1000">$1,000</button>
+          <button class="btn-value daily-double" data-value="DAILY DOUBLE">⭐ DAILY DOUBLE</button>
+        </div>
+      </section>
+
+      <!-- CONTESTANT SCOREBOARD CONTROLS -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>👥</span> CONTESTANT SCORE TRACKER
+          </div>
+          <span style="font-size: 11px; color: var(--text-muted);">Syncs directly to Stage Podium</span>
+        </div>
+
+        <div class="contestants-grid">
+          <!-- PLAYER 1 -->
+          <div class="contestant-card">
+            <input type="text" id="p1-name" class="contestant-name-input" value="Player 1" />
+            <div id="p1-score" class="contestant-score-val">$0</div>
+            <div class="score-btn-group">
+              <button class="btn-score plus" data-player="1" data-action="add">+ Value</button>
+              <button class="btn-score minus" data-player="1" data-action="sub">- Value</button>
+            </div>
+          </div>
+
+          <!-- PLAYER 2 -->
+          <div class="contestant-card">
+            <input type="text" id="p2-name" class="contestant-name-input" value="Player 2" />
+            <div id="p2-score" class="contestant-score-val">$0</div>
+            <div class="score-btn-group">
+              <button class="btn-score plus" data-player="2" data-action="add">+ Value</button>
+              <button class="btn-score minus" data-player="2" data-action="sub">- Value</button>
+            </div>
+          </div>
+
+          <!-- PLAYER 3 -->
+          <div class="contestant-card">
+            <input type="text" id="p3-name" class="contestant-name-input" value="Player 3" />
+            <div id="p3-score" class="contestant-score-val">$0</div>
+            <div class="score-btn-group">
+              <button class="btn-score plus" data-player="3" data-action="add">+ Value</button>
+              <button class="btn-score minus" data-player="3" data-action="sub">- Value</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- A-Z LETTER CALLING KEYBOARD -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🔤</span> LETTER CALLER KEYBOARD
+          </div>
+          <span style="font-size: 11px; color: var(--text-muted);">Click or press keys on keyboard</span>
+        </div>
+
+        <div id="letter-keyboard" class="letter-keyboard-grid">
+          <!-- Rendered dynamically A-Z -->
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
+          <button id="btn-call-random" class="btn btn-secondary" style="flex: 1;">
+            🎲 Reveal 1 Random
+          </button>
+          <button id="btn-call-vowels" class="btn btn-secondary" style="flex: 1;">
+            🅰️ Reveal All Vowels
+          </button>
+          <button id="btn-call-consonants" class="btn btn-secondary" style="flex: 1;">
+            🅱️ Reveal All Consonants
+          </button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT COLUMN: GAME SETUP, TIMER, & SOUNDBOARD -->
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+
+      <!-- ROUND TIMER & PROGRESS -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>⏱️</span> JEOPARDY COUNTDOWN TIMER
+          </div>
+          <div id="timer-number" class="timer-display">30s</div>
+        </div>
+
+        <div class="progress-bar-bg">
+          <div id="timer-progress-fill" class="progress-bar-fill" style="width: 100%;"></div>
+        </div>
+
+        <div class="button-group" style="margin-top: 14px;">
+          <button id="btn-timer-start" class="btn btn-primary">
+            ▶ START
+          </button>
+          <button id="btn-timer-pause" class="btn btn-secondary">
+            ⏸ PAUSE
+          </button>
+          <button id="btn-timer-reset" class="btn btn-secondary">
+            ↺ RESET
+          </button>
+        </div>
+      </section>
+
+      <!-- PUZZLE SELECTION & DECK -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>📂</span> JEOPARDY CATEGORY & CLUES
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-category">Choose Category</label>
+          <select id="select-category" class="form-select">
+            <!-- Populated from data -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-puzzle">Choose Preset Puzzle / Clue</label>
+          <select id="select-puzzle" class="form-select">
+            <!-- Populated from category -->
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+          <button id="btn-load-puzzle" class="btn btn-primary" style="flex: 1;">
+            📥 Load Puzzle
+          </button>
+          <button id="btn-random-puzzle" class="btn btn-secondary" style="flex: 1;">
+            🎲 Pick Random
+          </button>
+        </div>
+
+        <div class="divider">OR ENTER CUSTOM</div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-custom-answer">Custom Answer / Phrase</label>
+          <input id="input-custom-answer" type="text" class="form-input" placeholder="e.g. WAH GWAAN" maxlength="40" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-custom-hint">Custom Clue / Question</label>
+          <input id="input-custom-hint" type="text" class="form-input" placeholder="e.g. What is a popular Jamaican greeting?" />
+        </div>
+
+        <button id="btn-apply-custom" class="btn btn-secondary" style="width: 100%;">
+          ✨ Apply Custom Clue
+        </button>
+      </section>
+
+      <!-- MASTER GAME ACTIONS -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🎮</span> MASTER STAGE CONTROLS
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button id="btn-toggle-hint" class="btn btn-secondary" style="width: 100%;">
+            💡 Show / Hide Clue on Stage
+          </button>
+          <button id="btn-reveal-all" class="btn btn-solve" style="width: 100%;">
+            🏆 SOLVE & REVEAL FULL ANSWER
+          </button>
+          <button id="btn-next-round" class="btn btn-primary" style="width: 100%;">
+            ⏩ Next Round (+1)
+          </button>
+          <button id="btn-reset-board" class="btn btn-danger" style="width: 100%;">
+            ⚠️ Reset Board to Hidden
+          </button>
+        </div>
+      </section>
+
+      <!-- SOUNDBOARD -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🔊</span> JEOPARDY SOUNDBOARD FX
+          </div>
+        </div>
+
+        <div class="soundboard-grid">
+          <button class="btn-sfx" data-sound="correct">🔔 Ding</button>
+          <button class="btn-sfx" data-sound="buzzer">❌ Buzzer</button>
+          <button class="btn-sfx" data-sound="cheer">🎉 Cheer</button>
+          <button class="btn-sfx" data-sound="reveal">✨ Reveal</button>
+          <button class="btn-sfx" data-sound="tick">⏳ Think Tick</button>
+          <button class="btn-sfx" data-sound="timeup">🚨 Time's Up</button>
+          <button class="btn-sfx" data-sound="countdown">🔥 Daily Double</button>
+          <button class="btn-sfx" data-sound="click">🔘 Click</button>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- PURE VANILLA JAVASCRIPT -->
+  <script src="sounds.js"></script>
+  <script src="wheel-engine.js"></script>
+  <script src="jeopardy-data.js"></script>
+  <script src="sync-client.js"></script>
+  <script src="jeopardy-host.js"></script>
+
+</body>
+</html>

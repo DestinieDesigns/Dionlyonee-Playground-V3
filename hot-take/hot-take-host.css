@@ -1,0 +1,804 @@
+/* ==========================================
+   DIONLYONEE
+   HOT TAKE — HOST CONTROL
+   BLACK + GOLD GAME SHOW THEME
+========================================== */
+
+
+/* ==========================================
+   RESET
+========================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #242424 0%,
+            #0c0c0c 45%,
+            #030303 100%
+        );
+
+    color: #ffffff;
+}
+
+
+/* ==========================================
+   HOST BOARD
+========================================== */
+
+.host-board {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.host-header {
+    min-height: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 28px;
+
+    border-bottom:
+        1px solid
+        rgba(212, 175, 55, .3);
+
+    background:
+        rgba(0, 0, 0, .55);
+}
+
+
+/* ==========================================
+   BRAND
+========================================== */
+
+.host-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.host-logo {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        2px solid
+        #d4af37;
+
+    border-radius: 10px;
+
+    color: #d4af37;
+
+    font-size: 25px;
+    font-weight: 900;
+
+    box-shadow:
+        0 0 22px
+        rgba(212, 175, 55, .12);
+}
+
+.host-brand h1 {
+    margin: 0;
+
+    color: #d4af37;
+
+    font-size: 18px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+}
+
+.host-brand span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #666;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.host-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: #777;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+.host-status span:first-child {
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #444;
+}
+
+#statusDot.active {
+    background: #d4af37;
+
+    box-shadow:
+        0 0 14px
+        rgba(212, 175, 55, .9);
+}
+
+#statusText {
+    color: #d4af37;
+}
+
+
+/* ==========================================
+   MAIN
+========================================== */
+
+.host-main {
+    width: 100%;
+    max-width: 1500px;
+
+    margin: 0 auto;
+
+    padding: 24px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1.2fr
+        .9fr;
+
+    gap: 20px;
+
+    flex: 1;
+}
+
+
+/* ==========================================
+   PANELS
+========================================== */
+
+.host-panel {
+    padding: 20px;
+
+    border:
+        1px solid
+        rgba(212, 175, 55, .2);
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 30, 30, .97),
+            rgba(7, 7, 7, .97)
+        );
+
+    box-shadow:
+        0 12px 35px
+        rgba(0, 0, 0, .35);
+}
+
+
+/* ==========================================
+   PANEL HEADING
+========================================== */
+
+.panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.panel-heading span {
+    color: #d4af37;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+.panel-heading small {
+    color: #555;
+
+    font-size: 7px;
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* ==========================================
+   SELECT
+========================================== */
+
+.host-select {
+    width: 100%;
+
+    padding: 13px 12px;
+
+    border:
+        1px solid
+        #3d3d3d;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #0d0d0d;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.host-select:focus {
+    border-color: #d4af37;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(212, 175, 55, .08);
+}
+
+
+/* ==========================================
+   TEXTAREA
+========================================== */
+
+.host-textarea {
+    width: 100%;
+
+    min-height: 115px;
+
+    resize: vertical;
+
+    padding: 14px;
+
+    border:
+        1px solid
+        #3d3d3d;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #0b0b0b;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+.host-textarea::placeholder {
+    color: #555;
+}
+
+.host-textarea:focus {
+    border-color: #d4af37;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(212, 175, 55, .08);
+}
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.host-button {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 13px;
+
+    border:
+        1px solid
+        #444;
+
+    border-radius: 7px;
+
+    background: #111;
+
+    color: #aaa;
+
+    font-family: inherit;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        border-color .15s ease,
+        background .15s ease,
+        color .15s ease;
+}
+
+.host-button:hover {
+    transform: translateY(-1px);
+
+    border-color: #d4af37;
+
+    color: #d4af37;
+}
+
+.host-button:active {
+    transform: translateY(0);
+}
+
+
+/* ==========================================
+   SECONDARY BUTTON
+========================================== */
+
+.host-button.secondary {
+    border-color:
+        rgba(212, 175, 55, .3);
+
+    color: #d4af37;
+}
+
+.host-button.secondary:hover {
+    background:
+        rgba(212, 175, 55, .08);
+}
+
+
+/* ==========================================
+   SHOW BUTTON
+========================================== */
+
+.show-button {
+    min-height: 65px;
+
+    margin-top: 20px;
+
+    border:
+        1px solid
+        #d4af37;
+
+    background:
+        linear-gradient(
+            145deg,
+            #d8b83f,
+            #967018
+        );
+
+    color: #000;
+
+    font-size: 11px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(212, 175, 55, .12);
+}
+
+.show-button:hover {
+    background:
+        linear-gradient(
+            145deg,
+            #ebcc56,
+            #b48620
+        );
+
+    color: #000;
+}
+
+.show-button:disabled {
+    opacity: .25;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* ==========================================
+   CURRENT PROMPT
+========================================== */
+
+.current-prompt {
+    min-height: 190px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    text-align: center;
+
+    border:
+        1px solid
+        rgba(212, 175, 55, .28);
+
+    border-radius: 10px;
+
+    background:
+        radial-gradient(
+            circle,
+            #252525 0%,
+            #0b0b0b 80%
+        );
+
+    color: #ffffff;
+
+    font-size: clamp(
+        20px,
+        2.1vw,
+        30px
+    );
+
+    font-weight: 900;
+
+    line-height: 1.3;
+}
+
+
+/* ==========================================
+   COMMENTARY
+========================================== */
+
+.commentary-heading {
+    margin-top: 20px;
+}
+
+.commentary-box {
+    min-height: 90px;
+}
+
+
+/* ==========================================
+   ACTION ROW
+========================================== */
+
+.action-row {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+.action-row .host-button {
+    margin-top: 0;
+}
+
+
+/* ==========================================
+   CLEAR
+========================================== */
+
+.clear-button {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 11px;
+
+    border:
+        1px solid
+        rgba(120, 65, 55, .6);
+
+    border-radius: 7px;
+
+    background:
+        rgba(80, 40, 35, .12);
+
+    color: #a8786c;
+
+    font-family: inherit;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+}
+
+.clear-button:hover {
+    border-color: #c78678;
+
+    background:
+        rgba(100, 45, 40, .2);
+
+    color: #d39a8d;
+}
+
+
+/* ==========================================
+   DIVIDER
+========================================== */
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin: 20px 0;
+
+    color: #444;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background:
+        rgba(255, 255, 255, .08);
+}
+
+
+/* ==========================================
+   INSTRUCTIONS
+========================================== */
+
+.instruction {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, .05);
+}
+
+.instruction:last-of-type {
+    border-bottom: none;
+}
+
+.instruction-number {
+    min-width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid
+        rgba(212, 175, 55, .4);
+
+    border-radius: 6px;
+
+    color: #d4af37;
+
+    font-size: 8px;
+    font-weight: 900;
+}
+
+.instruction strong {
+    display: block;
+
+    color: #ddd;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+.instruction p {
+    margin: 4px 0 0;
+
+    color: #666;
+
+    font-size: 8px;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   HOST TIP
+========================================== */
+
+.host-tip {
+    margin-top: 18px;
+
+    padding: 13px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(212, 175, 55, .06);
+
+    color: #888;
+
+    font-size: 8px;
+
+    line-height: 1.6;
+}
+
+.host-tip strong {
+    color: #d4af37;
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.host-footer {
+    min-height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    border-top:
+        1px solid
+        rgba(212, 175, 55, .12);
+
+    color: #444;
+
+    font-size: 7px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+.host-footer b {
+    color: #d4af37;
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 1100px) {
+
+    .host-main {
+        grid-template-columns:
+            1fr
+            1fr;
+    }
+
+    .center-panel {
+        grid-column: 1 / -1;
+        grid-row: 1;
+    }
+
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .host-header {
+        padding: 12px 15px;
+    }
+
+    .host-logo {
+        width: 42px;
+        height: 42px;
+    }
+
+    .host-brand h1 {
+        font-size: 13px;
+    }
+
+    .host-brand span {
+        font-size: 7px;
+    }
+
+    .host-status {
+        display: none;
+    }
+
+    .host-main {
+        display: flex;
+
+        flex-direction: column;
+
+        padding: 12px;
+
+        gap: 12px;
+    }
+
+    .host-panel {
+        padding: 16px;
+    }
+
+    .current-prompt {
+        min-height: 150px;
+
+        padding: 22px;
+
+        font-size: 20px;
+    }
+
+    .action-row {
+        grid-template-columns:
+            1fr;
+    }
+
+    .host-footer {
+        display: none;
+    }
+
+}

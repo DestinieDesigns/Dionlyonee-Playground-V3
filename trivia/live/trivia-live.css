@@ -1,0 +1,36 @@
+/* Trivia Live Broadcast Styles */
+@import '../css/trivia.css';
+@import '../css/trivia-animations.css';
+
+body {
+  background-image: 
+    radial-gradient(circle at 50% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 60%);
+}
+
+.score-val, .contestant-score-val, .podium-score, .score-transition-active {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.35s ease,
+              text-shadow 0.35s ease,
+              filter 0.35s ease;
+  will-change: transform, color;
+  transform-origin: center center;
+}
+
+.score-bump-up {
+  transform: scale(1.18) !important;
+  color: #34d399 !important;
+  text-shadow: 0 0 18px rgba(52, 211, 153, 0.95) !important;
+}
+
+.score-bump-down {
+  transform: scale(0.92) !important;
+  color: #f87171 !important;
+  text-shadow: 0 0 16px rgba(239, 68, 68, 0.9) !important;
+}
+
+.score-bump-bankrupt {
+  transform: scale(0.85) rotate(-3deg) !important;
+  color: #ef4444 !important;
+  text-shadow: 0 0 24px rgba(239, 68, 68, 1) !important;
+}

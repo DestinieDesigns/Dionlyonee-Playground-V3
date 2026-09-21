@@ -1,0 +1,43 @@
+/* Wheel 4-Row 52-Tile TV Board */
+.tv-board-frame {
+  background: #064e3b;
+  border: 12px solid #d4af37;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.4), inset 0 0 30px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.tv-board-row {
+  display: flex;
+  gap: 4px;
+}
+
+.tv-tile {
+  width: 36px;
+  height: 48px;
+  background: #042f2e;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: #0f172a;
+  transition: all 0.3s ease;
+}
+
+.tv-tile.letter-active {
+  background: #ffffff;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.tv-tile.revealed {
+  background: #ffffff;
+  color: #0f172a;
+}

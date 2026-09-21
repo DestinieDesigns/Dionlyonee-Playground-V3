@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dionlyonee — WOULD YOU RATHER</title>
+  <link rel="stylesheet" href="../jeopardy/jeopardy.css">
+</head>
+<body>
+  <div class="jeopardy-launcher">
+    <div class="jeopardy-logo">⚖️</div>
+    <div class="brand-name">DIONLYONEE</div>
+    <div class="game-name">WOULD YOU RATHER</div>
+    <div class="game-subtitle">THE DIONLYONEE STREAM SHOW</div>
+    <div class="gold-line"></div>
+    <p class="launcher-description">Two impossible choices. Chat votes live on the debate meter!</p>
+    <div class="screen-options">
+      <button type="button" class="screen-card host-card" onclick="openHost()">
+        <div class="card-icon">🎤</div>
+        <div class="card-title">HOST CONTROL</div>
+        <div class="card-description">Control prompt cards, trigger timers, reveal answers, and play stream sound effects.</div>
+        <div class="card-action">ENTER HOST PANEL →</div>
+      </button>
+      <button type="button" class="screen-card live-card" onclick="openLive()">
+        <div class="card-icon">📺</div>
+        <div class="card-title">LIVE GAME</div>
+        <div class="card-description">Full screen audience broadcast view for stream OBS and viewer interaction.</div>
+        <div class="card-action">ENTER LIVE SCREEN →</div>
+      </button>
+    </div>
+    <button type="button" class="back-button" onclick="goBack()">← BACK TO DIONLYONEE PLAYGROUND</button>
+    <div class="launcher-footer">
+      <span>DIONLYONEE</span><span>◆</span><span>WOULD YOU RATHER</span><span>◆</span><span>STREAM SHOW</span>
+    </div>
+  </div>
+  <script>
+    function openHost() { window.open("host.html", "_blank"); }
+    function openLive() { window.open("live.html", "_blank"); }
+    function goBack() { window.location.href = "../index.html"; }
+  </script>
+</body>
+</html>

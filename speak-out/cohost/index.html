@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Co-Host Judge Panel - DIONLYONEE SPEAK OUT!</title>
+  <link rel="stylesheet" href="../css/speak-common.css">
+  <link rel="stylesheet" href="../host/speak-host.css">
+  <link rel="stylesheet" href="speak-cohost.css">
+</head>
+<body>
+  <div class="cohost-container" id="cohostApp">
+    <!-- Header -->
+    <header class="cohost-header" id="cohostHeader">
+      <div class="cohost-title">
+        <span>👑</span> DIONLYONEE SPEAK OUT! <span class="judge-tag">CO-HOST JUDGE</span>
+      </div>
+
+      <div class="host-stats-bar">
+        <div class="stat-pill score-pill">
+          <span class="label">Total Score</span>
+          <span class="value" id="coScoreVal">0</span>
+        </div>
+        <div class="stat-pill streak-pill" id="coStreakPill">
+          <span class="label">Streak 🔥</span>
+          <span class="value" id="coStreakVal">0</span>
+        </div>
+        <div class="stat-pill">
+          <span class="label">Room Code</span>
+          <span class="value" id="coRoomVal" style="color: #c084fc;">----</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="cohost-grid">
+      <!-- Left: Judge Center Stage -->
+      <section class="judge-card">
+        <div class="card-top-bar">
+          <div class="mode-badge-large" id="coModeBadge">
+            <span id="coModeIcon">👅</span>
+            <span id="coModeName">TONGUE TWISTER</span>
+          </div>
+          <div id="coDiffBadge" class="badge-difficulty-medium" style="padding: 0.4rem 1rem; border-radius: 999px; font-weight: 800; font-size: 0.8rem;">
+            MEDIUM (+100 PTS)
+          </div>
+        </div>
+
+        <div class="prompt-display">
+          <div class="prompt-instruction" id="coPromptInstruction">JUDGE HOST'S PERFORMANCE</div>
+          <div class="prompt-main-text" id="coPromptMainText">Waiting for Host...</div>
+
+          <!-- Forbidden Words Checklist (if Forbidden Words mode) -->
+          <div class="forbidden-words-grid" id="coForbiddenGrid" style="display: none;"></div>
+
+          <!-- Rapid Fire Item Clicker (if Rapid Fire mode) -->
+          <div id="coRapidCounterContainer" style="display: none; margin-top: 1rem;">
+            <div class="section-label">CLICK EACH TIME HOST NAMES AN ITEM:</div>
+            <div class="item-counter-grid" id="coCounterGrid"></div>
+          </div>
+
+          <!-- Secret Answers & Adjudication Guide -->
+          <div class="judge-secret-box" id="coSecretBox">
+            <div class="secret-label">
+              <span>👁️</span> ADJUDICATION CRITERIA & ANSWERS
+            </div>
+            <div class="secret-content" id="coSecretText">
+              Listen carefully for pauses, stumbles, or forbidden words.
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage Bottom Quick Actions -->
+        <div class="host-action-bar" style="grid-template-columns: repeat(3, 1fr);">
+          <button class="btn-action btn-pass" id="coBtnPass">
+            <span>✅</span> ACCEPT / PASS
+          </button>
+          <button class="btn-action btn-fail" id="coBtnFail">
+            <span>❌</span> BUZZ / FAIL
+          </button>
+          <button class="btn-action btn-next" id="coBtnNext">
+            <span>🎯</span> NEXT CARD
+          </button>
+        </div>
+      </section>
+
+      <!-- Right: Adjudication Controls & Timer -->
+      <aside class="judge-sidebar">
+        <!-- Timer Display -->
+        <div class="timer-box">
+          <div class="section-label" style="margin-bottom: 0.5rem;">Synchronized Timer</div>
+          <div class="timer-circle" id="coTimerRing" style="border-color: #c084fc;">
+            <span class="timer-num" id="coTimerNumber">20</span>
+          </div>
+          <div class="timer-buttons-row">
+            <button class="btn-timer-ctrl" id="coBtnTimerToggle">▶️ START</button>
+            <button class="btn-timer-ctrl" id="coBtnTimerReset">🔄 RESET</button>
+            <button class="btn-timer-ctrl" id="coBtnTimerPlus5">+5 SEC</button>
+          </div>
+        </div>
+
+        <!-- Judge Broadcast Controls -->
+        <div class="judge-action-box">
+          <div class="section-label">Live Stage Controls</div>
+          <button class="btn-judge btn-judge-hint" id="coBtnBroadcastHint">
+            <span>💡</span> Toggle Live Hint
+          </button>
+          <button class="btn-judge btn-judge-reveal" id="coBtnBroadcastAnswer">
+            <span>👁️</span> Reveal Secret Answer
+          </button>
+          <button class="btn-judge btn-judge-fail" id="coBtnBuzzer" style="padding: 0.75rem;">
+            <span>🚨</span> INSTANT BUZZER SOUND
+          </button>
+        </div>
+
+        <!-- Bonus Points -->
+        <div class="judge-action-box">
+          <div class="section-label">Award Entertainment Bonus</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem;">
+            <button class="btn-timer-ctrl" id="coBonus25" style="color: var(--gold); font-weight: 800;">+25</button>
+            <button class="btn-timer-ctrl" id="coBonus50" style="color: var(--gold); font-weight: 800;">+50</button>
+            <button class="btn-timer-ctrl" id="coBonus100" style="color: var(--gold); font-weight: 800;">+100</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Footer Bar -->
+    <footer class="host-footer-bar">
+      <div id="coStatusText">Connected as Official Adjudicator</div>
+      <div>
+        <a id="coLiveLink" href="#" target="_blank" style="color: #38bdf8; text-decoration: none; font-size: 0.8rem;">
+          View Live Stage ↗
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../../shared/firebase-config.js"></script>
+  <script src="../../shared/room-manager.js"></script>
+  <script src="../../shared/firebase-room.js"></script>
+  <script src="../../shared/game-session.js"></script>
+  <script src="../../shared/sound-manager.js"></script>
+
+  <!-- Data Libraries -->
+  <script src="../data/tongue-twisters.js"></script>
+  <script src="../data/rapid-fire.js"></script>
+  <script src="../data/forbidden-words.js"></script>
+  <script src="../data/voice-challenges.js"></script>
+  <script src="../data/keep-talking.js"></script>
+  <script src="../data/finish-the-phrase.js"></script>
+  <script src="../data/speak-out-data.js"></script>
+
+  <!-- Logic -->
+  <script src="../js/speak-timer.js"></script>
+  <script src="../js/streak-manager.js"></script>
+  <script src="../js/speak-scoring.js"></script>
+  <script src="../js/speak-randomizer.js"></script>
+  <script src="../js/challenge-manager.js"></script>
+  <script src="../js/speak-engine.js"></script>
+
+  <!-- Co-Host Controller -->
+  <script src="speak-cohost.js"></script>
+</body>
+</html>

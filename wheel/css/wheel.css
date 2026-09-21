@@ -1,0 +1,24 @@
+/* Wheel of Fortune Main Game Theme */
+@import '../../css/global.css';
+
+.wheel-view-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wheel-stage-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .wheel-stage-layout {
+    grid-template-columns: 1fr;
+  }
+}

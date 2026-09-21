@@ -1,0 +1,861 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #174143 0%,
+            #0b2021 30%,
+            #050909 65%,
+            #020303 100%
+        );
+
+    color: white;
+}
+
+
+.host {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.host-header {
+
+    min-height: 82px;
+
+    padding: 0 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid
+        rgba(212,175,55,.2);
+
+    background:
+        rgba(2,5,5,.75);
+
+    backdrop-filter:
+        blur(12px);
+
+}
+
+.brand {
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+.logo {
+
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        2px solid #d4af37;
+
+    border-radius: 11px;
+
+    color: #d4af37;
+
+    font-size: 23px;
+    font-weight: 900;
+
+}
+
+.brand-name {
+
+    color: #d4af37;
+
+    font-size: 14px;
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+}
+
+.brand-subtitle {
+
+    margin-top: 4px;
+
+    color: #657778;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+}
+
+
+.status {
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    color: #667778;
+
+    font-size: 7px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+}
+
+.status strong {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: white;
+
+    font-size: 11px;
+
+}
+
+.status-dot,
+.live-dot {
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #485758;
+
+}
+
+.status-dot.live,
+.live-dot.live {
+
+    background: #4ddc8a;
+
+    box-shadow:
+        0 0 15px
+        rgba(77,220,138,.7);
+
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.host-main {
+
+    flex: 1;
+
+    width: 100%;
+
+    max-width: 1500px;
+
+    margin: 0 auto;
+
+    padding: 35px;
+
+    display: grid;
+
+    grid-template-columns:
+        280px
+        minmax(400px, 1fr)
+        250px;
+
+    gap: 30px;
+
+    align-items: center;
+
+}
+
+
+/* =========================================
+   PANELS
+========================================= */
+
+.panel {
+
+    margin-bottom: 18px;
+
+    padding: 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,28,29,.95),
+            rgba(5,8,8,.95)
+        );
+
+}
+
+.panel-heading {
+
+    margin-bottom: 18px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.panel-heading span {
+
+    color: #d4af37;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+}
+
+.panel-heading small {
+
+    color: #4c5d5e;
+
+    font-size: 6px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================================
+   CONTROL BUTTONS
+========================================= */
+
+.control-button {
+
+    width: 100%;
+
+    min-height: 54px;
+
+    margin-bottom: 10px;
+
+    padding: 13px 15px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    border: 1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    color: white;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        opacity .2s ease;
+
+}
+
+.control-button:hover:not(:disabled) {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(212,175,55,.5);
+
+}
+
+.control-button span {
+
+    font-size: 17px;
+
+}
+
+.control-button.start {
+
+    background:
+        rgba(77,220,138,.08);
+
+}
+
+.control-button.next {
+
+    background:
+        rgba(212,175,55,.08);
+
+}
+
+.control-button.reset {
+
+    background:
+        rgba(255,255,255,.03);
+
+}
+
+.control-button:disabled {
+
+    opacity: .3;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =========================================
+   DECK
+========================================= */
+
+.deck-display {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+}
+
+.deck-box {
+
+    padding: 15px 8px;
+
+    text-align: center;
+
+    border:
+        1px solid
+        rgba(212,175,55,.12);
+
+    border-radius: 12px;
+
+    background:
+        rgba(212,175,55,.025);
+
+}
+
+.deck-box.used {
+
+    border-color:
+        rgba(255,255,255,.06);
+
+}
+
+.deck-icon {
+
+    margin-bottom: 5px;
+
+    font-size: 18px;
+
+}
+
+.deck-box strong {
+
+    display: block;
+
+    color: #d4af37;
+
+    font-size: 25px;
+
+}
+
+.deck-box span {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: #566667;
+
+    font-size: 6px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+}
+
+
+/* =========================================
+   INSTRUCTIONS
+========================================= */
+
+.instructions > div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 8px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.04);
+
+}
+
+.instructions b {
+
+    color: #d4af37;
+
+    font-size: 8px;
+
+}
+
+.instructions span {
+
+    color: #718081;
+
+    font-size: 8px;
+
+}
+
+
+/* =========================================
+   QUESTION COLUMN
+========================================= */
+
+.question-column {
+
+    text-align: center;
+
+}
+
+.question-label {
+
+    margin-bottom: 15px;
+
+    color: #6c8586;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+}
+
+
+/* =========================================
+   PLAYING CARD
+========================================= */
+
+.question-card {
+
+    position: relative;
+
+    width: min(100%, 540px);
+
+    min-height: 580px;
+
+    margin: 0 auto;
+
+    padding: 28px;
+
+    overflow: hidden;
+
+    border:
+        2px solid
+        #d4af37;
+
+    border-radius: 25px;
+
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            #164345,
+            #0b2526 45%,
+            #061010 100%
+        );
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.55),
+
+        inset 0 0 60px
+        rgba(212,175,55,.04);
+
+}
+
+.card-glow {
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    top: -150px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        rgba(212,175,55,.1);
+
+    filter:
+        blur(55px);
+
+}
+
+.playing-card-top,
+.playing-card-bottom {
+
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    color: #d4af37;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+}
+
+.card-center {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 85%;
+
+    transform:
+        translate(-50%,-50%);
+
+    text-align: center;
+
+}
+
+.card-small-title {
+
+    color: #8ca3a4;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 5px;
+
+}
+
+.card-main-title {
+
+    margin-top: 12px;
+
+    color: #d4af37;
+
+    font-size:
+        clamp(45px,6vw,75px);
+
+    line-height: .85;
+
+    font-weight: 900;
+
+    letter-spacing: 5px;
+
+}
+
+.card-question {
+
+    margin-top: 35px;
+
+    padding: 25px;
+
+    border:
+        1px solid
+        rgba(212,175,55,.22);
+
+    border-radius: 15px;
+
+    background:
+        rgba(0,0,0,.18);
+
+}
+
+.card-question span {
+
+    color: white;
+
+    font-size:
+        clamp(17px,2vw,25px);
+
+    line-height: 1.35;
+
+    font-weight: 800;
+
+}
+
+.card-change {
+
+    animation:
+        cardChange .5s ease;
+
+}
+
+@keyframes cardChange {
+
+    0% {
+
+        opacity: .25;
+
+        transform:
+            translateY(18px)
+            rotateX(8deg);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            rotateX(0);
+
+    }
+
+}
+
+
+/* =========================================
+   HOST MESSAGE
+========================================= */
+
+.host-message {
+
+    margin-top: 18px;
+
+    color: #667778;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+}
+
+
+/* =========================================
+   RIGHT SIDE
+========================================= */
+
+.live-status {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #899899;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+}
+
+.live-panel p {
+
+    color: #627273;
+
+    font-size: 9px;
+
+    line-height: 1.6;
+
+}
+
+.shortcut {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 10px 0;
+
+}
+
+kbd {
+
+    min-width: 48px;
+
+    padding: 7px 8px;
+
+    text-align: center;
+
+    border:
+        1px solid
+        rgba(212,175,55,.2);
+
+    border-radius: 7px;
+
+    color: #d4af37;
+
+    font-size: 7px;
+    font-weight: 900;
+
+}
+
+.shortcut span {
+
+    color: #667778;
+
+    font-size: 8px;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+
+    min-height: 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    border-top:
+        1px solid
+        rgba(212,175,55,.12);
+
+    color: #405253;
+
+    font-size: 7px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+}
+
+footer b {
+
+    color: #d4af37;
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:1050px) {
+
+    .host-main {
+
+        grid-template-columns:
+            230px
+            minmax(350px,1fr);
+
+    }
+
+    .info-column {
+
+        display: none;
+
+    }
+
+}
+
+
+@media(max-width:700px) {
+
+    .host-header {
+
+        padding: 15px 18px;
+
+    }
+
+    .host-main {
+
+        display: block;
+
+        padding: 20px 15px;
+
+    }
+
+    .question-column {
+
+        margin-bottom: 30px;
+
+    }
+
+    .question-card {
+
+        min-height: 480px;
+
+    }
+
+    .control-column {
+
+        margin-bottom: 30px;
+
+    }
+
+    footer {
+
+        display: none;
+
+    }
+
+}

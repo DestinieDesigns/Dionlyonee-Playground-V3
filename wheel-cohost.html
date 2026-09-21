@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Wheel Co-Host Assistant | Dionlyonee Stream</title>
+  <meta name="description" content="Mobile-first Co-Host assist desk and live controller for Dionlyonee Wheel of Fortune." />
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="wheel-cohost.css" />
+</head>
+
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="cohost-header">
+    <div class="brand-group">
+      <div class="brand-icon">🎤</div>
+      <div>
+        <div class="brand-title">WHEEL CO-HOST</div>
+        <div class="brand-sub">LIVE ASSIST DESK</div>
+      </div>
+    </div>
+
+    <!-- HUD STATS & CONNECTION BADGE -->
+    <div class="hud-stats">
+      <div id="cohost-conn-status" class="conn-pill online">
+        <span class="conn-dot"></span>
+        <span class="conn-text">LIVE</span>
+      </div>
+      <div id="cohost-round" class="hud-pill">ROUND 1</div>
+      <div id="cohost-timer" class="hud-pill gold">30s</div>
+      <div id="cohost-status" class="status-tag waiting">WAITING</div>
+    </div>
+  </header>
+
+  <!-- MAIN ASSIST DESK CONTAINER -->
+  <main class="cohost-container">
+
+    <!-- ACTIVE TURN & WHEEL STATUS CARDS -->
+    <section class="turn-status-grid">
+      <div class="card-turn active">
+        <div class="card-micro-label">ACTIVE CONTESTANT TURN</div>
+        <div id="cohost-active-player" class="card-highlight-text">PLAYER 1 (RED)</div>
+        <div id="cohost-active-score" class="card-score-subtext">Round Bank: $0</div>
+      </div>
+
+      <div class="card-wedge">
+        <div class="card-micro-label">LAST LANDED WEDGE</div>
+        <div id="cohost-last-wedge" class="card-wedge-text">$1,000</div>
+        <div id="cohost-wedge-subtext" class="card-wedge-subtext">Cash Wedge</div>
+      </div>
+    </section>
+
+    <!-- SECRET CONFIDENTIAL DOSSIER -->
+    <section class="secret-card">
+      <div class="secret-header-row">
+        <span class="secret-title">🔒 CO-HOST CONFIDENTIAL ANSWER KEY</span>
+        <span class="badge-synced">LIVE SYNCED</span>
+      </div>
+
+      <!-- CATEGORY -->
+      <div class="info-block">
+        <div class="info-label">CATEGORY</div>
+        <div id="cohost-category" class="secret-category-text">JAMAICAN / PATWA PHRASES</div>
+      </div>
+
+      <!-- FULL SECRET ANSWER -->
+      <div class="info-block">
+        <div class="info-label">SECRET PHRASE (<span id="cohost-letter-count">0</span> letters)</div>
+        <div id="cohost-answer" class="secret-answer-box">WAH GWAAN</div>
+      </div>
+
+      <!-- CLUE / HINT ASSIST PANEL -->
+      <div class="info-block">
+        <div class="info-label">CLUE / HINT SYSTEM</div>
+        <div id="cohost-hint-box" class="hint-card locked">
+          <div id="cohost-hint-badge" class="hint-badge locked">🔒 HINT LOCKED (0/3 TURNS)</div>
+          <div id="cohost-hint-text" class="hint-body">Hint text is sealed until 3 turns have elapsed.</div>
+          <button id="btn-cohost-toggle-stage-hint" class="btn-stage-reveal hidden">
+            👁️ REVEAL CLUE ON STAGE
+          </button>
+        </div>
+      </div>
+
+      <!-- 4-ROW STAGE MATRIX PREVIEW -->
+      <div class="info-block">
+        <div class="info-label">STAGE BOARD MATRIX (BRIGHT = VISIBLE ON STAGE, DIM = HIDDEN)</div>
+        <div id="cohost-tiles" class="cohost-tiles-grid">
+          <!-- Rendered dynamically via wheel-cohost.js -->
+        </div>
+      </div>
+
+      <!-- CALLED LETTERS STATUS -->
+      <div class="info-block">
+        <div class="info-label">CALLED LETTERS TRACKER</div>
+        <div id="cohost-called-letters" class="called-letters-wrap">
+          <span class="called-letter-tag empty">No letters called yet</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- EMERGENCY HOST CONTROLS (SAFETY CONFIRMED) -->
+    <section class="emergency-card">
+      <div class="emergency-title">⚠️ EMERGENCY ACTIONS (REQUIRES CONFIRMATION)</div>
+      <div class="emergency-actions-grid">
+        <button id="btn-emergency-bankrupt" class="btn-danger-mini">💥 Bankrupt Active Player</button>
+        <button id="btn-emergency-reset" class="btn-danger-mini">🔄 Reset Board</button>
+      </div>
+    </section>
+
+    <!-- CO-HOST RUN SHEET TIPS -->
+    <section class="tips-card">
+      <h3 class="tips-heading">📋 CO-HOST QUICK GUIDE</h3>
+      <ul class="tips-list">
+        <li>Tap <strong>CORRECT</strong> when a chatter solves the puzzle.</li>
+        <li>Tap <strong>WRONG</strong> if a called letter is not on the board (automatically moves to the next player).</li>
+        <li>The <strong>HINT</strong> unlocks automatically after 3 contestant turns.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- STICKY MOBILE QUICK CONTROL DOCK -->
+  <footer id="cohost-dock" class="cohost-quick-dock">
+    <button id="btn-dock-correct" class="dock-btn btn-dock-correct" title="Correct Guess / Solve">
+      <span class="dock-icon">✅</span>
+      <span class="dock-label">CORRECT</span>
+    </button>
+    <button id="btn-dock-wrong" class="dock-btn btn-dock-wrong" title="Wrong Letter / Advance Turn">
+      <span class="dock-icon">❌</span>
+      <span class="dock-label">WRONG</span>
+    </button>
+    <button id="btn-dock-next" class="dock-btn btn-dock-next" title="Next Player Turn">
+      <span class="dock-icon">⏭</span>
+      <span class="dock-label">NEXT TURN</span>
+    </button>
+    <button id="btn-dock-hint" class="dock-btn btn-dock-hint" title="Clue Status">
+      <span class="dock-icon">🔒</span>
+      <span class="dock-label">HINT LOCKED</span>
+    </button>
+    <button id="btn-dock-pause" class="dock-btn btn-dock-pause" title="Pause / Resume Timer">
+      <span class="dock-icon">⏸</span>
+      <span class="dock-label">PAUSE</span>
+    </button>
+    <button id="btn-dock-spin" class="dock-btn btn-dock-spin" title="Spin Wheel On Stage">
+      <span class="dock-icon">🎡</span>
+      <span class="dock-label">SPIN</span>
+    </button>
+    <button id="btn-dock-buzz" class="dock-btn btn-dock-buzz" title="Buzzer Alert">
+      <span class="dock-icon">🚨</span>
+      <span class="dock-label">BUZZ</span>
+    </button>
+  </footer>
+
+  <!-- SAFETY CONFIRMATION MODAL (ACCIDENTAL TRIGGER PREVENTION) -->
+  <div id="safety-modal-overlay" class="modal-overlay hidden">
+    <div class="safety-modal-box">
+      <div class="safety-modal-icon">⚠️</div>
+      <div id="safety-modal-title" class="safety-modal-title">Confirm Action</div>
+      <div id="safety-modal-desc" class="safety-modal-desc">Are you sure you want to perform this action?</div>
+      <div class="safety-modal-actions">
+        <button id="btn-safety-cancel" class="btn btn-secondary">Cancel</button>
+        <button id="btn-safety-confirm" class="btn btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PURE VANILLA JAVASCRIPT -->
+  <script src="../../shared/hint-validator.js"></script>
+  <script src="sounds.js"></script>
+  <script src="wheel-engine.js"></script>
+  <script src="sync-client.js"></script>
+  <script src="wheel-cohost.js"></script>
+
+</body>
+</html>

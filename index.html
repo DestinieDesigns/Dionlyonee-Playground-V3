@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dionlyonee Game Show Playground</title>
+    <meta name="description" content="Interactive live stream gaming hub featuring Wheel of Fortune, Jeopardy trivia, Most Likely To, Charades with host acting cues & silent signals, Hangman with PG-13 Slime Dunk visual & interactive letter board, and synchronized multi-device Host and Live Stage consoles in pure Vanilla JavaScript.">
+    <meta property="og:title" content="Dionlyonee Game Show Playground">
+    <meta property="og:description" content="Interactive live stream gaming hub featuring Wheel of Fortune, Jeopardy trivia, Most Likely To, Charades with host acting cues & silent signals, Hangman with PG-13 Slime Dunk visual & interactive letter board, and synchronized multi-device Host and Live Stage consoles in pure Vanilla JavaScript.">
+    
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="playground.css">
+    <link rel="stylesheet" href="shared/heart-power.css">
+    
+    <!-- AUDIO ENGINE -->
+    <script src="sounds.js"></script>
+
+    <style>
+      /* Quick Launcher Modal Overlay */
+      .game-launcher-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        background: rgba(2, 4, 4, 0.9);
+        backdrop-filter: blur(14px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+      .game-launcher-modal.active {
+        display: flex;
+        opacity: 1;
+      }
+      .modal-box {
+        background: radial-gradient(circle at 50% 0%, #16383a 0%, #0b1d1e 35%, #050909 70%, #020303 100%);
+        border: 1.5px solid rgba(212, 175, 55, 0.4);
+        border-radius: 20px;
+        box-shadow: 0 0 40px rgba(212, 175, 55, 0.2), 0 20px 50px rgba(0,0,0,0.8);
+        width: 100%;
+        max-width: 580px;
+        padding: 32px 28px;
+        text-align: center;
+        position: relative;
+      }
+      .modal-close {
+        position: absolute;
+        top: 18px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: #8ba1a2;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 4px;
+        line-height: 1;
+        transition: color 0.2s;
+      }
+      .modal-close:hover {
+        color: #d4af37;
+      }
+      .modal-header-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .modal-icon-badge {
+        font-size: 28px;
+      }
+      .modal-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        border: 1px solid rgba(212, 175, 55, 0.35);
+        background: rgba(212, 175, 55, 0.1);
+        color: #f7e07d;
+        font-size: 8.5px;
+        font-weight: 900;
+        letter-spacing: 3px;
+      }
+      .modal-title {
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: 2px;
+        color: #ffffff;
+        margin-bottom: 6px;
+      }
+      .modal-desc {
+        color: #8ba1a2;
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 16px;
+      }
+      .modal-room-notice {
+        background: rgba(14, 28, 30, 0.85);
+        border: 1px dashed rgba(212, 175, 55, 0.35);
+        border-radius: 10px;
+        padding: 6px 14px;
+        color: #728c8e;
+        font-size: 10.5px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        display: inline-block;
+        margin-bottom: 22px;
+      }
+      .modal-room-notice b {
+        color: #f7e07d;
+      }
+      .modal-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-bottom: 10px;
+      }
+      @media (max-width: 520px) {
+        .modal-grid { grid-template-columns: 1fr; }
+      }
+      .modal-btn {
+        background: rgba(14, 28, 30, 0.85);
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        border-radius: 12px;
+        padding: 16px 14px;
+        color: #fff;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: block;
+      }
+      .modal-btn:hover {
+        border-color: #d4af37;
+        background: rgba(22, 56, 58, 0.9);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 18px rgba(212, 175, 55, 0.2);
+      }
+      .modal-btn-icon {
+        font-size: 22px;
+        margin-bottom: 6px;
+      }
+      .modal-btn-title {
+        color: #d4af37;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 2px;
+      }
+      .modal-btn-sub {
+        color: #8ba1a2;
+        font-size: 9.5px;
+        margin-top: 3px;
+        letter-spacing: 0.5px;
+      }
+    </style>
+</head>
+<body>
+
+<div class="playground">
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+    <header class="playground-header">
+        <a href="index.html" class="brand-wrapper">
+            <div class="brand-mark">D</div>
+            <div>
+                <div class="brand-name">DIONLYONEE</div>
+                <div class="brand-subtitle">GAME SHOW PLAYGROUND</div>
+            </div>
+        </a>
+
+        <!-- Header Actions: Room Badge & Quick Actions -->
+        <div class="header-actions">
+            <!-- Active Room Indicator & Switcher -->
+            <div class="room-badge-container">
+                <span class="room-indicator-dot" title="Sync Online"></span>
+                <span class="room-label">ROOM:</span>
+                <span id="headerRoomCode" class="room-code-val">DION1</span>
+                <button type="button" class="btn-change-room" onclick="openRoomModal()">CHANGE</button>
+            </div>
+
+            <!-- Host Phone Controller Quick Link -->
+            <a id="headerRemoteLink" href="remote.html?room=DION1" target="_blank" class="header-btn" title="Open Wireless Phone Controller & QR Code" style="border-color: #f59e0b; color: #fef08a; background: rgba(245, 158, 11, 0.12);">
+                <span>📱</span> Phone Controller
+            </a>
+
+            <!-- Co-Host Quick Join -->
+            <a id="headerCohostLink" href="cohost-join.html?room=DION1" target="_blank" class="header-btn" title="Co-Host Buzzers & Desk">
+                <span>👥</span> Co-Host Join
+            </a>
+
+            <!-- Dual View Split Screen -->
+            <a id="headerDualLink" href="dual-view.html?room=DION1" target="_blank" class="header-btn" title="Open Host and Live Stage side-by-side">
+                <span>🎛️</span> Dual View
+            </a>
+
+            <!-- Heart Me Storyboard & Trigger -->
+            <button type="button" class="header-btn" onclick="openHeartStoryboard()" title="View the Host-Triggered Heart Me Live Animation Storyboard" style="border-color: rgba(255, 62, 108, 0.4); color: #ff3e6c;">
+                <span>❤️</span> Heart Me Storyboard
+            </button>
+
+            <!-- Sound Test -->
+            <button type="button" class="header-btn" onclick="testAudio()" title="Test audio output on this device">
+                <span>🔊</span> Audio Test
+            </button>
+        </div>
+    </header>
+
+    <!-- =========================================
+         HERO SECTION
+    ========================================== -->
+    <section class="hero">
+        <div class="hero-eyebrow">
+            <span>✨</span> THE LIVE STREAM GAMING HUB
+        </div>
+        <h1>
+            LET'S <span>PLAY.</span>
+        </h1>
+        <p>
+            Launch synchronized Host consoles, Live Stage overlays, and audience interactions for your stream. Scalable catalog designed for rapid live production.
+        </p>
+
+        <!-- Quick Metrics -->
+        <div class="hero-stats-row">
+            <div class="hero-stat-pill"><b>16</b> Game Shows Ready</div>
+            <div class="hero-stat-pill"><b>⚡</b> Real-Time Room Sync</div>
+            <div class="hero-stat-pill"><b>📺</b> OBS Overlay Displays</div>
+            <div class="hero-stat-pill"><b>🎯</b> Direct 1-Click Launch</div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         SPOTLIGHT SHOWCASE (FLAGSHIP SHOWS)
+    ========================================== -->
+    <section class="spotlight-section">
+        <div class="spotlight-grid">
+            
+            <!-- Flagship 1: Wheel of Fortune -->
+            <div class="spotlight-card">
+                <div class="spotlight-glow"></div>
+                <div class="spotlight-top">
+                    <div>
+                        <div class="spotlight-badge">FLAGSHIP MAIN EVENT</div>
+                        <h2 class="spotlight-title">WHEEL OF FORTUNE</h2>
+                    </div>
+                    <div class="spotlight-icon">🎡</div>
+                </div>
+                <p class="spotlight-desc">
+                    The classic 24-wedge spinning wheel, 4-row puzzle board, letter reveal engine, and stream contestant buzzers.
+                </p>
+                <div class="spotlight-actions">
+                    <a id="spotlightWheelHost" href="wheel/host/index.html?room=DION1" target="_blank" class="btn-spotlight-primary">
+                        🎤 Host Console
+                    </a>
+                    <a id="spotlightWheelRemote" href="remote.html?game=wheel&room=DION1" target="_blank" class="btn-spotlight-secondary" style="border-color: #f59e0b; color: #fef08a;">
+                        📱 Phone Remote
+                    </a>
+                    <a id="spotlightWheelLive" href="wheel/live/index.html?room=DION1" target="_blank" class="btn-spotlight-secondary">
+                        📺 Live Stage
+                    </a>
+                    <a id="spotlightWheelSingle" href="wheel/index.html?singleplayer=true" target="_blank" class="btn-spotlight-secondary" style="border-color: #10b981; color: #6ee7b7;">
+                        👤 Single Player
+                    </a>
+                    <a id="spotlightWheelSplit" href="dual-view.html?mode=wheel&room=DION1" target="_blank" class="btn-spotlight-secondary">
+                        🎛️ Dual-View
+                    </a>
+                </div>
+            </div>
+
+            <!-- Flagship 2: Dion Jeopardy -->
+            <div class="spotlight-card">
+                <div class="spotlight-glow"></div>
+                <div class="spotlight-top">
+                    <div>
+                        <div class="spotlight-badge">FLAGSHIP QUIZ ARENA</div>
+                        <h2 class="spotlight-title">DION JEOPARDY</h2>
+                    </div>
+                    <div class="spotlight-icon">🏆</div>
+                </div>
+                <p class="spotlight-desc">
+                    Full 25-clue TV Jeopardy game board, lockout buzzers, clue audio reveal, Daily Doubles, and Final Jeopardy showdown.
+                </p>
+                <div class="spotlight-actions">
+                    <a id="spotlightJeopardyHost" href="jeopardy/jeopardy-host.html?room=DION1" target="_blank" class="btn-spotlight-primary">
+                        🎤 Host Console
+                    </a>
+                    <a id="spotlightJeopardyRemote" href="remote.html?game=jeopardy&room=DION1" target="_blank" class="btn-spotlight-secondary" style="border-color: #f59e0b; color: #fef08a;">
+                        📱 Phone Remote
+                    </a>
+                    <a id="spotlightJeopardyLive" href="jeopardy/jeopardy-live.html?room=DION1" target="_blank" class="btn-spotlight-secondary">
+                        📺 Live Stage
+                    </a>
+                    <a id="spotlightJeopardySingle" href="jeopardy/jeopardy.html?singleplayer=true" target="_blank" class="btn-spotlight-secondary" style="border-color: #10b981; color: #6ee7b7;">
+                        👤 Single Player
+                    </a>
+                    <a id="spotlightJeopardySplit" href="dual-view.html?mode=jeopardy&room=DION1" target="_blank" class="btn-spotlight-secondary">
+                        🎛️ Dual-View
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================================
+         GAME CATALOG SECTION (RESPONSIVE GRID)
+    ========================================== -->
+    <section class="catalog-section">
+        <div class="section-heading">
+            <span>🎮 ALL GAMES & ACTIVITIES</span>
+            <small id="catalogHeaderStats">17 GAMES AVAILABLE</small>
+        </div>
+
+        <!-- Catalog Toolbar: Search, Filters, View Switcher -->
+        <div class="catalog-toolbar">
+            <div class="toolbar-top">
+                <!-- Instant Search Input -->
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input 
+                        type="text" 
+                        id="gameSearchInput" 
+                        class="search-input" 
+                        placeholder="Search games by title, rules, keywords (e.g. wheel, buzzer, letters, debate)..."
+                        autocomplete="off"
+                    >
+                    <button type="button" id="searchClearBtn" class="search-clear" onclick="clearSearch()" title="Clear Search">✕</button>
+                </div>
+
+                <!-- Controls: Sort & View Toggle -->
+                <div class="toolbar-controls">
+                    <select id="sortSelect" class="sort-select" onchange="handleSortChange(this.value)">
+                        <option value="featured">Sort: Featured First</option>
+                        <option value="az">Sort: Name (A - Z)</option>
+                        <option value="category">Sort: Category</option>
+                    </select>
+
+                    <div class="view-mode-toggle">
+                        <button type="button" id="btnViewGrid" class="btn-view-mode active" onclick="setViewMode('grid')" title="Card Grid View">⊞</button>
+                        <button type="button" id="btnViewList" class="btn-view-mode" onclick="setViewMode('list')" title="Compact Streamer List View">☰</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div class="filter-pills" id="filterPillsContainer">
+                <button type="button" class="filter-pill active" onclick="setCategoryFilter('all')">
+                    🌟 All Games <span class="filter-count-badge" id="countAll">17</span>
+                </button>
+                <button type="button" class="filter-pill" onclick="setCategoryFilter('main')">
+                    🏆 Main Events <span class="filter-count-badge" id="countMain">5</span>
+                </button>
+                <button type="button" class="filter-pill" onclick="setCategoryFilter('knowledge')">
+                    🧠 Knowledge & Quiz <span class="filter-count-badge" id="countKnowledge">3</span>
+                </button>
+                <button type="button" class="filter-pill" onclick="setCategoryFilter('words')">
+                    🔤 Word & Guessing <span class="filter-count-badge" id="countWords">5</span>
+                </button>
+                <button type="button" class="filter-pill" onclick="setCategoryFilter('chat')">
+                    💬 Chat & Interactive <span class="filter-count-badge" id="countChat">6</span>
+                </button>
+                <button type="button" class="filter-pill" onclick="setCategoryFilter('party')">
+                    🎭 Party & Acting <span class="filter-count-badge" id="countParty">2</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Status / Results Summary Bar -->
+        <div class="catalog-status-bar">
+            <div>
+                Showing <b id="resultsCount">17</b> of <b id="totalGamesCount">17</b> games
+            </div>
+            <div id="activeFilterLabel" style="color:#d4af37;">
+                All Categories
+            </div>
+        </div>
+
+        <!-- Dynamic Game Cards Container (Grid or List View) -->
+        <div id="catalogContainer" class="catalog-grid">
+            <!-- Rendered by JavaScript -->
+        </div>
+
+        <!-- Empty Results State -->
+        <div id="catalogEmpty" class="catalog-empty" style="display: none;">
+            <div class="empty-icon">🔍</div>
+            <div class="empty-title">No matching games found</div>
+            <div class="empty-desc">Try adjusting your search query or reset the category filters.</div>
+            <button type="button" class="btn-reset-filters" onclick="resetAllFilters()">Reset All Filters</button>
+        </div>
+    </section>
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+    <footer>
+        <span>DIONLYONEE</span>
+        <b>◆</b>
+        <span>GAME SHOW PLAYGROUND</span>
+        <b>◆</b>
+        <span>2026 LIVE STREAM ENGINE</span>
+    </footer>
+
+</div>
+
+<!-- =========================================
+     LAUNCHER MODAL
+========================================== -->
+<div id="gameLauncherModal" class="game-launcher-modal">
+    <div class="modal-box">
+        <button type="button" class="modal-close" onclick="closeModal()">✕</button>
+        
+        <div class="modal-header-row">
+            <span id="modalIcon" class="modal-icon-badge">🎮</span>
+            <div id="modalBadge" class="modal-badge">GAME SHOW</div>
+        </div>
+
+        <div id="modalTitle" class="modal-title">GAME NAME</div>
+        <div id="modalDesc" class="modal-desc">Select screen to launch</div>
+        
+        <div class="modal-room-notice">
+            Syncing to Room: <b id="modalRoomCode">DION1</b>
+        </div>
+
+        <div class="modal-grid">
+            <a id="btnHost" href="#" target="_blank" class="modal-btn">
+                <div class="modal-btn-icon">🎤</div>
+                <div class="modal-btn-title">HOST CONTROL</div>
+                <div class="modal-btn-sub">Primary broadcast control (Locked 🔒)</div>
+            </a>
+            <a id="btnRemote" href="#" target="_blank" class="modal-btn" style="border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.08);">
+                <div class="modal-btn-icon">📱</div>
+                <div class="modal-btn-title" style="color: #f59e0b;">PHONE CONTROLLER</div>
+                <div class="modal-btn-sub">Wireless phone controller & QR Code</div>
+            </a>
+            <a id="btnLive" href="#" target="_blank" class="modal-btn">
+                <div class="modal-btn-icon">📺</div>
+                <div class="modal-btn-title">LIVE STAGE</div>
+                <div class="modal-btn-sub">Audience screen for OBS / TikTok live overlay</div>
+            </a>
+            <a id="btnSinglePlayer" href="#" target="_blank" class="modal-btn" style="border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.08);">
+                <div class="modal-btn-icon">👤</div>
+                <div class="modal-btn-title" style="color: #10b981;">SINGLE PLAYER MODE</div>
+                <div class="modal-btn-sub">Play solo without host/audience requirements</div>
+            </a>
+            <a id="btnCohost" href="#" target="_blank" class="modal-btn">
+                <div class="modal-btn-icon">👥</div>
+                <div class="modal-btn-title">CO-HOST / BUZZER</div>
+                <div class="modal-btn-sub">Join as assistant host or contestant buzzer</div>
+            </a>
+            <a id="btnSplit" href="#" target="_blank" class="modal-btn">
+                <div class="modal-btn-icon">🎛️</div>
+                <div class="modal-btn-title">SPLIT SCREEN</div>
+                <div class="modal-btn-sub">Host + Live side-by-side on 1 screen</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================
+     ROOM CODE SWITCHER MODAL
+========================================== -->
+<div id="roomSwitcherModal" class="room-modal">
+    <div class="room-modal-box">
+        <button type="button" class="modal-close" onclick="closeRoomModal()">✕</button>
+        <div class="modal-badge">ROOM MANAGEMENT</div>
+        <h2 style="color:#fff; font-size:20px; font-weight:900; margin: 6px 0 10px;">CHANGE ACTIVE ROOM</h2>
+        <p style="color:#8ba1a2; font-size:11.5px; line-height:1.5;">
+            Enter a room code to synchronize all Host consoles, Live Stage displays, and audience buzzers together.
+        </p>
+
+        <input type="text" id="customRoomInput" class="room-input" maxlength="12" placeholder="ROOM CODE (E.G. DION1)">
+
+        <div class="room-quick-presets">
+            <button type="button" class="preset-pill" onclick="selectRoomPreset('DION1')">DION1</button>
+            <button type="button" class="preset-pill" onclick="selectRoomPreset('STREAM')">STREAM</button>
+            <button type="button" class="preset-pill" onclick="selectRoomPreset('STAGE')">STAGE</button>
+            <button type="button" class="preset-pill" onclick="selectRoomPreset('LIVE')">LIVE</button>
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <button type="button" class="btn-spotlight-primary" onclick="applyCustomRoom()" style="padding:10px 24px;">
+                Save Room Code
+            </button>
+            <button type="button" class="btn-spotlight-secondary" onclick="closeRoomModal()" style="padding:10px 18px;">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =========================================
+   GAME DIRECTORY (15 GAMES TOTAL)
+========================================= */
+const GAME_DIRECTORY = {
+  'wheel': {
+    id: 'wheel',
+    title: 'WHEEL OF FORTUNE',
+    badge: 'MAIN EVENT',
+    desc: 'Classic 24-wedge spinning wheel, 4-row puzzle board, and letter reveal engine with physics.',
+    category: 'main',
+    icon: '🎡',
+    tags: ['📡 Live Sync', '🔔 Audio', '⏱️ Spin Physics'],
+    host: 'wheel/host/index.html',
+    live: 'wheel/live/index.html',
+    split: 'dual-view.html?mode=wheel',
+    direct: 'wheel/index.html',
+    featured: true,
+    sortOrder: 1
+  },
+  'jeopardy': {
+    id: 'jeopardy',
+    title: 'DION JEOPARDY',
+    badge: 'MAIN EVENT',
+    desc: 'Interactive 25-clue TV Jeopardy grid, buzzer lockouts, Daily Doubles, and clue reveal.',
+    category: 'main',
+    icon: '🏆',
+    tags: ['📡 Live Sync', '👥 Buzzers', '🔔 Audio'],
+    host: 'jeopardy/jeopardy-host.html',
+    live: 'jeopardy/jeopardy-live.html',
+    split: 'dual-view.html?mode=jeopardy',
+    direct: 'jeopardy/jeopardy.html',
+    featured: true,
+    sortOrder: 2
+  },
+  'word-reveal': {
+    id: 'word-reveal',
+    title: 'WORD REVEAL MYSTERY',
+    badge: 'MAIN EVENT',
+    desc: 'Uncover mystery word tiles clue-by-clue with live buzzer showdown and stage animations.',
+    category: 'main',
+    icon: '🟩',
+    tags: ['📡 Live Sync', '👥 Buzzers', '🔔 Audio'],
+    host: 'word-reveal/host/index.html',
+    live: 'word-reveal/live/index.html',
+    split: 'word-reveal/host/index.html',
+    direct: 'word-reveal/index.html',
+    featured: true,
+    sortOrder: 3
+  },
+  'speak-out': {
+    id: 'speak-out',
+    title: 'DIONLYONEE SPEAK OUT!',
+    badge: 'LIVE CHALLENGE',
+    status: 'ready',
+    desc: 'Fast-paced live stream speaking challenge with 650+ stream-tested prompts. Eliminate dead air with Tongue Twisters, Rapid Fire, Forbidden Words, Voice Challenges, and Keep Talking.',
+    category: 'main',
+    icon: '🎤',
+    tags: ['🎤 Zero Dead Air', '🔥 Streak Multiplier', '📡 Live Sync', '👑 Co-Host Judge'],
+    host: 'speak-out/host/index.html',
+    live: 'speak-out/live/index.html',
+    split: 'speak-out/cohost/index.html',
+    direct: 'speak-out/index.html',
+    featured: true,
+    sortOrder: 3.5
+  },
+  'trivia': {
+    id: 'trivia',
+    title: 'TRIVIA SHOWDOWN',
+    badge: 'KNOWLEDGE',
+    desc: 'Fast-paced buzzer quiz arena across multiple categories with host SFX soundboard.',
+    category: 'knowledge',
+    icon: '🧠',
+    tags: ['📡 Live Sync', '👥 Buzzers', '🔔 SFX Soundboard'],
+    host: 'trivia/host/index.html',
+    live: 'trivia/live/index.html',
+    split: 'trivia/host/index.html',
+    direct: 'trivia/index.html',
+    featured: true,
+    sortOrder: 4
+  },
+  'hangman': {
+    id: 'hangman',
+    title: 'HANGMAN SHOW',
+    badge: 'GUESSING',
+    desc: 'Guess letters, avoid strikes, and trigger the interactive slime dunk visualizer.',
+    category: 'words',
+    icon: '🔤',
+    tags: ['📡 Live Sync', '🎯 Slime Dunk', '🔔 Audio'],
+    host: 'hangman/host.html',
+    live: 'hangman/live.html',
+    split: 'hangman/host.html',
+    direct: 'hangman/index.html',
+    featured: false,
+    sortOrder: 5
+  },
+  'charades': {
+    id: 'charades',
+    title: 'STREAM CHARADES',
+    badge: 'PERFORMANCE',
+    desc: 'Silent host acting prompts with 60s live stream countdown timer and team scoring.',
+    category: 'party',
+    icon: '🎭',
+    tags: ['⏱️ 60s Timer', '🤫 Silent Cues', '🏆 Scoring'],
+    host: 'charades/host.html',
+    live: 'charades/live.html',
+    split: 'charades/host.html',
+    direct: 'charades/index.html',
+    featured: false,
+    sortOrder: 6
+  },
+  'most-likely': {
+    id: 'most-likely',
+    title: 'MOST LIKELY TO',
+    badge: 'CHAT GAME',
+    desc: 'Who is most likely to...? Let audience and contestants debate and vote live.',
+    category: 'chat',
+    icon: '🃏',
+    tags: ['📡 Live Sync', '💬 Chat Debate', '📊 Live Meter'],
+    host: 'most-likely/most-likely-host.html',
+    live: 'most-likely/most-likely-live.html',
+    split: 'dual-view.html?mode=mostlikely',
+    direct: 'most-likely/index.html',
+    featured: false,
+    sortOrder: 7
+  },
+  'hot-take': {
+    id: 'hot-take',
+    title: 'HOT TAKE DEBATE',
+    badge: 'CHAT GAME',
+    desc: 'Spicy stream opinions with debate timer, agree/disagree vote reactions.',
+    category: 'chat',
+    icon: '🔥',
+    tags: ['⏱️ Debate Timer', '🔥 Spicy Polls', '💬 Chat Votes'],
+    host: 'hot-take/hot-take-host.html',
+    live: 'hot-take/hot-take.html',
+    split: 'hot-take/hot-take-host.html',
+    direct: 'hot-take/index.html',
+    featured: false,
+    sortOrder: 8
+  },
+  'would-you-rather': {
+    id: 'would-you-rather',
+    title: 'WOULD YOU RATHER',
+    badge: 'CHAT GAME',
+    desc: 'Two impossible choices with real-time percentage split vote meter.',
+    category: 'chat',
+    icon: '⚖️',
+    tags: ['📊 Split Meter', '⚖️ Dilemmas', '💬 Audience Vote'],
+    host: 'would-you-rather/host.html',
+    live: 'would-you-rather/live.html',
+    split: 'would-you-rather/host.html',
+    direct: 'would-you-rather/index.html',
+    featured: false,
+    sortOrder: 9
+  },
+  'finish-the-sentence': {
+    id: 'finish-the-sentence',
+    title: 'FINISH THE SENTENCE',
+    badge: 'CHAT CREATIVE',
+    desc: 'Host reads the wild setup prompt, and chat competes to finish the sentence.',
+    category: 'chat',
+    icon: '😂',
+    tags: ['💬 Chat Input', '😂 Comedy', '⏱️ Timer'],
+    host: 'finish-the-sentence/host.html',
+    live: 'finish-the-sentence/live.html',
+    split: 'finish-the-sentence/host.html',
+    direct: 'finish-the-sentence/index.html',
+    featured: false,
+    sortOrder: 10
+  },
+  'what-would-you-do': {
+    id: 'what-would-you-do',
+    title: 'WHAT WOULD YOU DO?',
+    badge: 'CHAT CREATIVE',
+    desc: 'Wild moral dilemmas, scandalous scenarios, and split-second decisions.',
+    category: 'chat',
+    icon: '🤔',
+    tags: ['🤔 Moral Dilemmas', '💬 Chat Debate', '📊 Reaction Poll'],
+    host: 'what-would-you-do/host.html',
+    live: 'what-would-you-do/live.html',
+    split: 'what-would-you-do/host.html',
+    direct: 'what-would-you-do/index.html',
+    featured: false,
+    sortOrder: 11
+  },
+  'who-would-you-pick': {
+    id: 'who-would-you-pick',
+    title: 'WHO WOULD YOU PICK?',
+    badge: 'CHAT CREATIVE',
+    desc: 'Head-to-head celebrity, character, and stream draft matchups.',
+    category: 'chat',
+    icon: '👥',
+    tags: ['⚔️ Matchups', '👑 Draft Pick', '💬 Chat Polls'],
+    host: 'who-would-you-pick/host.html',
+    live: 'who-would-you-pick/live.html',
+    split: 'who-would-you-pick/host.html',
+    direct: 'who-would-you-pick/index.html',
+    featured: false,
+    sortOrder: 12
+  },
+  'emoji-guess': {
+    id: 'emoji-guess',
+    title: 'EMOJI GUESS',
+    badge: 'GUESSING',
+    desc: 'Visual emoji combinations to decode popular movies, songs, and trends.',
+    category: 'words',
+    icon: '🧩',
+    tags: ['🧩 Visual Cryptic', '⏱️ Clue Timer', '🎯 Buzzers'],
+    host: 'emoji-guess/host.html',
+    live: 'emoji-guess/live.html',
+    split: 'emoji-guess/host.html',
+    direct: 'emoji-guess/index.html',
+    featured: false,
+    sortOrder: 13
+  },
+  'unscramble-it': {
+    id: 'unscramble-it',
+    title: 'UNSCRAMBLE IT',
+    badge: 'GUESSING',
+    desc: 'Scrambled anagram letter tiles with progressive hint reveals and timer.',
+    category: 'words',
+    icon: '🔀',
+    tags: ['🔀 Anagram Tile', '💡 Hint Steps', '⏱️ 30s Clock'],
+    host: 'unscramble-it/host.html',
+    live: 'unscramble-it/live.html',
+    split: 'unscramble-it/host.html',
+    direct: 'unscramble-it/index.html',
+    featured: false,
+    sortOrder: 14
+  },
+  'who-dis': {
+    id: 'who-dis',
+    title: 'WHO DIS? MYSTERY PERSON',
+    badge: 'KNOWLEDGE',
+    desc: '3 progressive clues and silhouette reveals to identify the mystery icon.',
+    category: 'knowledge',
+    icon: '🕵️',
+    tags: ['🕵️ 3 Clues', '👤 Silhouette', '🔔 Audio'],
+    host: 'who-dis/host.html',
+    live: 'who-dis/live.html',
+    split: 'who-dis/host.html',
+    direct: 'who-dis/index.html',
+    featured: false,
+    sortOrder: 15
+  },
+  'guess-lyrics': {
+    id: 'guess-lyrics',
+    title: 'GUESS THE LYRICS',
+    badge: 'R&B • REGGAE • LOVE • GOSPEL',
+    desc: 'Sing the missing line! Test your music soul across 90s & 2000s R&B, timeless Love Songs & Slow Jams, Reggae & Jamaican vibes, Dancehall party bangers, and Gospel!',
+    category: 'words',
+    icon: '🎤',
+    tags: ['🎵 R&B Classics', '🇯🇲 Reggae & Jamaican', '💃 Dancehall Anthems', '❤️ Love Songs', '🙌 Gospel & Praise', '👤 Solo Mode'],
+    host: 'guess-lyrics/host.html',
+    live: 'guess-lyrics/live.html',
+    split: 'dual-view.html?mode=lyrics',
+    direct: 'guess-lyrics/index.html',
+    featured: true,
+    sortOrder: 4.5
+  }
+};
+
+/* =========================================
+   APPLICATION STATE
+========================================= */
+let currentRoom = 'DION1';
+let currentCategory = 'all';
+let searchQuery = '';
+let currentSort = 'featured';
+let currentViewMode = 'grid'; // 'grid' or 'list'
+
+// Initialize room from URL or localStorage
+function initRoom() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const roomParam = urlParams.get('room');
+  if (roomParam && roomParam.trim()) {
+    currentRoom = roomParam.trim().toUpperCase();
+  } else {
+    const saved = localStorage.getItem('dion_room_id');
+    if (saved && saved.trim()) {
+      currentRoom = saved.trim().toUpperCase();
+    }
+  }
+  updateRoomDisplays();
+}
+
+function updateRoomDisplays() {
+  document.getElementById('headerRoomCode').textContent = currentRoom;
+  document.getElementById('modalRoomCode').textContent = currentRoom;
+  document.getElementById('customRoomInput').value = currentRoom;
+
+  // Update spotlight links
+  const query = `?room=${encodeURIComponent(currentRoom)}`;
+  document.getElementById('headerDualLink').href = `dual-view.html${query}`;
+  document.getElementById('headerRemoteLink').href = `remote.html${query}`;
+  document.getElementById('headerCohostLink').href = `cohost-join.html${query}`;
+
+  document.getElementById('spotlightWheelHost').href = `wheel/host/index.html${query}`;
+  document.getElementById('spotlightWheelRemote').href = `remote.html?game=wheel&room=${encodeURIComponent(currentRoom)}`;
+  document.getElementById('spotlightWheelLive').href = `wheel/live/index.html${query}`;
+  document.getElementById('spotlightWheelSingle').href = `wheel/index.html?singleplayer=true`;
+  document.getElementById('spotlightWheelSplit').href = `dual-view.html?mode=wheel&room=${encodeURIComponent(currentRoom)}`;
+  
+  document.getElementById('spotlightJeopardyHost').href = `jeopardy/jeopardy-host.html${query}`;
+  document.getElementById('spotlightJeopardyRemote').href = `remote.html?game=jeopardy&room=${encodeURIComponent(currentRoom)}`;
+  document.getElementById('spotlightJeopardyLive').href = `jeopardy/jeopardy-live.html${query}`;
+  document.getElementById('spotlightJeopardySingle').href = `jeopardy/jeopardy.html?singleplayer=true`;
+  document.getElementById('spotlightJeopardySplit').href = `dual-view.html?mode=jeopardy&room=${encodeURIComponent(currentRoom)}`;
+
+  // Re-render catalog so card URLs have the new room
+  renderCatalog();
+}
+
+function openRoomModal() {
+  document.getElementById('customRoomInput').value = currentRoom;
+  document.getElementById('roomSwitcherModal').classList.add('active');
+  document.getElementById('customRoomInput').focus();
+}
+
+function closeRoomModal() {
+  document.getElementById('roomSwitcherModal').classList.remove('active');
+}
+
+function selectRoomPreset(preset) {
+  document.getElementById('customRoomInput').value = preset;
+  applyCustomRoom();
+}
+
+function applyCustomRoom() {
+  const val = document.getElementById('customRoomInput').value.trim().toUpperCase();
+  if (val) {
+    currentRoom = val;
+    localStorage.setItem('dion_room_id', currentRoom);
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.set('room', currentRoom);
+    window.history.replaceState({}, '', newUrl.toString());
+    updateRoomDisplays();
+  }
+  closeRoomModal();
+}
+
+// Audio Test
+function testAudio() {
+  if (window.SoundManager && typeof window.SoundManager.playSound === 'function') {
+    window.SoundManager.playSound('reveal');
+  } else if (window.sounds && typeof window.sounds.play === 'function') {
+    window.sounds.play('reveal');
+  }
+}
+
+/* =========================================
+   FILTER & SEARCH ENGINE
+========================================= */
+function setCategoryFilter(category) {
+  currentCategory = category;
+  
+  // Update UI pills
+  const pills = document.querySelectorAll('.filter-pill');
+  pills.forEach(pill => pill.classList.remove('active'));
+  if (window.event && window.event.currentTarget && window.event.currentTarget.classList) {
+    window.event.currentTarget.classList.add('active');
+  }
+
+  const labelMap = {
+    'all': 'All Categories',
+    'main': 'Main Events & Stages',
+    'knowledge': 'Knowledge & Quiz',
+    'words': 'Word & Guessing',
+    'chat': 'Chat & Interactive',
+    'party': 'Party & Performance'
+  };
+  document.getElementById('activeFilterLabel').textContent = labelMap[category] || 'Filtered';
+
+  renderCatalog();
+}
+
+function handleSearchInput(e) {
+  searchQuery = e.target.value.trim().toLowerCase();
+  const clearBtn = document.getElementById('searchClearBtn');
+  if (searchQuery.length > 0) {
+    clearBtn.classList.add('visible');
+  } else {
+    clearBtn.classList.remove('visible');
+  }
+  renderCatalog();
+}
+
+function clearSearch() {
+  const input = document.getElementById('gameSearchInput');
+  input.value = '';
+  searchQuery = '';
+  document.getElementById('searchClearBtn').classList.remove('visible');
+  renderCatalog();
+  input.focus();
+}
+
+function handleSortChange(sortVal) {
+  currentSort = sortVal;
+  renderCatalog();
+}
+
+function setViewMode(mode) {
+  currentViewMode = mode;
+  document.getElementById('btnViewGrid').classList.toggle('active', mode === 'grid');
+  document.getElementById('btnViewList').classList.toggle('active', mode === 'list');
+  
+  const container = document.getElementById('catalogContainer');
+  if (mode === 'grid') {
+    container.className = 'catalog-grid';
+  } else {
+    container.className = 'catalog-list';
+  }
+  renderCatalog();
+}
+
+function resetAllFilters() {
+  clearSearch();
+  setCategoryFilter('all');
+  const firstPill = document.querySelector('.filter-pill');
+  if (firstPill) firstPill.classList.add('active');
+}
+
+/* =========================================
+   CATALOG RENDERING
+========================================= */
+function getFilteredGames() {
+  const games = Object.values(GAME_DIRECTORY);
+  
+  return games.filter(g => {
+    // Category match
+    const matchesCategory = (currentCategory === 'all') || (g.category === currentCategory);
+    if (!matchesCategory) return false;
+
+    // Search query match
+    if (searchQuery) {
+      const searchBlob = `${g.title} ${g.desc} ${g.badge} ${(g.tags || []).join(' ')}`.toLowerCase();
+      if (!searchBlob.includes(searchQuery)) {
+        return false;
+      }
+    }
+    return true;
+  }).sort((a, b) => {
+    if (currentSort === 'az') {
+      return a.title.localeCompare(b.title);
+    } else if (currentSort === 'category') {
+      return a.category.localeCompare(b.category) || a.title.localeCompare(b.title);
+    } else {
+      // featured
+      if (a.featured !== b.featured) {
+        return a.featured ? -1 : 1;
+      }
+      return (a.sortOrder || 99) - (b.sortOrder || 99);
+    }
+  });
+}
+
+function renderCatalog() {
+  const container = document.getElementById('catalogContainer');
+  const emptyBox = document.getElementById('catalogEmpty');
+  const resultsCount = document.getElementById('resultsCount');
+  
+  const filtered = getFilteredGames();
+  resultsCount.textContent = filtered.length;
+
+  if (filtered.length === 0) {
+    container.innerHTML = '';
+    emptyBox.style.display = 'block';
+    return;
+  }
+
+  emptyBox.style.display = 'none';
+  const query = `?room=${encodeURIComponent(currentRoom)}`;
+
+  if (currentViewMode === 'grid') {
+    container.className = 'catalog-grid';
+    container.innerHTML = filtered.map(g => {
+      const hostUrl = `${g.host}${query}`;
+      const liveUrl = `${g.live}${query}`;
+      const singleUrl = `${g.direct}${g.direct.includes('?') ? '&' : '?'}singleplayer=true`;
+      const tagsHtml = (g.tags || []).map(t => `<span class="card-tag-pill">${t}</span>`).join('');
+
+      return `
+        <div class="catalog-card" onclick="handleCardClick(event, '${g.id}')">
+            <div>
+                <div class="card-top">
+                    <div class="card-icon">${g.icon}</div>
+                    <span class="card-cat-badge">${g.badge}</span>
+                </div>
+                <h3 class="card-title">${g.title}</h3>
+                <p class="card-desc">${g.desc}</p>
+                <div class="card-tags">${tagsHtml}</div>
+            </div>
+            <div class="card-actions" onclick="event.stopPropagation()">
+                <a href="${hostUrl}" target="_blank" class="btn-card-host">🎤 Host</a>
+                <a href="${liveUrl}" target="_blank" class="btn-card-live">📺 Live</a>
+                <a href="${singleUrl}" target="_blank" class="btn-card-solo" style="padding: 7px 11px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); color: #34d399; font-weight: 800; border-radius: 8px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Play Single Player Mode">👤 Solo</a>
+                <button type="button" class="btn-card-options" onclick="openGame('${g.id}')" title="More Launch Options (Remote, Co-Host, Dual)">⚙️</button>
+            </div>
+        </div>
+      `;
+    }).join('');
+  } else {
+    // List View
+    container.className = 'catalog-list';
+    container.innerHTML = filtered.map(g => {
+      const hostUrl = `${g.host}${query}`;
+      const liveUrl = `${g.live}${query}`;
+      const singleUrl = `${g.direct}${g.direct.includes('?') ? '&' : '?'}singleplayer=true`;
+
+      return `
+        <div class="list-row" onclick="handleCardClick(event, '${g.id}')">
+            <div class="list-left">
+                <div class="list-icon">${g.icon}</div>
+                <div class="list-info">
+                    <div class="list-title-row">
+                        <h3 class="list-title">${g.title}</h3>
+                        <span class="card-cat-badge">${g.badge}</span>
+                    </div>
+                    <p class="list-desc">${g.desc}</p>
+                </div>
+            </div>
+            <div class="list-actions" onclick="event.stopPropagation()">
+                <a href="${hostUrl}" target="_blank" class="btn-card-host">🎤 Host</a>
+                <a href="${liveUrl}" target="_blank" class="btn-card-live">📺 Live</a>
+                <a href="${singleUrl}" target="_blank" class="btn-card-solo" style="padding: 7px 11px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); color: #34d399; font-weight: 800; border-radius: 8px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Play Single Player Mode">👤 Solo</a>
+                <button type="button" class="btn-card-options" onclick="openGame('${g.id}')" title="Launch Modal">⚙️</button>
+            </div>
+        </div>
+      `;
+    }).join('');
+  }
+}
+
+function handleCardClick(event, gameKey) {
+  // If user clicked directly on an anchor or button inside, do nothing extra
+  if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON' || event.target.closest('a') || event.target.closest('button')) {
+    return;
+  }
+  openGame(gameKey);
+}
+
+/* =========================================
+   LAUNCHER MODAL
+========================================= */
+function openGame(gameKey) {
+  const g = GAME_DIRECTORY[gameKey];
+  if (!g) return;
+
+  const modal = document.getElementById('gameLauncherModal');
+  const query = `?room=${encodeURIComponent(currentRoom)}`;
+  const singleUrl = `${g.direct}${g.direct.includes('?') ? '&' : '?'}singleplayer=true`;
+  const remoteUrl = `remote.html?game=${encodeURIComponent(g.id)}&room=${encodeURIComponent(currentRoom)}`;
+  const cohostUrl = `cohost-join.html?game=${encodeURIComponent(g.id)}&room=${encodeURIComponent(currentRoom)}`;
+
+  document.getElementById('modalIcon').textContent = g.icon || '🎮';
+  document.getElementById('modalBadge').textContent = g.badge;
+  document.getElementById('modalTitle').textContent = g.title;
+  document.getElementById('modalDesc').textContent = g.desc;
+  document.getElementById('modalRoomCode').textContent = currentRoom;
+
+  document.getElementById('btnHost').href = `${g.host}${query}`;
+  if (document.getElementById('btnRemote')) document.getElementById('btnRemote').href = remoteUrl;
+  document.getElementById('btnLive').href = `${g.live}${query}`;
+  if (document.getElementById('btnSinglePlayer')) document.getElementById('btnSinglePlayer').href = singleUrl;
+  if (document.getElementById('btnCohost')) document.getElementById('btnCohost').href = cohostUrl;
+  document.getElementById('btnSplit').href = `${g.split}${query.replace('?', '&')}`;
+
+  modal.classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('gameLauncherModal').classList.remove('active');
+}
+
+// Modal Backdrop and Keyboard Listeners
+document.getElementById('gameLauncherModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.getElementById('roomSwitcherModal').addEventListener('click', function(e) {
+  if (e.target === this) closeRoomModal();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeModal();
+    closeRoomModal();
+  }
+});
+
+// Setup on Page Load
+document.addEventListener('DOMContentLoaded', () => {
+  initRoom();
+  document.getElementById('gameSearchInput').addEventListener('input', handleSearchInput);
+});
+
+function openHeartStoryboard() {
+  if (window.HeartPowerSystem) {
+    window.HeartPowerSystem.injectStoryboardModal();
+    window.HeartPowerSystem.openStoryboardModal();
+  }
+}
+</script>
+
+<script src="shared/heart-power-system.js"></script>
+</body>
+</html>

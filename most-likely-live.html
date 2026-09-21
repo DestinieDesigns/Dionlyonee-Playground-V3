@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Most Likely To Live Stage | Dionlyonee Stream</title>
+  <meta name="description" content="Live audience flashcard stage display for Dionlyonee Most Likely To stream party game." />
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="most-likely-live.css" />
+</head>
+
+<body>
+
+  <!-- LIVE STAGE HEADER -->
+  <header class="live-header">
+    <div class="brand-section">
+      <div class="brand-icon">🃏</div>
+      <div>
+        <div class="brand-title">MOST LIKELY TO...</div>
+        <div class="brand-tag">LIVE AUDIENCE STAGE</div>
+      </div>
+    </div>
+
+    <!-- QUICK NAV LINKS -->
+    <nav class="nav-links" style="display: flex; gap: 8px; align-items: center;">
+      <a href="index.html" target="_blank" rel="noopener noreferrer" class="nav-btn" style="padding: 6px 12px; font-size: 12px; text-decoration: none; color: #fff; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">🏠 Hub ↗</a>
+      <a href="most-likely-host.html" target="_blank" rel="noopener noreferrer" class="nav-btn" style="padding: 6px 12px; font-size: 12px; text-decoration: none; color: #fff; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">🃏 Host ↗</a>
+      <a href="dual-view.html?game=mostlikely" target="_blank" rel="noopener noreferrer" class="nav-btn" style="padding: 6px 12px; font-size: 12px; text-decoration: none; color: #e9d5ff; background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.5); border-radius: 6px;">🎛️ Split Screen ↗</a>
+    </nav>
+
+    <!-- LIVE STATUS BADGE -->
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div id="ml-live-card-counter" class="live-counter-badge">
+        CARD 1 / 65
+      </div>
+      <div class="live-indicator">
+        <span class="live-dot"></span> LIVE
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN STAGE -->
+  <main class="stage-main">
+
+    <!-- WAITING STATE -->
+    <div id="ml-waiting-section" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; min-height: 440px; text-align: center;">
+      <div style="font-size: 72px; animation: float 3s ease-in-out infinite;">🃏</div>
+      <h2 style="font-family: 'Cinzel', serif; font-size: 36px; font-weight: 900; color: #a855f7; letter-spacing: 2px;">
+        WAITING FOR NEXT CARD
+      </h2>
+      <p style="color: #94a3b8; font-size: 18px; max-width: 500px;">
+        Host is drawing the next topic from the deck. Get your answers ready!
+      </p>
+    </div>
+
+    <!-- ACTIVE FLASHCARD CONTAINER -->
+    <div id="ml-card-section" class="flashcard-container">
+      
+      <div id="ml-flashcard" class="live-flashcard">
+        <!-- Card Top Bar -->
+        <div class="flashcard-top-bar">
+          <div id="ml-live-deck-badge" class="live-deck-badge">
+            ALL DECKS EDITION
+          </div>
+          <div id="ml-live-number-badge" style="font-family: 'Space Grotesk', monospace; font-size: 14px; font-weight: 900; color: rgba(255,255,255,0.6);">
+            #1
+          </div>
+        </div>
+
+        <!-- Question Text -->
+        <div class="card-prompt-wrapper">
+          <div style="font-size: 14px; font-weight: 800; color: #d8b4fe; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px;">
+            WHO IS MOST LIKELY TO...
+          </div>
+          <h1 id="ml-live-prompt" class="live-card-text">
+            Fall asleep in the middle of an intense movie? 😴
+          </h1>
+        </div>
+
+        <!-- Bottom Discussion Callout -->
+        <div class="flashcard-footer">
+          <div class="stream-hint-item">
+            <span>🎙️</span> <strong>Guests:</strong> Defend yourselves!
+          </div>
+          <div class="stream-hint-divider">•</div>
+          <div class="stream-hint-item">
+            <span>💬</span> <strong>Chat:</strong> Drop names in the chat!
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- PURE VANILLA JAVASCRIPT & AUDIO -->
+  <script src="sounds.js"></script>
+  <script src="sync-client.js"></script>
+  <script src="most-likely-data.js"></script>
+  <script src="most-likely-live.js"></script>
+
+</body>
+</html>

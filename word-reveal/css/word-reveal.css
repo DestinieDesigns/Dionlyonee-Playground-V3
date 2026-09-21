@@ -1,0 +1,293 @@
+/* Word Reveal Mystery - Master Styles */
+@import '../../css/global.css';
+
+:root {
+  --tile-w: 48px;
+  --tile-h: 64px;
+  --tile-font: 26px;
+  --gold-glow: rgba(212, 175, 55, 0.4);
+  --emerald-glow: rgba(16, 185, 129, 0.45);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --tile-w: 36px;
+    --tile-h: 50px;
+    --tile-font: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --tile-w: 28px;
+    --tile-h: 42px;
+    --tile-font: 16px;
+  }
+}
+
+/* TILES WRAPPER & WORD GROUPING */
+.word-tiles-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  justify-content: center;
+  align-items: center;
+  margin: 28px auto;
+  max-width: 1100px;
+  padding: 10px;
+  perspective: 1000px;
+}
+
+.word-group {
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  align-items: center;
+}
+
+/* 3D TILE CARDS */
+.word-tile {
+  width: var(--tile-w);
+  height: var(--tile-h);
+  perspective: 600px;
+  user-select: none;
+  position: relative;
+}
+
+.tile-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 8px;
+}
+
+.word-tile.revealed .tile-inner {
+  transform: rotateY(180deg);
+}
+
+.tile-front,
+.tile-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  box-sizing: border-box;
+}
+
+/* FRONT: MYSTERY MASK */
+.tile-front {
+  background: radial-gradient(circle at 50% 30%, #152d33 0%, #09171a 75%, #050d0f 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+  color: #d4af37;
+  transform: rotateY(0deg);
+}
+
+.mystery-symbol {
+  font-size: calc(var(--tile-font) * 0.9);
+  font-weight: 900;
+  opacity: 0.7;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* BACK: REVEALED LETTER */
+.tile-back {
+  background: linear-gradient(145deg, #ffffff 0%, #f3ede2 60%, #ded0b7 100%);
+  border: 2px solid #d4af37;
+  color: #0b1d20;
+  font-size: var(--tile-font);
+  font-weight: 900;
+  transform: rotateY(180deg);
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35), inset 0 -2px 6px rgba(0,0,0,0.1);
+}
+
+.tile-letter {
+  display: block;
+  line-height: 1;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.15);
+}
+
+/* PUNCTUATION TILES */
+.word-tile.punctuation {
+  width: calc(var(--tile-w) * 0.5);
+  min-width: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: var(--tile-font);
+  color: #f7e07d;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+}
+
+/* INTERACTIVE TILES FOR HOST */
+.word-tile.clickable-tile {
+  cursor: pointer;
+}
+
+.word-tile.clickable-tile:hover .tile-front {
+  border-color: #34d399;
+  box-shadow: 0 0 16px rgba(52, 211, 153, 0.6);
+  transform: translateY(-2px);
+}
+
+/* JUST REVEALED ANIMATION GLOW */
+.word-tile.just-revealed .tile-back {
+  animation: revealPulse 0.8s ease-out;
+}
+
+@keyframes revealPulse {
+  0% {
+    box-shadow: 0 0 25px #10b981, 0 0 50px #10b981;
+    transform: rotateY(180deg) scale(1.15);
+  }
+  100% {
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
+    transform: rotateY(180deg) scale(1);
+  }
+}
+
+/* SOLVED CELEBRATION GLOW */
+.word-tile.solved-glow .tile-back {
+  border-color: #10b981;
+  background: linear-gradient(145deg, #f0fdf4 0%, #dcfce7 60%, #bbf7d0 100%);
+  color: #064e3b;
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.6);
+}
+
+/* HINT TIERS DISPLAY */
+.hint-tiers-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+  text-align: left;
+}
+
+.hint-tier-card {
+  background: rgba(11, 29, 32, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.hint-tier-card.unlocked {
+  border-color: rgba(52, 211, 153, 0.5);
+  background: rgba(6, 40, 36, 0.7);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+}
+
+.hint-tier-card.unlocked.active {
+  border-color: #34d399;
+  box-shadow: 0 0 18px rgba(52, 211, 153, 0.3);
+}
+
+.hint-tier-card.locked {
+  opacity: 0.6;
+}
+
+.hint-tier-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.hint-tier-badge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fbbf24;
+}
+
+.hint-tier-status {
+  font-size: 9.5px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #94a3b8;
+}
+
+.hint-tier-card.unlocked .hint-tier-status {
+  color: #34d399;
+}
+
+.hint-tier-body {
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.4;
+  min-height: 38px;
+}
+
+/* AUTOPILOT BADGE & BAR */
+.autopilot-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1.5px solid #10b981;
+  color: #34d399;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.autopilot-indicator.active {
+  animation: pulseGreen 1.5s infinite;
+}
+
+@keyframes pulseGreen {
+  0%, 100% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.8); }
+}
+
+/* CHAT FEED STYLES */
+.chat-log-box {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: 12px;
+}
+
+.chat-log-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 4px;
+}
+
+.chat-log-item.winner-log {
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  border-radius: 6px;
+}
+
+.chat-author {
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+.chat-guess-text {
+  color: #ffffff;
+  font-weight: 600;
+  margin-left: 8px;
+}

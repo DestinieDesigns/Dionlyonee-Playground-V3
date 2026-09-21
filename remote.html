@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#070a13" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Host Phone Controller • Dionlyonee Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/heart-power.css">
+  <style>
+    :root {
+      --bg-dark: #070a13;
+      --card-bg: #0f172a;
+      --card-border: rgba(234, 179, 8, 0.25);
+      --gold: #facc15;
+      --gold-dark: #ca8a04;
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --rose: #f43f5e;
+      --rose-dark: #e11d48;
+      --blue: #3b82f6;
+      --amber: #f59e0b;
+      --text: #ffffff;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      padding-bottom: max(32px, env(safe-area-inset-bottom, 32px));
+    }
+
+    /* TOP HEADER */
+    .top-bar {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 2px solid rgba(250, 204, 21, 0.3);
+      padding: max(12px, env(safe-area-inset-top, 12px)) 16px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      font-size: 24px;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 1px;
+      color: #ffffff;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #eab308;
+      box-shadow: 0 0 8px #eab308;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .status-dot.connected {
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+    }
+
+    .status-dot.disconnected {
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+    }
+
+    /* ROOM & GAME BAR */
+    .room-info-bar {
+      background: linear-gradient(180deg, rgba(234, 179, 8, 0.15) 0%, rgba(15, 23, 42, 0.6) 100%);
+      border-bottom: 1px solid rgba(250, 204, 21, 0.2);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .room-tag {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .room-code-val {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 2px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(250, 204, 21, 0.4);
+      display: inline-block;
+      margin-left: 4px;
+    }
+
+    .game-badge {
+      font-size: 11px;
+      font-weight: 900;
+      color: #ffffff;
+      background: rgba(59, 130, 246, 0.25);
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      max-width: 170px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn-qr-pill {
+      background: rgba(250, 204, 21, 0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.1s, background 0.15s;
+    }
+
+    .btn-qr-pill:active {
+      transform: scale(0.95);
+      background: rgba(250, 204, 21, 0.3);
+    }
+
+    /* CONTAINER */
+    .container {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+      max-width: 540px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* COOLDOWN BANNER */
+    .cooldown-banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(234, 179, 8, 0.08));
+      border: 2px dashed #f59e0b;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+      animation: pulseBorder 2.5s infinite;
+    }
+
+    .cooldown-banner.hidden {
+      display: none;
+    }
+
+    @keyframes pulseBorder {
+      0%, 100% { border-color: rgba(245, 158, 11, 0.5); box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); }
+      50% { border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.4); }
+    }
+
+    .cooldown-tag {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .cooldown-desc {
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    .btn-start-next {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 16px 20px;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+      transition: transform 0.1s, filter 0.1s;
+    }
+
+    .btn-start-next:active {
+      transform: scale(0.97);
+      filter: brightness(0.9);
+    }
+
+    /* LIVE STATE MONITOR */
+    .state-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .state-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .state-card-content {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .state-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .state-sub {
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: 800;
+    }
+
+    /* ACTION BUTTON GRIDS */
+    .section-title {
+      font-size: 11.5px;
+      font-weight: 900;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .controls-grid.single-col {
+      grid-template-columns: 1fr;
+    }
+
+    .controls-grid.three-col {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .btn-ctrl {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 16px 12px;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      min-height: 72px;
+      transition: transform 0.08s, background 0.15s, border-color 0.15s;
+    }
+
+    .btn-ctrl:active {
+      transform: scale(0.96);
+    }
+
+    .btn-ctrl .ctrl-icon {
+      font-size: 22px;
+    }
+
+    .btn-ctrl .ctrl-label {
+      font-size: 12px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    /* THEMED BUTTONS */
+    .btn-gold {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.25), rgba(202, 138, 4, 0.35));
+      border-color: var(--gold);
+      color: #fff;
+    }
+    .btn-gold:active {
+      background: rgba(234, 179, 8, 0.4);
+    }
+
+    .btn-spin {
+      grid-column: span 2;
+      background: linear-gradient(135deg, #d97706, #b45309);
+      border: 2px solid var(--gold);
+      font-size: 16px;
+      min-height: 80px;
+      box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35);
+    }
+    .btn-spin .ctrl-icon { font-size: 28px; }
+
+    .btn-correct {
+      background: linear-gradient(135deg, #059669, #047857);
+      border-color: #34d399;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-wrong {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      border-color: #fb7185;
+      box-shadow: 0 4px 14px rgba(244, 63, 94, 0.25);
+    }
+
+    .btn-blue {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-color: #60a5fa;
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      border-color: #c084fc;
+    }
+
+    /* SOUNDS DRAWER */
+    .sound-pills-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .btn-sound-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      padding: 8px 14px;
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.08s, background 0.15s;
+    }
+
+    .btn-sound-pill:active {
+      transform: scale(0.95);
+      background: rgba(250, 204, 21, 0.2);
+      color: #fff;
+    }
+
+    /* QUICK LETTER PICKER MODAL / DRAWER */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.88);
+      backdrop-filter: blur(10px);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #0f172a;
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 420px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 0 35px rgba(250, 204, 21, 0.3);
+    }
+
+    .alphabet-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+
+    .btn-letter {
+      aspect-ratio: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      color: #ffffff;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 16px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .btn-letter:active {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .btn-letter.vowel {
+      border-color: #60a5fa;
+      color: #93c5fd;
+    }
+
+    .btn-close-modal {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* ACTION TOAST */
+    .action-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #10b981;
+      color: #000;
+      font-weight: 900;
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .action-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="brand-group">
+      <span class="brand-icon">🎮</span>
+      <div>
+        <div class="brand-title">DIONLYONEE</div>
+        <div class="brand-sub">HOST CONTROLLER</div>
+      </div>
+    </div>
+
+    <div id="connBadge" class="status-badge">
+      <span id="connDot" class="status-dot"></span>
+      <span id="connLabel">CONNECTING...</span>
+    </div>
+  </header>
+
+  <!-- ROOM & GAME BAR -->
+  <div class="room-info-bar">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span class="room-tag">ROOM:</span>
+      <span id="roomCodeDisplay" class="room-code-val" onclick="openRoomSwitchPrompt()" style="cursor: pointer;" title="Tap to switch room">----</span>
+      <button type="button" class="btn-qr-pill" onclick="openQRModal()" title="Show Connection QR Code">📱 QR / PAIR</button>
+    </div>
+    <div id="gameBadge" class="game-badge">WHEEL OF FORTUNE</div>
+  </div>
+
+  <main class="container">
+
+    <!-- COOLDOWN / WAITING SCREEN BANNER -->
+    <div id="cooldownBanner" class="cooldown-banner hidden">
+      <div class="cooldown-tag">
+        <span>⏸</span> COOLDOWN ACTIVE
+      </div>
+      <p id="cooldownText" class="cooldown-desc">
+        Take time to celebrate the winner, talk to contestants, or introduce the next round!
+      </p>
+      <button type="button" id="btnNextRound" class="btn-start-next" onclick="triggerAction('START_ROUND')">
+        <span>▶</span> START NEXT ROUND
+      </button>
+    </div>
+
+    <!-- LIVE STATE MONITOR -->
+    <div class="state-card">
+      <div class="state-card-header">
+        <span>📡 STAGE STATUS</span>
+        <span id="phaseTag" style="color: var(--gold);">ACTIVE</span>
+      </div>
+      <div class="state-card-content">
+        <div class="state-row">
+          <span id="activePromptLabel" style="color: #cbd5e1;">Prompt / Category:</span>
+          <span id="activePromptVal" class="state-sub">Loading...</span>
+        </div>
+        <div class="state-row" id="playerRow">
+          <span style="color: #cbd5e1;">Contestant Turn:</span>
+          <span id="activePlayerVal" style="color: #38bdf8; font-weight: 800;">Player 1</span>
+        </div>
+        <div class="state-row" id="timerRow" style="display: none;">
+          <span style="color: #cbd5e1;">Timer:</span>
+          <span id="timerVal" style="font-family: monospace; font-size: 16px; color: #f43f5e; font-weight: 900;">30s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME-SPECIFIC CONTROLS CONTAINER -->
+    <div id="gameControlsContainer">
+      <!-- Will be populated dynamically based on gameType -->
+    </div>
+
+    <!-- DEDICATED LIVE INTERACTIONS (HEART ME, ROSE GIFT & MATRIX) -->
+    <div class="section-title">
+      <span>💖 LIVE AUDIENCE INTERACTIONS</span>
+      <span style="font-size: 10px; color: #fb7185; background: rgba(251,113,133,0.15); padding: 2px 8px; border-radius: 999px; border: 1px solid #fb7185;">HOST-TRIGGERED</span>
+    </div>
+
+    <!-- PRIMARY GIFT SOUNDBOARD BROADCASTER BUTTON -->
+    <button type="button" class="btn-ctrl" id="btnRemoteGiftSoundboard" style="width: 100%; margin-bottom: 12px; background: linear-gradient(135deg, #e11d48 0%, #be123c 100%); border: 2px solid #fecdd3; padding: 14px 16px; border-radius: 14px; box-shadow: 0 4px 18px rgba(225,29,72,0.4); cursor: pointer;" onclick="openGiftSoundboardFromRemote()">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+        <span style="font-size: 20px;">🎁</span>
+        <span style="font-size: 14px; font-weight: 900; letter-spacing: 0.5px; color: #ffffff;">OPEN GIFT SOUNDBOARD</span>
+        <span style="font-size: 10px; font-weight: 800; background: rgba(0,0,0,0.35); padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.3); color: #fecdd3;">BROADCAST TO STAGE</span>
+      </div>
+    </button>
+
+    <!-- Rose Activity Queue Banner on Remote -->
+    <div id="remoteRoseQueueBanner" style="display: none; background: rgba(190, 18, 60, 0.25); border: 1px dashed #fb7185; border-radius: 12px; padding: 10px 14px; margin-bottom: 10px;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <span style="font-size: 12px; font-weight: 800; color: #fecdd3;">🌹 TIKTOK ROSES:</span>
+          <span id="remoteRoseQueueCount" style="font-weight: 900; color: #34d399; font-size: 14px;">× 0</span>
+        </div>
+        <button type="button" class="btn-sound-pill" style="background: linear-gradient(135deg, #be123c, #10b981); color: #fff; border-color: #fecdd3; font-weight: 900;" onclick="triggerRoseRemote()">
+          🌹 BLOOM NOW
+        </button>
+      </div>
+    </div>
+
+    <!-- 6-BUTTON LIVE INTERACTIONS MATRIX -->
+    <div class="controls-grid" style="margin-bottom: 12px;">
+      <!-- 1. HEART ME -->
+      <button type="button" class="btn-ctrl" id="btnRemoteHeart" style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.25), rgba(190, 18, 60, 0.5)); border: 1.5px solid #fb7185;" onclick="triggerHeartRemote()">
+        <span class="ctrl-icon">❤️</span>
+        <span class="ctrl-label" id="btnRemoteHeartLabel" style="color: #ffffff;">HEART ME</span>
+        <span id="btnRemoteHeartSub" style="font-size: 9px; color: #fecdd3; font-weight: 700;">(SEND HEART)</span>
+      </button>
+
+      <!-- 2. ROSE GIFT -->
+      <button type="button" class="btn-ctrl" id="btnRemoteRose" style="background: linear-gradient(135deg, rgba(190, 18, 60, 0.4), rgba(16, 185, 129, 0.25)); border: 1.5px solid #34d399;" onclick="triggerRoseRemote()">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span class="ctrl-icon">🌹</span>
+          <span id="remoteRosePillBadge" style="background: #10b981; color: #022c22; font-size: 10px; font-weight: 900; padding: 2px 7px; border-radius: 999px;">× 1</span>
+        </div>
+        <span class="ctrl-label" id="btnRemoteRoseLabel" style="color: #ffffff;">ROSE BLOOM</span>
+        <span id="btnRemoteRoseSub" style="font-size: 9px; color: #a7f3d0; font-weight: 700;">(PLANT LOVE)</span>
+      </button>
+
+      <!-- 3. LIKE BURST -->
+      <button type="button" class="btn-ctrl" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18);" onclick="triggerInteractionRemote('INTERACTION_LIKE', '👍')">
+        <span class="ctrl-icon">👍</span>
+        <span class="ctrl-label">LIKE BURST</span>
+      </button>
+
+      <!-- 4. GIFT SHOWER -->
+      <button type="button" class="btn-ctrl" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18);" onclick="triggerInteractionRemote('INTERACTION_GIFT', '🎁')">
+        <span class="ctrl-icon">🎁</span>
+        <span class="ctrl-label">GIFT SHOWER</span>
+      </button>
+
+      <!-- 5. FOLLOW SALUTE -->
+      <button type="button" class="btn-ctrl" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18);" onclick="triggerInteractionRemote('INTERACTION_FOLLOW', '⭐')">
+        <span class="ctrl-icon">⭐</span>
+        <span class="ctrl-label">FOLLOW SALUTE</span>
+      </button>
+
+      <!-- 6. CHAT SHOUTOUT -->
+      <button type="button" class="btn-ctrl" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18);" onclick="triggerInteractionRemote('INTERACTION_CHAT', '💬')">
+        <span class="ctrl-icon">💬</span>
+        <span class="ctrl-label">CHAT SHOUTOUT</span>
+      </button>
+    </div>
+
+    <!-- Quick Streamer Testing Bar for Mobile -->
+    <div style="display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px;">
+      <button type="button" class="btn-sound-pill" onclick="simulateRoseRemote(1)">+1 🌹 Test</button>
+      <button type="button" class="btn-sound-pill" onclick="simulateRoseRemote(5)">+5 🌹 Garden</button>
+      <button type="button" class="btn-sound-pill" onclick="simulateRoseRemote(10)">+10 🌹 Bloom</button>
+      <button type="button" class="btn-sound-pill" onclick="simulateHeartRemote()">+❤️ Heart Me</button>
+    </div>
+
+    <!-- UNIVERSAL LIVE SOUNDBOARD -->
+    <div class="section-title">
+      <span>🔊 LIVE STREAM SOUNDS</span>
+      <span style="font-size: 10px; color: var(--gold);">BROADCASTS TO ALL</span>
+    </div>
+    <div class="sound-pills-row">
+      <button type="button" class="btn-sound-pill" onclick="sendSound('cheer')">👏 Applause</button>
+      <button type="button" class="btn-sound-pill" onclick="sendSound('reveal')">✨ Ding / Correct</button>
+      <button type="button" class="btn-sound-pill" onclick="sendSound('buzzer')">❌ Buzzer</button>
+      <button type="button" class="btn-sound-pill" onclick="sendSound('wheel')">🎡 Spin Tick</button>
+      <button type="button" class="btn-sound-pill" onclick="sendSound('bankrupt')">💣 Bankrupt</button>
+      <button type="button" class="btn-sound-pill" onclick="sendSound('countdown')">⏱ Countdown</button>
+      <button type="button" class="btn-sound-pill" onclick="sendSound('timeup')">🚨 Time Up</button>
+    </div>
+
+    <!-- SECONDARY CONTROLS (PAUSE / RESUME / COOLDOWN TOGGLE) -->
+    <div class="section-title">
+      <span>⚙️ STREAM FLOW CONTROL</span>
+    </div>
+    <div class="controls-grid">
+      <button type="button" class="btn-ctrl" onclick="triggerAction('PAUSE')">
+        <span class="ctrl-icon">⏸</span>
+        <span class="ctrl-label">PAUSE / RESUME</span>
+      </button>
+      <button type="button" class="btn-ctrl" onclick="triggerAction('ENTER_COOLDOWN')">
+        <span class="ctrl-icon">☕</span>
+        <span class="ctrl-label">COOLDOWN MODE</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- LETTER PICKER MODAL (WHEEL OF FORTUNE) -->
+  <div id="letterModal" class="modal-overlay">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="color: var(--gold); font-size: 16px; font-weight: 900;">CALL / REVEAL LETTER</h3>
+        <button type="button" onclick="closeLetterModal()" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">✕</button>
+      </div>
+      <p style="font-size: 12px; color: #94a3b8;">Tap a letter to reveal it across all stream screens:</p>
+      <div class="alphabet-grid" id="alphabetGrid"></div>
+      <button type="button" class="btn-close-modal" onclick="closeLetterModal()">Close Letter Pad</button>
+    </div>
+  </div>
+
+  <!-- QR CODE PAIRING MODAL -->
+  <div id="qrModal" class="modal-overlay">
+    <div class="modal-box" style="text-align: center; max-width: 380px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h3 style="color: var(--gold); font-size: 16px; font-weight: 900;">SCAN TO CONNECT</h3>
+        <button type="button" onclick="closeQRModal()" style="background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; padding: 4px;">✕</button>
+      </div>
+      <p style="font-size: 12px; color: #94a3b8; margin-bottom: 14px;">Scan with your mobile phone camera to control this game room live:</p>
+      
+      <div id="qrCodeContainer" style="display: flex; justify-content: center; align-items: center; margin: 12px auto; background: #ffffff; padding: 14px; border-radius: 16px; width: 200px; height: 200px; box-shadow: 0 8px 24px rgba(0,0,0,0.6);"></div>
+      
+      <div id="qrRoomCodeText" style="font-family: 'Space Grotesk', monospace; font-size: 14px; color: var(--gold); font-weight: 800; margin: 12px 0 6px;">ROOM: DION1</div>
+      <div style="font-size: 11px; color: #64748b; margin-bottom: 16px; word-break: break-all;" id="qrUrlText"></div>
+      
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="btn-ctrl btn-gold" style="flex: 1; min-height: 44px; padding: 10px;" onclick="copyRemoteUrl()">
+          <span class="ctrl-label">📋 COPY LINK</span>
+        </button>
+        <button type="button" class="btn-close-modal" style="flex: 1; margin-top: 0;" onclick="closeQRModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTION TOAST -->
+  <div id="actionToast" class="action-toast">ACTION SENT</div>
+
+  <script src="/shared/qrcode.min.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      // --- 1. ROOM INITIALIZATION (Reads room from URL or storage, NEVER creates duplicate or overrides) ---
+      const urlParams = new URLSearchParams(window.location.search);
+      let roomId = (urlParams.get('room') || sessionStorage.getItem('dion_current_room') || 'DION1').trim().toUpperCase();
+      let gameType = (urlParams.get('game') || 'wheel').toLowerCase();
+
+      const elRoomCode = document.getElementById('roomCodeDisplay');
+      const elGameBadge = document.getElementById('gameBadge');
+      const elConnDot = document.getElementById('connDot');
+      const elConnLabel = document.getElementById('connLabel');
+      const elCooldownBanner = document.getElementById('cooldownBanner');
+      const elCooldownText = document.getElementById('cooldownText');
+      const elBtnNextRound = document.getElementById('btnNextRound');
+      const elPhaseTag = document.getElementById('phaseTag');
+      const elActivePromptVal = document.getElementById('activePromptVal');
+      const elActivePlayerVal = document.getElementById('activePlayerVal');
+      const elPlayerRow = document.getElementById('playerRow');
+      const elTimerRow = document.getElementById('timerRow');
+      const elTimerVal = document.getElementById('timerVal');
+      const elControlsContainer = document.getElementById('gameControlsContainer');
+      const elToast = document.getElementById('actionToast');
+
+      elRoomCode.textContent = roomId;
+
+      let ws = null;
+      let broadcastChannel = null;
+      let isConnected = false;
+      let currentGameState = {};
+      let pollInterval = null;
+
+      // Haptic feedback for tactile phone feel
+      function vibrate(ms = 20) {
+        try {
+          if (navigator.vibrate) navigator.vibrate(ms);
+        } catch (e) {}
+      }
+
+      function showToast(msg) {
+        elToast.textContent = msg;
+        elToast.classList.add('show');
+        setTimeout(() => elToast.classList.remove('show'), 1500);
+      }
+
+      // --- 2. WEBSOCKET & REAL-TIME CONNECTION ---
+      function initWebSocket() {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${protocol}//${window.location.host}/ws`;
+
+        try {
+          if (ws) {
+            try { ws.close(); } catch (e) {}
+          }
+
+          ws = new WebSocket(wsUrl);
+
+          ws.onopen = () => {
+            setConnected(true);
+            ws.send(JSON.stringify({
+              type: 'JOIN_ROOM',
+              roomId: roomId,
+              role: 'host_controller',
+              gameType: gameType
+            }));
+          };
+
+          ws.onmessage = (event) => {
+            try {
+              const data = JSON.parse(event.data);
+              if (data.type === 'ROOM_STATE' && (data.roomId === roomId || !data.roomId)) {
+                onStateReceived(data.state, data.gameType);
+              } else if (data.type === 'HOST_ACTION' && (data.roomId === roomId || !data.roomId)) {
+                // Another controller or computer updated action
+              } else if (data.type === 'PONG') {
+                setConnected(true);
+              }
+            } catch (e) {}
+          };
+
+          ws.onerror = () => {
+            setConnected(false);
+          };
+
+          ws.onclose = () => {
+            setConnected(false);
+            setTimeout(initWebSocket, 3000);
+          };
+        } catch (err) {
+          setConnected(false);
+        }
+      }
+
+      function initBroadcastChannel() {
+        try {
+          if ('BroadcastChannel' in window) {
+            broadcastChannel = new BroadcastChannel(`dion_room_${roomId}`);
+            broadcastChannel.onmessage = (e) => {
+              const data = e.data;
+              if (!data) return;
+              if (data.type === 'ROOM_STATE') {
+                onStateReceived(data.state, data.gameType);
+              }
+            };
+          }
+        } catch (e) {}
+      }
+
+      function setConnected(status) {
+        isConnected = status;
+        if (status) {
+          elConnDot.className = 'status-dot connected';
+          elConnLabel.textContent = 'CONNECTED';
+        } else {
+          elConnDot.className = 'status-dot disconnected';
+          elConnLabel.textContent = 'RECONNECTING...';
+        }
+      }
+
+      // HTTP Polling fallback for guaranteed state sync
+      async function pollRoomState() {
+        try {
+          const res = await fetch(`/api/rooms/${roomId}?t=${Date.now()}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.success && data.room) {
+              setConnected(true);
+              if (data.room.gameType && data.room.gameType !== gameType) {
+                gameType = data.room.gameType;
+                renderGameControls();
+              }
+              if (data.room.state) {
+                onStateReceived(data.room.state, data.room.gameType);
+              }
+            }
+          }
+        } catch (e) {}
+      }
+
+      // --- 3. STATE PARSING & UI UPDATES ---
+      function onStateReceived(state, detectedGameType) {
+        if (!state) return;
+        currentGameState = state;
+
+        if (detectedGameType && detectedGameType !== gameType) {
+          gameType = detectedGameType;
+          renderGameControls();
+        }
+
+        updateHeader();
+        updateCooldownBanner();
+        updateMonitor();
+      }
+
+      function updateHeader() {
+        const gameNames = {
+          'wheel': 'Wheel of Fortune',
+          'jeopardy': 'Jeopardy Trivia',
+          'trivia': 'Stream Trivia',
+          'speak-out': 'Dionlyonee Speak Out',
+          'word-reveal': 'Word Reveal',
+          'charades': 'Stream Charades',
+          'hangman': 'Slime Hangman',
+          'most-likely': 'Most Likely To',
+          'what-would-you-do': 'What Would You Do'
+        };
+        elGameBadge.textContent = gameNames[gameType] || gameType.toUpperCase();
+      }
+
+      function updateCooldownBanner() {
+        const isCooldown = currentGameState.phase === 'cooldown' ||
+                           currentGameState.phase === 'waiting' ||
+                           currentGameState.isCooldown === true ||
+                           currentGameState.showWaitingScreen === true;
+
+        if (isCooldown) {
+          elCooldownBanner.classList.remove('hidden');
+          elPhaseTag.textContent = 'COOLDOWN';
+          elPhaseTag.style.color = '#f59e0b';
+
+          if (gameType === 'wheel') {
+            elBtnNextRound.innerHTML = '<span>▶</span> START NEXT PUZZLE';
+            elCooldownText.textContent = 'Contestants are chatting! Press below when you are ready to reveal the next puzzle.';
+          } else if (gameType === 'trivia' || gameType === 'jeopardy') {
+            elBtnNextRound.innerHTML = '<span>▶</span> START NEXT QUESTION';
+            elCooldownText.textContent = 'Review scores with chat, then launch the next question.';
+          } else if (gameType === 'speak-out') {
+            elBtnNextRound.innerHTML = '<span>▶</span> START NEXT CHALLENGE';
+            elCooldownText.textContent = 'Contestant is getting ready! Press to begin the tongue twister challenge.';
+          } else {
+            elBtnNextRound.innerHTML = '<span>▶</span> START NEXT ROUND';
+            elCooldownText.textContent = 'Live Cooldown Active. Host has full manual control.';
+          }
+        } else {
+          elCooldownBanner.classList.add('hidden');
+          elPhaseTag.textContent = 'ACTIVE';
+          elPhaseTag.style.color = '#10b981';
+        }
+      }
+
+      function updateMonitor() {
+        // Active prompt / puzzle
+        const promptText = currentGameState.category ||
+                           currentGameState.topic ||
+                           currentGameState.currentPrompt?.setup ||
+                           currentGameState.currentPrompt?.question ||
+                           currentGameState.answer ||
+                           'Live Stage Active';
+        elActivePromptVal.textContent = promptText;
+
+        // Active player turn
+        if (typeof currentGameState.activePlayerIndex === 'number' && currentGameState.contestants) {
+          const p = currentGameState.contestants[currentGameState.activePlayerIndex];
+          elPlayerRow.style.display = 'flex';
+          elActivePlayerVal.textContent = p ? p.name : `Player ${currentGameState.activePlayerIndex + 1}`;
+          if (p && p.color) elActivePlayerVal.style.color = p.color;
+        } else {
+          elPlayerRow.style.display = 'none';
+        }
+
+        // Active timer
+        if (typeof currentGameState.seconds === 'number' || typeof currentGameState.remainingSeconds === 'number') {
+          const sec = currentGameState.remainingSeconds !== undefined ? currentGameState.remainingSeconds : currentGameState.seconds;
+          elTimerRow.style.display = 'flex';
+          elTimerVal.textContent = `${sec}s`;
+        } else {
+          elTimerRow.style.display = 'none';
+        }
+      }
+
+      // --- 4. ACTION DISPATCH ENGINE ---
+      window.triggerAction = function (action, payload = {}) {
+        vibrate(30);
+        showToast(`⚡ ${action.replace(/_/g, ' ')}`);
+
+        const packet = {
+          type: 'HOST_ACTION',
+          roomId: roomId,
+          gameType: gameType,
+          action: action,
+          payload: payload,
+          timestamp: Date.now()
+        };
+
+        // 1. Send over WebSocket
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          try { ws.send(JSON.stringify(packet)); } catch (e) {}
+        }
+
+        // 2. BroadcastChannel
+        if (broadcastChannel) {
+          try { broadcastChannel.postMessage(packet); } catch (e) {}
+        }
+
+        // 3. HTTP Server action endpoint
+        fetch(`/api/rooms/${roomId}/action`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action, payload })
+        }).catch(() => {});
+
+        // 4. Special Wheel Spin action shortcut
+        if (action === 'SPIN') {
+          fetch(`/api/rooms/${roomId}/spin`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              roomId: roomId,
+              startAngle: 0,
+              targetAngle: Math.floor(Math.random() * 360) + 1440,
+              duration: 4500,
+              startTime: Date.now()
+            })
+          }).catch(() => {});
+        }
+      };
+
+      window.sendSound = function (soundName) {
+        vibrate(20);
+        showToast(`🔊 Sound: ${soundName}`);
+
+        const packet = {
+          type: 'PLAY_SOUND',
+          roomId: roomId,
+          sound: soundName,
+          timestamp: Date.now()
+        };
+
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          try { ws.send(JSON.stringify(packet)); } catch (e) {}
+        }
+
+        fetch(`/api/rooms/${roomId}/sound`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sound: soundName })
+        }).catch(() => {});
+      };
+
+      // --- 4B. AUDIENCE LIVE INTERACTIONS & GIFTS ENGINE ---
+      let remoteRoseCount = 0;
+      let isRemoteHeartCooldown = false;
+      let isRemoteRoseCooldown = false;
+
+      window.triggerHeartRemote = function () {
+        if (isRemoteHeartCooldown) return;
+        vibrate([40, 60, 80]);
+        showToast('❤️ HEART ME SENT TO LIVE STAGE!');
+
+        triggerAction('HEART_ME_TRIGGER', { origin: 'phone-remote' });
+
+        isRemoteHeartCooldown = true;
+        const btnHeart = document.getElementById('btnRemoteHeart');
+        const btnSub = document.getElementById('btnRemoteHeartSub');
+        if (btnHeart) btnHeart.style.opacity = '0.5';
+        if (btnSub) btnSub.textContent = '(COOLDOWN)';
+
+        setTimeout(() => {
+          isRemoteHeartCooldown = false;
+          if (btnHeart) btnHeart.style.opacity = '1';
+          if (btnSub) btnSub.textContent = '(SEND HEART)';
+        }, 2500);
+      };
+
+      window.triggerRoseRemote = function () {
+        if (isRemoteRoseCooldown) return;
+        const count = Math.max(1, remoteRoseCount || 1);
+        vibrate([60, 40, 100]);
+        showToast(`🌹 ROSE BLOOM (×${count}) SENT TO STAGE!`);
+
+        triggerAction('ROSE_BLOOM_TRIGGER', {
+          count: count,
+          primaryGifter: 'Stream Audience',
+          origin: 'phone-remote'
+        });
+
+        // Reset queued roses
+        remoteRoseCount = 0;
+        updateRemoteRoseUI();
+
+        isRemoteRoseCooldown = true;
+        const btnRose = document.getElementById('btnRemoteRose');
+        const btnSub = document.getElementById('btnRemoteRoseSub');
+        if (btnRose) btnRose.style.opacity = '0.5';
+        if (btnSub) btnSub.textContent = '(COOLDOWN)';
+
+        setTimeout(() => {
+          isRemoteRoseCooldown = false;
+          if (btnRose) btnRose.style.opacity = '1';
+          if (btnSub) btnSub.textContent = '(PLANT LOVE)';
+        }, 2500);
+      };
+
+      window.triggerInteractionRemote = function (actionName, icon) {
+        vibrate(30);
+        showToast(`${icon} ${actionName.replace('INTERACTION_', '')} SENT!`);
+        triggerAction(actionName, { origin: 'phone-remote' });
+      };
+
+      window.simulateRoseRemote = function (addCount = 1) {
+        remoteRoseCount += addCount;
+        vibrate(25);
+        showToast(`🌹 Received +${addCount} Rose(s)! Total: ${remoteRoseCount}`);
+        updateRemoteRoseUI();
+      };
+
+      window.simulateHeartRemote = function () {
+        vibrate(30);
+        showToast(`❤️ Viewer sent Heart Me! Tap HEART ME to trigger.`);
+        const banner = document.getElementById('btnRemoteHeart');
+        if (banner) {
+          banner.style.boxShadow = '0 0 20px #f43f5e';
+          setTimeout(() => banner.style.boxShadow = '', 1500);
+        }
+      };
+
+      function updateRemoteRoseUI() {
+        const badge = document.getElementById('remoteRosePillBadge');
+        const banner = document.getElementById('remoteRoseQueueBanner');
+        const bannerCount = document.getElementById('remoteRoseQueueCount');
+        const roseSub = document.getElementById('btnRemoteRoseSub');
+
+        if (badge) badge.textContent = `× ${remoteRoseCount || 1}`;
+        if (roseSub && !isRemoteRoseCooldown) {
+          roseSub.textContent = remoteRoseCount > 1 ? `BLOOM × ${remoteRoseCount}` : '(PLANT LOVE)';
+        }
+
+        if (banner && bannerCount) {
+          if (remoteRoseCount > 0) {
+            banner.style.display = 'block';
+            bannerCount.textContent = `× ${remoteRoseCount}`;
+          } else {
+            banner.style.display = 'none';
+          }
+        }
+      }
+
+      // --- 5. DYNAMIC GAME CONTROLS RENDERING ---
+      function renderGameControls() {
+        if (gameType === 'wheel') {
+          elControlsContainer.innerHTML = `
+            <div class="section-title">
+              <span>🎡 WHEEL OF FORTUNE CONTROLS</span>
+            </div>
+            <div class="controls-grid">
+              <button type="button" class="btn-ctrl btn-spin" onclick="triggerAction('SPIN')">
+                <span class="ctrl-icon">🎡</span>
+                <span class="ctrl-label">SPIN THE WHEEL</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-gold" onclick="openLetterModal()">
+                <span class="ctrl-icon">🔤</span>
+                <span class="ctrl-label">CALL / REVEAL LETTER</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-correct" onclick="triggerAction('SOLVE')">
+                <span class="ctrl-icon">🏆</span>
+                <span class="ctrl-label">CORRECT SOLVE</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-wrong" onclick="triggerAction('WRONG')">
+                <span class="ctrl-icon">❌</span>
+                <span class="ctrl-label">WRONG / BUZZER</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-blue" onclick="triggerAction('NEXT_PLAYER')">
+                <span class="ctrl-icon">⏭</span>
+                <span class="ctrl-label">NEXT PLAYER</span>
+              </button>
+
+              <button type="button" class="btn-ctrl" onclick="triggerAction('HINT')">
+                <span class="ctrl-icon">💡</span>
+                <span class="ctrl-label">TOGGLE HINT</span>
+              </button>
+
+              <button type="button" class="btn-ctrl" onclick="triggerAction('REVEAL_ALL')">
+                <span class="ctrl-icon">👁️</span>
+                <span class="ctrl-label">REVEAL ALL</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-purple" style="grid-column: span 2;" onclick="triggerAction('START_ROUND')">
+                <span class="ctrl-icon">▶</span>
+                <span class="ctrl-label">ADVANCE TO NEXT PUZZLE</span>
+              </button>
+            </div>
+          `;
+        } else if (gameType === 'trivia' || gameType === 'jeopardy') {
+          elControlsContainer.innerHTML = `
+            <div class="section-title">
+              <span>🧠 TRIVIA CONTROLS</span>
+            </div>
+            <div class="controls-grid">
+              <button type="button" class="btn-ctrl btn-correct" style="grid-column: span 2; min-height: 80px;" onclick="triggerAction('CORRECT')">
+                <span class="ctrl-icon">✅</span>
+                <span class="ctrl-label">CORRECT ANSWER (+POINTS)</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-wrong" onclick="triggerAction('WRONG')">
+                <span class="ctrl-icon">❌</span>
+                <span class="ctrl-label">WRONG / STRIKE</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-gold" onclick="triggerAction('HINT')">
+                <span class="ctrl-icon">💡</span>
+                <span class="ctrl-label">REVEAL HINT</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-blue" onclick="triggerAction('START_TIMER')">
+                <span class="ctrl-icon">⏱</span>
+                <span class="ctrl-label">START 30S TIMER</span>
+              </button>
+
+              <button type="button" class="btn-ctrl" onclick="triggerAction('PAUSE_TIMER')">
+                <span class="ctrl-icon">⏸</span>
+                <span class="ctrl-label">PAUSE TIMER</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-purple" style="grid-column: span 2;" onclick="triggerAction('START_ROUND')">
+                <span class="ctrl-icon">⏭</span>
+                <span class="ctrl-label">NEXT QUESTION</span>
+              </button>
+            </div>
+          `;
+        } else if (gameType === 'speak-out') {
+          elControlsContainer.innerHTML = `
+            <div class="section-title">
+              <span>🗣️ SPEAK OUT / TONGUE TWISTER</span>
+            </div>
+            <div class="controls-grid">
+              <button type="button" class="btn-ctrl btn-spin" onclick="triggerAction('START_CHALLENGE')">
+                <span class="ctrl-icon">▶</span>
+                <span class="ctrl-label">START CHALLENGE</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-blue" onclick="triggerAction('START_TIMER')">
+                <span class="ctrl-icon">⏱</span>
+                <span class="ctrl-label">START TIMER</span>
+              </button>
+
+              <button type="button" class="btn-ctrl" onclick="triggerAction('PAUSE_TIMER')">
+                <span class="ctrl-icon">⏸</span>
+                <span class="ctrl-label">PAUSE TIMER</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-correct" onclick="triggerAction('PASS')">
+                <span class="ctrl-icon">🏆</span>
+                <span class="ctrl-label">SUCCESS (PASS)</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-wrong" onclick="triggerAction('FAIL')">
+                <span class="ctrl-icon">❌</span>
+                <span class="ctrl-label">FAIL (STRIKE)</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-gold" style="grid-column: span 2;" onclick="triggerAction('REPEAT')">
+                <span class="ctrl-icon">🔁</span>
+                <span class="ctrl-label">REPEAT PHRASE ON STAGE</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-purple" style="grid-column: span 2;" onclick="triggerAction('START_ROUND')">
+                <span class="ctrl-icon">⏭</span>
+                <span class="ctrl-label">NEXT CHALLENGE</span>
+              </button>
+            </div>
+          `;
+        } else {
+          // General Stream Game
+          elControlsContainer.innerHTML = `
+            <div class="section-title">
+              <span>🎮 STREAM GAME CONTROLS</span>
+            </div>
+            <div class="controls-grid">
+              <button type="button" class="btn-ctrl btn-spin" onclick="triggerAction('START_ROUND')">
+                <span class="ctrl-icon">▶</span>
+                <span class="ctrl-label">START / NEXT PROMPT</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-correct" onclick="triggerAction('CORRECT')">
+                <span class="ctrl-icon">✅</span>
+                <span class="ctrl-label">CORRECT / PASS</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-wrong" onclick="triggerAction('WRONG')">
+                <span class="ctrl-icon">❌</span>
+                <span class="ctrl-label">WRONG / PASS</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-blue" onclick="triggerAction('START_TIMER')">
+                <span class="ctrl-icon">⏱</span>
+                <span class="ctrl-label">START TIMER</span>
+              </button>
+
+              <button type="button" class="btn-ctrl btn-gold" onclick="triggerAction('HINT')">
+                <span class="ctrl-icon">💡</span>
+                <span class="ctrl-label">REVEAL HINT</span>
+              </button>
+            </div>
+          `;
+        }
+      }
+
+      // Alphabet pad setup for Wheel letter calls
+      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+      const vowels = new Set(['A', 'E', 'I', 'O', 'U']);
+      const elAlphabetGrid = document.getElementById('alphabetGrid');
+      alphabet.forEach(letter => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `btn-letter ${vowels.has(letter) ? 'vowel' : ''}`;
+        btn.textContent = letter;
+        btn.onclick = () => {
+          triggerAction('LETTER', { letter });
+          closeLetterModal();
+        };
+        elAlphabetGrid.appendChild(btn);
+      });
+
+      window.openLetterModal = function () {
+        document.getElementById('letterModal').classList.add('active');
+      };
+
+      window.closeLetterModal = function () {
+        document.getElementById('letterModal').classList.remove('active');
+      };
+
+      window.openQRModal = function () {
+        const modal = document.getElementById('qrModal');
+        const container = document.getElementById('qrCodeContainer');
+        const qrRoomText = document.getElementById('qrRoomCodeText');
+        const qrUrlText = document.getElementById('qrUrlText');
+        const targetUrl = window.location.href;
+
+        if (qrRoomText) qrRoomText.textContent = `ROOM: ${roomId} • ${gameType.toUpperCase()}`;
+        if (qrUrlText) qrUrlText.textContent = targetUrl;
+
+        if (container) {
+          container.innerHTML = '';
+          if (window.QRCode) {
+            try {
+              new QRCode(container, {
+                text: targetUrl,
+                width: 172,
+                height: 172,
+                colorDark: '#070a13',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.M
+              });
+            } catch (e) {
+              container.innerHTML = `<span style="color:#000; font-size:12px;">QR Ready</span>`;
+            }
+          } else {
+            container.innerHTML = `<span style="color:#000; font-size:12px;">Scan link</span>`;
+          }
+        }
+
+        if (modal) modal.classList.add('active');
+      };
+
+      window.closeQRModal = function () {
+        const modal = document.getElementById('qrModal');
+        if (modal) modal.classList.remove('active');
+      };
+
+      window.copyRemoteUrl = function () {
+        try {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            showToast('COPIED LINK TO CLIPBOARD');
+          }).catch(() => {
+            showToast('LINK READY');
+          });
+        } catch (e) {
+          showToast('LINK READY');
+        }
+      };
+
+      window.openRoomSwitchPrompt = function () {
+        const newRoom = prompt('Enter Room Code to connect to:', roomId);
+        if (newRoom && newRoom.trim()) {
+          const cleanRoom = newRoom.trim().toUpperCase();
+          sessionStorage.setItem('dion_current_room', cleanRoom);
+          const currentUrl = new URL(window.location.href);
+          currentUrl.searchParams.set('room', cleanRoom);
+          window.location.href = currentUrl.toString();
+        }
+      };
+
+      // --- 6. INITIALIZATION ---
+      renderGameControls();
+      initWebSocket();
+      initBroadcastChannel();
+      pollRoomState();
+
+      pollInterval = setInterval(pollRoomState, 1500);
+
+      // Heartbeat ping
+      setInterval(() => {
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({ type: 'PING' }));
+        }
+      }, 10000);
+
+      window.openGiftSoundboardFromRemote = function () {
+        vibrate(30);
+        if (window.HeartPowerSystem) {
+          window.HeartPowerSystem.injectStoryboardModal();
+          window.HeartPowerSystem.openStoryboardModal('soundboard');
+        } else {
+          showToast('🎁 SOUNDBOARD LOADING...');
+        }
+      };
+
+      window.addEventListener('beforeunload', () => {
+        if (pollInterval) clearInterval(pollInterval);
+      });
+
+    })();
+  </script>
+  <script src="/shared/heart-power-system.js"></script>
+</body>
+</html>

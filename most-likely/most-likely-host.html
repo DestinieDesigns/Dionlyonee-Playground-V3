@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dionlyonee Most Likely — Host</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+
+            margin: 0;
+
+            min-height: 100%;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: white;
+
+            background:
+
+                radial-gradient(
+                    circle at 50% 0%,
+                    #17494a,
+                    #071516 45%,
+                    #020404
+                );
+
+        }
+
+
+        button {
+
+            font-family: inherit;
+
+        }
+
+
+        .host {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        /* HEADER */
+
+        .header {
+
+            min-height: 82px;
+
+            padding:
+                18px 30px;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.08);
+
+            background:
+                rgba(0,0,0,.35);
+
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+        }
+
+
+        .logo {
+
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                2px solid
+                #d4af37;
+
+            border-radius: 12px;
+
+            color:
+                #d4af37;
+
+            font-size: 24px;
+
+            font-weight: 900;
+
+        }
+
+
+        .brand-name {
+
+            color:
+                #d4af37;
+
+            font-size: 12px;
+
+            font-weight: 900;
+
+            letter-spacing: 4px;
+
+        }
+
+
+        .brand-game {
+
+            margin-top: 5px;
+
+            color:
+                #718586;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            letter-spacing: 3px;
+
+        }
+
+
+        .status {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .status-dot {
+
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            background:
+                #596869;
+
+        }
+
+
+        .status-dot.live {
+
+            background:
+                #4fe29b;
+
+            box-shadow:
+                0 0 15px
+                rgba(79,226,155,.8);
+
+        }
+
+
+        .status-label {
+
+            display: block;
+
+            color:
+                #627273;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        #statusText {
+
+            display: block;
+
+            margin-top: 4px;
+
+            color:
+                #d4af37;
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        /* MAIN */
+
+        .main {
+
+            flex: 1;
+
+            width: 100%;
+
+            max-width: 1350px;
+
+            margin: auto;
+
+            padding: 35px;
+
+            display: grid;
+
+            grid-template-columns:
+                270px
+                minmax(400px, 1fr)
+                270px;
+
+            gap: 25px;
+
+        }
+
+
+        .panel {
+
+            padding: 22px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            border-radius: 18px;
+
+            background:
+                rgba(9,18,19,.9);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,.25);
+
+        }
+
+
+        .panel-title {
+
+            margin-bottom: 20px;
+
+            color:
+                #d4af37;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            letter-spacing: 3px;
+
+        }
+
+
+        /* BUTTONS */
+
+        .control-buttons {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+
+        }
+
+
+        .control-button {
+
+            width: 100%;
+
+            min-height: 58px;
+
+            border: 1px solid
+                rgba(255,255,255,.1);
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            color: white;
+
+            transition:
+                .2s ease;
+
+        }
+
+
+        .control-button:hover:not(:disabled) {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .start {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #b99425,
+                    #d4af37
+                );
+
+            color:
+                #071112;
+
+        }
+
+
+        .next {
+
+            background:
+                #123839;
+
+            border-color:
+                rgba(212,175,55,.3);
+
+        }
+
+
+        .reset {
+
+            background:
+                #171d1e;
+
+            color:
+                #9a9fa0;
+
+        }
+
+
+        .control-button:disabled {
+
+            opacity:
+                .35;
+
+            cursor:
+                not-allowed;
+
+        }
+
+
+        /* DECK */
+
+        .deck-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+
+        }
+
+
+        .deck-box {
+
+            padding: 18px 10px;
+
+            text-align: center;
+
+            border:
+                1px solid
+                rgba(255,255,255,.06);
+
+            border-radius: 12px;
+
+            background:
+                #0b1314;
+
+        }
+
+
+        .deck-number {
+
+            display: block;
+
+            color:
+                #d4af37;
+
+            font-size: 30px;
+
+            font-weight: 900;
+
+        }
+
+
+        .deck-label {
+
+            display: block;
+
+            margin-top: 7px;
+
+            color:
+                #647576;
+
+            font-size: 7px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        /* QUESTION */
+
+        .question-column {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        .current-label {
+
+            margin-bottom: 18px;
+
+            color:
+                #d4af37;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            letter-spacing: 4px;
+
+        }
+
+
+        .question-card {
+
+            width: 100%;
+
+            min-height: 410px;
+
+            padding: 45px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            position: relative;
+
+            border:
+                2px solid
+                #d4af37;
+
+            border-radius: 25px;
+
+            background:
+
+                radial-gradient(
+                    circle at 50% 25%,
+                    #174c4d,
+                    #081516 65%,
+                    #030707
+                );
+
+            box-shadow:
+
+                0 30px 80px
+                rgba(0,0,0,.5),
+
+                0 0 50px
+                rgba(212,175,55,.1);
+
+        }
+
+
+        .question-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 12px;
+
+            border:
+                1px solid
+                rgba(212,175,55,.2);
+
+            border-radius: 18px;
+
+        }
+
+
+        .card-number {
+
+            position: absolute;
+
+            top: 28px;
+
+            right: 32px;
+
+            color:
+                #d4af37;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .card-icon {
+
+            font-size: 45px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .question {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 700px;
+
+            color: white;
+
+            font-size:
+                clamp(28px, 4vw, 55px);
+
+            line-height: 1.08;
+
+            font-weight: 900;
+
+        }
+
+
+        .card-label {
+
+            margin-top: 28px;
+
+            color:
+                #758788;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            letter-spacing: 3px;
+
+        }
+
+
+        .message {
+
+            margin-top: 18px;
+
+            color:
+                #68797a;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            text-align: center;
+
+        }
+
+
+        /* RIGHT */
+
+        .live-box {
+
+            text-align: center;
+
+        }
+
+
+        .live-icon {
+
+            font-size: 42px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .live-title {
+
+            color:
+                #d4af37;
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .live-description {
+
+            margin-top: 12px;
+
+            color:
+                #657576;
+
+            font-size: 9px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .connection-box {
+
+            margin-top: 20px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background:
+                #0c191a;
+
+            color:
+                #55dc99;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        /* SHORTCUTS */
+
+        .shortcut {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 12px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.05);
+
+            color:
+                #718182;
+
+            font-size: 9px;
+
+        }
+
+
+        kbd {
+
+            padding:
+                6px 9px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.1);
+
+            border-radius: 6px;
+
+            color:
+                #d4af37;
+
+            background:
+                #101718;
+
+            font-weight: 900;
+
+        }
+
+
+        /* FOOTER */
+
+        footer {
+
+            padding:
+                18px;
+
+            text-align: center;
+
+            color:
+                #4e5d5e;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.06);
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: 3px;
+
+        }
+
+
+        footer b {
+
+            margin:
+                0 12px;
+
+            color:
+                #d4af37;
+
+        }
+
+
+        /* ANIMATION */
+
+        .card-pop {
+
+            animation:
+                cardPop .4s ease;
+
+        }
+
+
+        @keyframes cardPop {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    scale(.94)
+                    translateY(15px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    scale(1)
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* MOBILE */
+
+        @media(max-width:950px) {
+
+            .main {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .question-column {
+
+                order:
+                    -1;
+
+            }
+
+        }
+
+
+        @media(max-width:600px) {
+
+            .header {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .main {
+
+                padding:
+                    18px;
+
+            }
+
+
+            .question-card {
+
+                min-height:
+                    350px;
+
+                padding:
+                    30px 20px;
+
+            }
+
+
+            .status {
+
+                display:
+                    none;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="host">
+
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="logo">
+                D
+            </div>
+
+            <div>
+
+                <div class="brand-name">
+                    DIONLYONEE
+                </div>
+
+                <div class="brand-game">
+                    MOST LIKELY • HOST CONTROL
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="status">
+
+            <span
+                id="statusDot"
+                class="status-dot"
+            ></span>
+
+            <div>
+
+                <span class="status-label">
+                    GAME STATUS
+                </span>
+
+                <strong id="statusText">
+                    READY
+                </strong>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="main">
+
+
+        <!-- LEFT -->
+
+        <section>
+
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    GAME CONTROL
+                </div>
+
+
+                <div class="control-buttons">
+
+                    <button
+                        id="startButton"
+                        class="control-button start"
+                        type="button"
+                    >
+                        ▶ START GAME
+                    </button>
+
+
+                    <button
+                        id="nextButton"
+                        class="control-button next"
+                        type="button"
+                        disabled
+                    >
+                        🃏 NEXT CARD
+                    </button>
+
+
+                    <button
+                        id="resetButton"
+                        class="control-button reset"
+                        type="button"
+                    >
+                        ↻ RESET DECK
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="panel"
+                style="margin-top:18px;"
+            >
+
+                <div class="panel-title">
+                    CARD DECK
+                </div>
+
+
+                <div class="deck-grid">
+
+                    <div class="deck-box">
+
+                        <span
+                            id="remainingCount"
+                            class="deck-number"
+                        >
+                            40
+                        </span>
+
+                        <span class="deck-label">
+                            REMAINING
+                        </span>
+
+                    </div>
+
+
+                    <div class="deck-box">
+
+                        <span
+                            id="usedCount"
+                            class="deck-number"
+                        >
+                            0
+                        </span>
+
+                        <span class="deck-label">
+                            USED
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CENTER -->
+
+        <section class="question-column">
+
+            <div class="current-label">
+                CURRENT CARD
+            </div>
+
+
+            <div
+                id="questionCard"
+                class="question-card"
+            >
+
+                <div
+                    id="cardNumber"
+                    class="card-number"
+                >
+                    CARD —
+                </div>
+
+
+                <div class="card-icon">
+                    🃏
+                </div>
+
+
+                <div
+                    id="question"
+                    class="question"
+                >
+                    READY TO PLAY
+                </div>
+
+
+                <div class="card-label">
+                    LET CHAT DEBATE
+                </div>
+
+            </div>
+
+
+            <div
+                id="hostMessage"
+                class="message"
+            >
+                PRESS START TO DRAW THE FIRST CARD
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT -->
+
+        <section>
+
+
+            <div class="panel live-box">
+
+                <div class="panel-title">
+                    LIVE SCREEN
+                </div>
+
+
+                <div class="live-icon">
+                    📺
+                </div>
+
+
+                <div class="live-title">
+                    PON DI APP
+                </div>
+
+
+                <div class="live-description">
+
+                    The audience screen receives
+                    every card automatically.
+
+                </div>
+
+
+                <div class="connection-box">
+                    ● BROADCAST READY
+                </div>
+
+            </div>
+
+
+            <div
+                class="panel"
+                style="margin-top:18px;"
+            >
+
+                <div class="panel-title">
+                    SHORTCUTS
+                </div>
+
+
+                <div class="shortcut">
+
+                    <span>
+                        Next card
+                    </span>
+
+                    <kbd>
+                        SPACE
+                    </kbd>
+
+                </div>
+
+
+                <div class="shortcut">
+
+                    <span>
+                        Reset deck
+                    </span>
+
+                    <kbd>
+                        R
+                    </kbd>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+
+        DIONLYONEE
+        <b>◆</b>
+        MOST LIKELY
+        <b>◆</b>
+        HOST CONTROL
+
+    </footer>
+
+
+</div>
+
+
+<script src="most-likely-game.js"></script>
+
+
+<script>
+
+"use strict";
+
+
+const startButton =
+    document.getElementById(
+        "startButton"
+    );
+
+
+const nextButton =
+    document.getElementById(
+        "nextButton"
+    );
+
+
+const resetButton =
+    document.getElementById(
+        "resetButton"
+    );
+
+
+const question =
+    document.getElementById(
+        "question"
+    );
+
+
+const questionCard =
+    document.getElementById(
+        "questionCard"
+    );
+
+
+const cardNumber =
+    document.getElementById(
+        "cardNumber"
+    );
+
+
+const remainingCount =
+    document.getElementById(
+        "remainingCount"
+    );
+
+
+const usedCount =
+    document.getElementById(
+        "usedCount"
+    );
+
+
+const statusText =
+    document.getElementById(
+        "statusText"
+    );
+
+
+const statusDot =
+    document.getElementById(
+        "statusDot"
+    );
+
+
+const hostMessage =
+    document.getElementById(
+        "hostMessage"
+    );
+
+
+/* =====================================================
+   UPDATE HOST
+   ===================================================== */
+
+function updateHost(state) {
+
+    remainingCount.textContent =
+        state.remaining;
+
+
+    usedCount.textContent =
+        state.used;
+
+
+    if (
+        state.started &&
+        state.currentQuestion
+    ) {
+
+        question.textContent =
+            state.currentQuestion;
+
+
+        cardNumber.textContent =
+            "CARD #" +
+            state.cardNumber;
+
+
+        statusText.textContent =
+            "LIVE";
+
+
+        statusDot.classList.add(
+            "live"
+        );
+
+
+        nextButton.disabled =
+            state.remaining <= 0;
+
+
+        hostMessage.textContent =
+            state.remaining > 0
+                ? "CARD IS LIVE — LET CHAT DEBATE"
+                : "DECK COMPLETE — RESET TO PLAY AGAIN";
+
+
+        questionCard.classList.remove(
+            "card-pop"
+        );
+
+
+        void questionCard.offsetWidth;
+
+
+        questionCard.classList.add(
+            "card-pop"
+        );
+
+
+        return;
+
+    }
+
+
+    question.textContent =
+        "READY TO PLAY";
+
+
+    cardNumber.textContent =
+        "CARD —";
+
+
+    statusText.textContent =
+        "READY";
+
+
+    statusDot.classList.remove(
+        "live"
+    );
+
+
+    nextButton.disabled =
+        true;
+
+
+    hostMessage.textContent =
+        "PRESS START TO DRAW THE FIRST CARD";
+
+}
+
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+
+startButton.addEventListener(
+    "click",
+    function () {
+
+        startMostLikelyGame();
+
+    }
+);
+
+
+nextButton.addEventListener(
+    "click",
+    function () {
+
+        nextMostLikelyCard();
+
+    }
+);
+
+
+resetButton.addEventListener(
+    "click",
+    function () {
+
+        const answer =
+            confirm(
+                "Reset the Most Likely deck?"
+            );
+
+
+        if (answer) {
+
+            resetMostLikelyGame();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   KEYBOARD
+   ===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.target.tagName ===
+            "INPUT"
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            event.code ===
+            "Space"
+        ) {
+
+            event.preventDefault();
+
+
+            if (
+                mostLikelyState.started
+            ) {
+
+                nextMostLikelyCard();
+
+            } else {
+
+                startMostLikelyGame();
+
+            }
+
+        }
+
+
+        if (
+            event.key.toLowerCase() ===
+            "r"
+        ) {
+
+            resetMostLikelyGame();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   RECEIVE STATE
+   ===================================================== */
+
+mostLikelyChannel.addEventListener(
+    "message",
+    function (event) {
+
+        if (
+            event.data &&
+            event.data.type ===
+            "STATE"
+        ) {
+
+            updateHost(
+                event.data.state
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   INITIAL
+   ===================================================== */
+
+updateHost(
+    getMostLikelyPublicState()
+);
+
+
+broadcastMostLikelyState();
+
+</script>
+
+
+</body>
+
+</html>

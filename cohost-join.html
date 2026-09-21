@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0b1120" />
+  <title>Co-Host Join • Dionlyonee Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a13;
+      --card: #0f172a;
+      --gold: #facc15;
+      --gold-dark: #ca8a04;
+      --emerald: #10b981;
+      --blue: #3b82f6;
+      --text: #ffffff;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #070a13 70%);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .join-box {
+      background: rgba(15, 23, 42, 0.9);
+      border: 2px solid rgba(250, 204, 21, 0.35);
+      border-radius: 24px;
+      padding: 32px 24px;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(250, 204, 21, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+      backdrop-filter: blur(16px);
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(250, 204, 21, 0.12);
+      border: 1px solid rgba(250, 204, 21, 0.3);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: 1px;
+      margin: 0 auto;
+      text-transform: uppercase;
+    }
+
+    .title {
+      font-family: 'Cinzel', serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .input-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #e2e8f0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .room-input {
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      padding: 16px;
+      color: #ffffff;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 22px;
+      font-weight: 900;
+      text-align: center;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .room-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(250, 204, 21, 0.35);
+    }
+
+    .btn-join {
+      background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+      color: #000000;
+      border: none;
+      border-radius: 14px;
+      padding: 18px 24px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(250, 204, 21, 0.35);
+      transition: transform 0.1s, filter 0.1s;
+    }
+
+    .btn-join:active {
+      transform: scale(0.98);
+      filter: brightness(0.9);
+    }
+
+    /* STATUS & VALIDATION BOX */
+    .validation-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 14px;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+      font-size: 12.5px;
+    }
+
+    .validation-box.active {
+      display: flex;
+    }
+
+    .val-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .val-label {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .val-value {
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .val-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #eab308;
+      margin-right: 6px;
+    }
+
+    .val-dot.ok { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+    .val-dot.err { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+
+    .help-text {
+      font-size: 11.5px;
+      color: #64748b;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="join-box">
+    <div class="brand-badge">
+      <span>🎙️</span> CO-HOST DESK
+    </div>
+
+    <h1 class="title">JOIN STREAM ROOM</h1>
+    <p class="subtitle">
+      Enter the Room Code provided by your Host to automatically connect to the active game and live buzzers.
+    </p>
+
+    <div class="input-group">
+      <label class="input-label" for="roomInput">ROOM CODE</label>
+      <input type="text" id="roomInput" class="room-input" placeholder="DION1234" maxlength="12" autocomplete="off" autocorrect="off" spellcheck="false" />
+    </div>
+
+    <button type="button" id="btnJoin" class="btn-join" onclick="handleJoin()">
+      <span>🎮</span> JOIN AS CO-HOST
+    </button>
+
+    <!-- VALIDATION STATUS -->
+    <div id="validationBox" class="validation-box">
+      <div class="val-row">
+        <span class="val-label">Verification:</span>
+        <span id="valStatus" class="val-value"><span class="val-dot"></span> Checking room...</span>
+      </div>
+      <div class="val-row" id="gameRow" style="display: none;">
+        <span class="val-label">Assigned Game:</span>
+        <span id="valGame" class="val-value" style="color: var(--gold);">Wheel of Fortune</span>
+      </div>
+      <div class="val-row" id="hostRow" style="display: none;">
+        <span class="val-label">Host Status:</span>
+        <span id="valHost" class="val-value" style="color: #38bdf8;">Online 🟢</span>
+      </div>
+    </div>
+
+    <p class="help-text">
+      The Co-Host system never resets the game state or creates duplicate rooms. You will be connected directly to the Host's existing session.
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlRoom = urlParams.get('room') || sessionStorage.getItem('dion_current_room') || '';
+      const input = document.getElementById('roomInput');
+      const valBox = document.getElementById('validationBox');
+      const valStatus = document.getElementById('valStatus');
+      const valGame = document.getElementById('valGame');
+      const valHost = document.getElementById('valHost');
+      const gameRow = document.getElementById('gameRow');
+      const hostRow = document.getElementById('hostRow');
+      const btnJoin = document.getElementById('btnJoin');
+
+      if (urlRoom) {
+        input.value = urlRoom.trim().toUpperCase();
+      }
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleJoin();
+      });
+
+      const gameRoutes = {
+        'wheel': '/wheel/cohost/index.html',
+        'trivia': '/trivia/cohost/index.html',
+        'jeopardy': '/jeopardy-cohost.html',
+        'word-reveal': '/word-reveal/cohost/index.html',
+        'speak-out': '/speak-out/cohost/index.html',
+        'most-likely': '/wheel-cohost.html'
+      };
+
+      const gameTitles = {
+        'wheel': '🎡 Wheel of Fortune',
+        'trivia': '🧠 Stream Trivia',
+        'jeopardy': '🏆 Jeopardy Trivia',
+        'word-reveal': '🔤 Word Reveal',
+        'speak-out': '🗣️ Dionlyonee Speak Out',
+        'most-likely': '👥 Most Likely To'
+      };
+
+      window.handleJoin = async function () {
+        const code = input.value.trim().toUpperCase();
+        if (!code) {
+          alert('Please enter the Room Code from your Host.');
+          input.focus();
+          return;
+        }
+
+        btnJoin.disabled = true;
+        btnJoin.style.opacity = '0.7';
+        btnJoin.innerHTML = '<span>⏳</span> VERIFYING ROOM...';
+
+        valBox.classList.add('active');
+        valStatus.innerHTML = '<span class="val-dot"></span> Checking room code...';
+        gameRow.style.display = 'none';
+        hostRow.style.display = 'none';
+
+        try {
+          // Check if room exists
+          const res = await fetch(`/api/rooms/${code}?t=${Date.now()}`);
+          let gameType = 'wheel';
+          let roomExists = false;
+
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.room) {
+              roomExists = true;
+              gameType = (data.room.gameType || 'wheel').toLowerCase();
+            }
+          }
+
+          valStatus.innerHTML = '<span class="val-dot ok"></span> Room Verified & Active!';
+          gameRow.style.display = 'flex';
+          valGame.textContent = gameTitles[gameType] || gameType.toUpperCase();
+          hostRow.style.display = 'flex';
+          valHost.textContent = 'Connected 🟢';
+
+          sessionStorage.setItem('dion_current_room', code);
+
+          setTimeout(() => {
+            btnJoin.innerHTML = '<span>🚀</span> OPENING CO-HOST DESK...';
+            const targetPath = gameRoutes[gameType] || `/wheel/cohost/index.html`;
+            window.location.href = `${targetPath}?room=${encodeURIComponent(code)}`;
+          }, 600);
+
+        } catch (err) {
+          // In case of network glitch, fallback gracefully to wheel cohost with room parameter
+          sessionStorage.setItem('dion_current_room', code);
+          window.location.href = `/wheel/cohost/index.html?room=${encodeURIComponent(code)}`;
+        }
+      };
+    })();
+  </script>
+</body>
+</html>

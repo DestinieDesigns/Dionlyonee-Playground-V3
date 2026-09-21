@@ -1,0 +1,49 @@
+/* Responsive Viewport Rules */
+
+@media (max-width: 1024px) {
+  .main-header {
+    padding: 14px 20px;
+  }
+  .hub-container {
+    padding: 24px 16px 40px;
+  }
+  .games-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 20px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .brand-title {
+    font-size: 15px;
+  }
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+  .room-hud-badge {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  .hub-hero-title {
+    font-size: 28px !important;
+  }
+  .hub-hero-subtitle {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .games-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .hub-stats-row {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+}

@@ -1,0 +1,724 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+
+    margin: 0;
+
+    width: 100%;
+    height: 100%;
+
+}
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #174345 0%,
+            #0a2021 35%,
+            #030707 75%,
+            #010202 100%
+        );
+
+    color: white;
+
+}
+
+
+.live {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.live-header {
+
+    height: 72px;
+
+    padding: 0 35px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr;
+
+    align-items: center;
+
+    border-bottom:
+        1px solid
+        rgba(212,175,55,.18);
+
+    background:
+        rgba(1,4,4,.7);
+
+    backdrop-filter:
+        blur(12px);
+
+}
+
+.brand {
+
+    color: #d4af37;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+}
+
+.game-name {
+
+    color: #9aa7a7;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+}
+
+.connection {
+
+    justify-self: end;
+
+    color: #637475;
+
+    font-size: 7px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================================
+   WAITING SCREEN
+========================================= */
+
+.waiting-screen {
+
+    position: relative;
+
+    flex: 1;
+
+    min-height:
+        calc(100vh - 125px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    overflow: hidden;
+
+}
+
+.waiting-art {
+
+    position: absolute;
+
+    width: 600px;
+    height: 600px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%,-50%)
+        rotate(45deg);
+
+    opacity: .35;
+
+}
+
+.diamond {
+
+    position: absolute;
+
+    width: 110px;
+    height: 110px;
+
+    border:
+        1px solid
+        rgba(212,175,55,.12);
+
+    background:
+        rgba(212,175,55,.025);
+
+}
+
+.d1 {
+    top: 0;
+    left: 245px;
+}
+
+.d2 {
+    top: 80px;
+    left: 125px;
+}
+
+.d3 {
+    top: 80px;
+    right: 125px;
+}
+
+.d4 {
+    top: 200px;
+    left: 5px;
+}
+
+.d5 {
+    top: 200px;
+    right: 5px;
+}
+
+.d6 {
+    bottom: 80px;
+    left: 125px;
+}
+
+.d7 {
+    bottom: 80px;
+    right: 125px;
+}
+
+.d8 {
+    bottom: 0;
+    left: 245px;
+}
+
+
+.waiting-brand {
+
+    position: relative;
+
+    color: #d4af37;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 6px;
+
+}
+
+.pon-di {
+
+    position: relative;
+
+    margin-top: 14px;
+
+    color: white;
+
+    font-size:
+        clamp(45px,8vw,85px);
+
+    line-height: .85;
+
+    font-weight: 900;
+
+    letter-spacing: 5px;
+
+}
+
+.waiting-screen h1 {
+
+    position: relative;
+
+    margin: 0;
+
+    color: #d4af37;
+
+    font-size:
+        clamp(60px,10vw,105px);
+
+    line-height: .85;
+
+    font-weight: 900;
+
+    letter-spacing: 8px;
+
+}
+
+.waiting-line {
+
+    position: relative;
+
+    width: 110px;
+    height: 2px;
+
+    margin: 25px 0;
+
+    background:
+        #d4af37;
+
+}
+
+.waiting-game {
+
+    position: relative;
+
+    color: #8ba0a1;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 5px;
+
+}
+
+.waiting-screen p {
+
+    position: relative;
+
+    margin-top: 16px;
+
+    color: #657778;
+
+    font-size: 9px;
+
+    line-height: 1.8;
+
+    letter-spacing: 1px;
+
+}
+
+
+/* =========================================
+   WAITING CARD
+========================================= */
+
+.waiting-card {
+
+    position: relative;
+
+    margin-top: 30px;
+
+    padding: 15px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    border:
+        1px solid
+        rgba(212,175,55,.18);
+
+    border-radius: 14px;
+
+    background:
+        rgba(212,175,55,.035);
+
+}
+
+.waiting-card-icon {
+
+    font-size: 25px;
+
+}
+
+.waiting-card strong {
+
+    display: block;
+
+    color: #d4af37;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+}
+
+.waiting-card small {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: #5e6f70;
+
+    font-size: 6px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+}
+
+
+/* =========================================
+   GAME SCREEN
+========================================= */
+
+.game-screen {
+
+    flex: 1;
+
+    min-height:
+        calc(100vh - 125px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+
+}
+
+.hidden {
+
+    display: none !important;
+
+}
+
+.game-eyebrow {
+
+    margin-bottom: 20px;
+
+    color: #789091;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 5px;
+
+}
+
+
+/* =========================================
+   LIVE CARD
+========================================= */
+
+.live-card {
+
+    position: relative;
+
+    width:
+        min(850px,90vw);
+
+    min-height: 500px;
+
+    padding: 30px 35px;
+
+    overflow: hidden;
+
+    border:
+        2px solid
+        #d4af37;
+
+    border-radius: 28px;
+
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            #174748,
+            #0b2627 45%,
+            #061010 100%
+        );
+
+    box-shadow:
+
+        0 35px 100px
+        rgba(0,0,0,.55),
+
+        inset 0 0 70px
+        rgba(212,175,55,.04);
+
+}
+
+.card-glow {
+
+    position: absolute;
+
+    width: 400px;
+    height: 400px;
+
+    left: 50%;
+    top: -200px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        rgba(212,175,55,.08);
+
+    filter:
+        blur(65px);
+
+}
+
+.card-top,
+.card-bottom {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: #d4af37;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+}
+
+.card-center {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 85%;
+
+    transform:
+        translate(-50%,-50%);
+
+    text-align: center;
+
+}
+
+.card-label {
+
+    color: #849b9c;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 5px;
+
+}
+
+.live-question {
+
+    margin-top: 25px;
+
+    color: white;
+
+    font-size:
+        clamp(24px,4vw,46px);
+
+    line-height: 1.25;
+
+    font-weight: 900;
+
+}
+
+.card-divider {
+
+    width: 100px;
+    height: 2px;
+
+    margin: 28px auto;
+
+    background:
+        #d4af37;
+
+}
+
+.card-prompt {
+
+    color: #d4af37;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+}
+
+
+/* =========================================
+   CARD ANIMATION
+========================================= */
+
+.card-change {
+
+    animation:
+        cardChange .65s ease;
+
+}
+
+@keyframes cardChange {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            rotateX(12deg)
+            scale(.97);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            rotateX(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+.game-message {
+
+    margin-top: 20px;
+
+    color: #526465;
+
+    font-size: 7px;
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.live-footer {
+
+    height: 53px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    border-top:
+        1px solid
+        rgba(212,175,55,.12);
+
+    color: #3d5051;
+
+    font-size: 7px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+}
+
+.live-footer b {
+
+    color: #d4af37;
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:700px) {
+
+    .live-header {
+
+        height: 60px;
+
+        padding: 0 15px;
+
+    }
+
+    .brand {
+
+        font-size: 7px;
+
+        letter-spacing: 2px;
+
+    }
+
+    .game-name {
+
+        font-size: 6px;
+
+        letter-spacing: 2px;
+
+    }
+
+    .connection {
+
+        font-size: 5px;
+
+    }
+
+    .live-card {
+
+        min-height: 450px;
+
+        padding: 22px;
+
+    }
+
+    .live-question {
+
+        font-size: 23px;
+
+    }
+
+    .waiting-art {
+
+        transform:
+            translate(-50%,-50%)
+            rotate(45deg)
+            scale(.7);
+
+    }
+
+    .live-footer {
+
+        display: none;
+
+    }
+
+}

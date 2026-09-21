@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dionlyonee Most Likely — Live</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+
+            margin: 0;
+
+            min-height: 100%;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: white;
+
+            background:
+                #030708;
+
+        }
+
+
+        .live {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background:
+
+                radial-gradient(
+                    circle at 50% 20%,
+                    #164546,
+                    transparent 42%
+                ),
+
+                linear-gradient(
+                    145deg,
+                    #061112,
+                    #020405
+                );
+
+        }
+
+
+        /* HEADER */
+
+        header {
+
+            min-height: 75px;
+
+            padding:
+                18px 30px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content:
+                space-between;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.07);
+
+            background:
+                rgba(0,0,0,.4);
+
+        }
+
+
+        .brand {
+
+            color:
+                #d4af37;
+
+            font-size:
+                12px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                4px;
+
+        }
+
+
+        .game {
+
+            color:
+                #738384;
+
+            font-size:
+                9px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                3px;
+
+        }
+
+
+        .connection {
+
+            color:
+                #68797a;
+
+            font-size:
+                8px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                2px;
+
+        }
+
+
+        .connection.live {
+
+            color:
+                #53e19a;
+
+        }
+
+
+        /* WAITING */
+
+        .waiting {
+
+            flex: 1;
+
+            min-height:
+                calc(100vh - 130px);
+
+            display: flex;
+
+            flex-direction:
+                column;
+
+            align-items: center;
+
+            justify-content:
+                center;
+
+            text-align: center;
+
+            padding:
+                40px 20px;
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+        }
+
+
+        /* DIAMOND PIXELS */
+
+        .pixels {
+
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            pointer-events:
+                none;
+
+        }
+
+
+        .pixel {
+
+            position:
+                absolute;
+
+            width:
+                14px;
+
+            height:
+                14px;
+
+            transform:
+                rotate(45deg);
+
+            border:
+                2px solid
+                rgba(212,175,55,.35);
+
+            box-shadow:
+                0 0 12px
+                rgba(212,175,55,.1);
+
+        }
+
+
+        .pixel:nth-child(1) {
+            top: 15%;
+            left: 12%;
+        }
+
+        .pixel:nth-child(2) {
+            top: 28%;
+            left: 22%;
+        }
+
+        .pixel:nth-child(3) {
+            top: 12%;
+            right: 15%;
+        }
+
+        .pixel:nth-child(4) {
+            top: 35%;
+            right: 9%;
+        }
+
+        .pixel:nth-child(5) {
+            bottom: 20%;
+            left: 10%;
+        }
+
+        .pixel:nth-child(6) {
+            bottom: 13%;
+            left: 25%;
+        }
+
+        .pixel:nth-child(7) {
+            bottom: 19%;
+            right: 12%;
+        }
+
+        .pixel:nth-child(8) {
+            bottom: 30%;
+            right: 25%;
+        }
+
+
+        /* ART */
+
+        .waiting-art {
+
+            width:
+                300px;
+
+            height:
+                210px;
+
+            position:
+                relative;
+
+            margin-bottom:
+                10px;
+
+        }
+
+
+        .glow {
+
+            position:
+                absolute;
+
+            width:
+                220px;
+
+            height:
+                220px;
+
+            left:
+                40px;
+
+            top:
+                -5px;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(212,175,55,.13);
+
+            filter:
+                blur(35px);
+
+        }
+
+
+        .circle {
+
+            position:
+                absolute;
+
+            width:
+                175px;
+
+            height:
+                175px;
+
+            left:
+                50%;
+
+            top:
+                50%;
+
+            transform:
+                translate(-50%,-50%);
+
+            border:
+                3px solid
+                #d4af37;
+
+            border-radius:
+                50%;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #176465,
+                    #061213
+                );
+
+            box-shadow:
+                0 0 45px
+                rgba(212,175,55,.2);
+
+        }
+
+
+        .circle::before {
+
+            content: "";
+
+            position:
+                absolute;
+
+            inset:
+                12px;
+
+            border:
+                2px dashed
+                rgba(255,255,255,.18);
+
+            border-radius:
+                50%;
+
+        }
+
+
+        .card {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            font-size:
+                75px;
+
+            transform:
+                rotate(-8deg);
+
+            filter:
+                drop-shadow(
+                    0 10px 12px
+                    rgba(0,0,0,.5)
+                );
+
+        }
+
+
+        .spark {
+
+            position:
+                absolute;
+
+            color:
+                #d4af37;
+
+            font-size:
+                22px;
+
+            animation:
+                sparkle 2s infinite;
+
+        }
+
+
+        .spark.a {
+
+            top:
+                15px;
+
+            left:
+                30px;
+
+        }
+
+
+        .spark.b {
+
+            top:
+                30px;
+
+            right:
+                25px;
+
+        }
+
+
+        .spark.c {
+
+            bottom:
+                15px;
+
+            left:
+                35px;
+
+        }
+
+
+        .spark.d {
+
+            bottom:
+                25px;
+
+            right:
+                35px;
+
+        }
+
+
+        @keyframes sparkle {
+
+            0%,
+            100% {
+
+                opacity:
+                    .3;
+
+                transform:
+                    scale(.8)
+                    rotate(0deg);
+
+            }
+
+            50% {
+
+                opacity:
+                    1;
+
+                transform:
+                    scale(1.2)
+                    rotate(45deg);
+
+            }
+
+        }
+
+
+        .eyebrow {
+
+            color:
+                #d4af37;
+
+            font-size:
+                9px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                5px;
+
+        }
+
+
+        .title {
+
+            margin:
+                16px 0 0;
+
+            font-size:
+                clamp(
+                    38px,
+                    8vw,
+                    76px
+                );
+
+            line-height:
+                .9;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                3px;
+
+        }
+
+
+        .title span {
+
+            color:
+                #d4af37;
+
+        }
+
+
+        .description {
+
+            max-width:
+                500px;
+
+            margin:
+                20px auto 0;
+
+            color:
+                #718283;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .ready-card {
+
+            margin-top:
+                28px;
+
+            padding:
+                15px 25px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                13px;
+
+            border:
+                1px solid
+                rgba(212,175,55,.25);
+
+            border-radius:
+                12px;
+
+            background:
+                rgba(5,15,16,.8);
+
+        }
+
+
+        .ready-icon {
+
+            font-size:
+                25px;
+
+        }
+
+
+        .ready-title {
+
+            color:
+                #d4af37;
+
+            font-size:
+                10px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                3px;
+
+        }
+
+
+        .ready-text {
+
+            margin-top:
+                4px;
+
+            color:
+                #637475;
+
+            font-size:
+                7px;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        /* GAME */
+
+        .game-screen {
+
+            flex: 1;
+
+            min-height:
+                calc(100vh - 130px);
+
+            padding:
+                50px 20px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            text-align:
+                center;
+
+        }
+
+
+        .hidden {
+
+            display:
+                none !important;
+
+        }
+
+
+        .game-eyebrow {
+
+            margin-bottom:
+                22px;
+
+            color:
+                #d4af37;
+
+            font-size:
+                10px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                5px;
+
+        }
+
+
+        .game-card {
+
+            width:
+                min(950px, 94vw);
+
+            min-height:
+                390px;
+
+            padding:
+                60px 40px;
+
+            position:
+                relative;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                2px solid
+                #d4af37;
+
+            border-radius:
+                28px;
+
+            background:
+
+                radial-gradient(
+                    circle at 50% 20%,
+                    #174d4e,
+                    #071617 65%,
+                    #030606
+                );
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,.6);
+
+        }
+
+
+        .game-card::before {
+
+            content: "";
+
+            position:
+                absolute;
+
+            inset:
+                12px;
+
+            border:
+                1px solid
+                rgba(212,175,55,.2);
+
+            border-radius:
+                20px;
+
+        }
+
+
+        .game-card-number {
+
+            position:
+                absolute;
+
+            top:
+                25px;
+
+            right:
+                30px;
+
+            color:
+                #d4af37;
+
+            font-size:
+                9px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                2px;
+
+        }
+
+
+        .game-card-icon {
+
+            font-size:
+                50px;
+
+            margin-bottom:
+                22px;
+
+        }
+
+
+        .question {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            max-width:
+                800px;
+
+            font-size:
+                clamp(
+                    30px,
+                    6vw,
+                    68px
+                );
+
+            line-height:
+                1.05;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .debate {
+
+            margin-top:
+                28px;
+
+            color:
+                #718384;
+
+            font-size:
+                9px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                3px;
+
+        }
+
+
+        .card-animation {
+
+            animation:
+                cardIn .45s ease;
+
+        }
+
+
+        @keyframes cardIn {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    scale(.94)
+                    translateY(20px);
+
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    scale(1)
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* FOOTER */
+
+        footer {
+
+            min-height:
+                55px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            gap:
+                12px;
+
+            color:
+                #4f5e5f;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.06);
+
+            font-size:
+                7px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                2px;
+
+        }
+
+
+        footer b {
+
+            color:
+                #d4af37;
+
+        }
+
+
+        @media(max-width:600px) {
+
+            header {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .game {
+
+                display:
+                    none;
+
+            }
+
+
+            .game-card {
+
+                min-height:
+                    330px;
+
+                padding:
+                    40px 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="live">
+
+
+    <header>
+
+        <div class="brand">
+            DIONLYONEE
+        </div>
+
+
+        <div class="game">
+            MOST LIKELY
+        </div>
+
+
+        <div
+            id="connection"
+            class="connection"
+        >
+            WAITING FOR HOST
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         WAITING SCREEN
+    ================================================== -->
+
+    <section
+        id="waitingScreen"
+        class="waiting"
+    >
+
+
+        <div class="pixels">
+
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+
+        </div>
+
+
+        <div class="waiting-art">
+
+            <div class="glow"></div>
+
+            <div class="spark a">
+                ◆
+            </div>
+
+            <div class="spark b">
+                ✦
+            </div>
+
+            <div class="spark c">
+                ◆
+            </div>
+
+            <div class="spark d">
+                ✦
+            </div>
+
+
+            <div class="circle">
+
+                <div class="card">
+                    🃏
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="eyebrow">
+            DIONLYONEE GAME SHOW
+        </div>
+
+
+        <h1 class="title">
+
+            DIONLYONEE<br>
+
+            <span>PON DI APP</span>
+
+        </h1>
+
+
+        <p class="description">
+
+            Welcome to the Most Likely game!
+
+            <br>
+
+            The host is getting everything ready.
+            Get comfortable, get your answers ready,
+            and let the conversation begin.
+
+        </p>
+
+
+        <div class="ready-card">
+
+            <div class="ready-icon">
+                🃏
+            </div>
+
+
+            <div>
+
+                <div class="ready-title">
+                    GET READY
+                </div>
+
+                <div class="ready-text">
+                    THE CONVERSATION IS ABOUT TO BEGIN
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =================================================
+         GAME SCREEN
+    ================================================== -->
+
+    <main
+        id="gameScreen"
+        class="game-screen hidden"
+    >
+
+
+        <div class="game-eyebrow">
+            WHO IS MOST LIKELY TO...
+        </div>
+
+
+        <div
+            id="gameCard"
+            class="game-card"
+        >
+
+
+            <div
+                id="gameCardNumber"
+                class="game-card-number"
+            >
+                CARD —
+            </div>
+
+
+            <div class="game-card-icon">
+                🃏
+            </div>
+
+
+            <div
+                id="liveQuestion"
+                class="question"
+            >
+                —
+            </div>
+
+
+            <div class="debate">
+                💬 LET CHAT DEBATE
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+    <footer>
+
+        <span>
+            DIONLYONEE
+        </span>
+
+        <b>◆</b>
+
+        <span>
+            MOST LIKELY
+        </span>
+
+        <b>◆</b>
+
+        <span>
+            LIVE GAME
+        </span>
+
+    </footer>
+
+
+</div>
+
+
+<script src="most-likely-game.js"></script>
+
+
+<script>
+
+"use strict";
+
+
+const waitingScreen =
+    document.getElementById(
+        "waitingScreen"
+    );
+
+
+const gameScreen =
+    document.getElementById(
+        "gameScreen"
+    );
+
+
+const gameCard =
+    document.getElementById(
+        "gameCard"
+    );
+
+
+const liveQuestion =
+    document.getElementById(
+        "liveQuestion"
+    );
+
+
+const gameCardNumber =
+    document.getElementById(
+        "gameCardNumber"
+    );
+
+
+const connection =
+    document.getElementById(
+        "connection"
+    );
+
+
+/* =====================================================
+   WAITING
+   ===================================================== */
+
+function showWaiting() {
+
+    waitingScreen.classList.remove(
+        "hidden"
+    );
+
+
+    gameScreen.classList.add(
+        "hidden"
+    );
+
+
+    connection.textContent =
+        "WAITING FOR HOST";
+
+
+    connection.classList.remove(
+        "live"
+    );
+
+}
+
+
+/* =====================================================
+   SHOW CARD
+   ===================================================== */
+
+function showCard(state) {
+
+    waitingScreen.classList.add(
+        "hidden"
+    );
+
+
+    gameScreen.classList.remove(
+        "hidden"
+    );
+
+
+    connection.textContent =
+        "● LIVE";
+
+
+    connection.classList.add(
+        "live"
+    );
+
+
+    liveQuestion.textContent =
+        state.currentQuestion;
+
+
+    gameCardNumber.textContent =
+        "CARD #" +
+        state.cardNumber;
+
+
+    gameCard.classList.remove(
+        "card-animation"
+    );
+
+
+    void gameCard.offsetWidth;
+
+
+    gameCard.classList.add(
+        "card-animation"
+    );
+
+}
+
+
+/* =====================================================
+   RECEIVE HOST STATE
+   ===================================================== */
+
+mostLikelyChannel.addEventListener(
+    "message",
+    function (event) {
+
+        if (
+            !event.data ||
+            event.data.type !==
+            "STATE"
+        ) {
+
+            return;
+
+        }
+
+
+        const state =
+            event.data.state;
+
+
+        if (!state) {
+
+            return;
+
+        }
+
+
+        if (
+            state.started &&
+            state.currentQuestion
+        ) {
+
+            showCard(
+                state
+            );
+
+        } else {
+
+            showWaiting();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   INITIAL WAITING
+   ===================================================== */
+
+showWaiting();
+
+
+/* =====================================================
+   ASK HOST FOR CURRENT GAME
+   ===================================================== */
+
+setTimeout(
+    function () {
+
+        mostLikelyChannel.postMessage({
+
+            type:
+                "REQUEST_STATE"
+
+        });
+
+    },
+    100
+);
+
+
+/* =====================================================
+   ASK AGAIN
+   ===================================================== */
+
+setTimeout(
+    function () {
+
+        mostLikelyChannel.postMessage({
+
+            type:
+                "REQUEST_STATE"
+
+        });
+
+    },
+    1000
+);
+
+
+/* =====================================================
+   CLEANUP
+   ===================================================== */
+
+window.addEventListener(
+    "beforeunload",
+    function () {
+
+        mostLikelyChannel.close();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

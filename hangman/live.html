@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dionlyonee LIVE — HANGMAN SHOW</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="css/hangman.css">
+  <link rel="stylesheet" href="css/hangman-animations.css">
+  <link rel="stylesheet" href="css/hangman-live.css">
+  <link rel="stylesheet" href="../shared/heart-power.css">
+</head>
+<body>
+  <div class="live-stream-container">
+    <!-- Topbar: Branding & Round Timer -->
+    <header class="live-stream-topbar">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #d4af37, #b45309); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 22px; font-weight: 900; color: #000; box-shadow: 0 0 15px rgba(212,175,55,0.6);">
+          D
+        </div>
+        <div>
+          <div style="font-family: var(--font-display); font-size: 16px; font-weight: 900; color: #d4af37; letter-spacing: 1.5px;">
+            DIONLYONEE STREAM SHOW
+          </div>
+          <div id="live-category-banner" style="font-size: 11px; font-weight: 800; color: #10b981; letter-spacing: 1px;">
+            CARIBBEAN CULTURE • EASY
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="text-align: right;">
+          <div id="live-timer-label" style="font-size: 10px; font-weight: 900; color: #94a3b8; letter-spacing: 1px;">ROUND TIMER</div>
+          <div id="live-timer-clock" style="font-family: var(--font-mono); font-size: 32px; font-weight: 900; color: #d4af37; text-shadow: 0 0 16px rgba(212,175,55,0.5); line-height: 1;">
+            45s
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.5); padding: 4px 10px; border-radius: 999px;">
+          <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px #ef4444;"></span>
+          <span style="font-size: 11px; font-weight: 900; color: #fca5a5; letter-spacing: 1px;">LIVE</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Center Stage -->
+    <main class="live-stream-center">
+      <div class="live-stage-card">
+        <!-- Visual Stage (Slime Dunk / Gallows / Pirate) -->
+        <div id="live-visual-stage" style="width: 100%; display: flex; justify-content: center; margin-bottom: 8px;">
+          <!-- SVG injected dynamically -->
+        </div>
+
+        <!-- Strike Meter Nodes (6 Strikes) -->
+        <div id="live-strike-meter" class="strike-meter-bar" style="width: 100%; max-width: 520px; margin-bottom: 16px;">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- Word Blanks (3D Flip Letter Slots) -->
+        <div id="live-word-blanks" class="word-blanks-container" style="margin-bottom: 14px;">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- Word Length & Remaining Letters Counter -->
+        <div id="live-word-length" style="font-size: 12px; font-weight: 800; color: #d4af37; letter-spacing: 1.5px; margin-bottom: 8px;">
+          12 LETTERS • 12 REMAINING
+        </div>
+
+        <!-- Progressive Clue Banner -->
+        <div id="live-clue-banner" class="banner-glow" style="background: rgba(212,175,55,0.12); border: 1.5px solid rgba(212,175,55,0.5); border-radius: 12px; padding: 10px 24px; width: 100%; max-width: 650px; text-align: center; margin-bottom: 16px;">
+          <!-- Injected by JS -->
+        </div>
+
+        <!-- Called / Available Alphabet Letter Bank -->
+        <div style="width: 100%; max-width: 800px; text-align: center;">
+          <div style="font-size: 10px; font-weight: 900; color: #64748b; letter-spacing: 1.5px; margin-bottom: 6px;">LETTER BANK:</div>
+          <div id="live-alphabet-bar" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Lower Third: Chat Feed Ticker & Viewer Interactive Input -->
+    <footer class="live-stream-lower">
+      <!-- Live Chat Activity Ticker -->
+      <div style="flex: 1; min-width: 280px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+          <span style="font-size: 13px;">💬</span>
+          <span style="font-size: 11px; font-weight: 900; color: #d4af37; letter-spacing: 1px;">CHAT GUESS STREAM:</span>
+        </div>
+        <div id="live-chat-ticker" style="display: flex; flex-direction: column; gap: 4px;">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+
+      <!-- Interactive Spectator Input (For viewers on mobile / direct web tab) -->
+      <div style="display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.5); padding: 8px 14px; border-radius: 12px; border: 1px solid rgba(212,175,55,0.35);">
+        <input type="text" id="live-viewer-input" placeholder="Type letter or !solve word..." style="background: transparent; border: none; color: #ffffff; font-size: 13px; font-weight: 700; width: 220px; outline: none;">
+        <button type="button" id="btn-live-send-guess" class="key-btn" style="width: auto; height: 32px; padding: 0 12px; font-size: 11px; background: linear-gradient(135deg, #d4af37, #b45309); color: #000;">
+          GUESS
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Fullscreen Win Celebration Overlay -->
+  <div id="live-win-overlay" class="live-fullscreen-overlay" style="display: none;">
+    <div style="font-size: 64px; margin-bottom: 12px;">🏆</div>
+    <div style="font-family: var(--font-display); font-size: 44px; font-weight: 900; color: #fbbf24; text-shadow: 0 0 30px rgba(251,191,36,0.8); margin-bottom: 8px;">
+      WORD SOLVED!
+    </div>
+    <div id="win-solved-word" style="font-family: var(--font-display); font-size: 36px; font-weight: 900; color: #ffffff; letter-spacing: 4px; margin-bottom: 12px;">
+      "JERK CHICKEN"
+    </div>
+    <div id="win-solver-name" style="font-size: 18px; font-weight: 800; color: #34d399; background: rgba(16,185,129,0.2); border: 1px solid #10b981; padding: 6px 20px; border-radius: 999px;">
+      SOLVED BY CHAT!
+    </div>
+  </div>
+
+  <!-- Fullscreen Loss / Slime Dunk Overlay -->
+  <div id="live-loss-overlay" class="live-fullscreen-overlay" style="display: none;">
+    <div class="slime-drip-overlay"></div>
+    <div style="font-size: 64px; margin-bottom: 12px;">🧪</div>
+    <div style="font-family: var(--font-display); font-size: 44px; font-weight: 900; color: #ef4444; text-shadow: 0 0 30px rgba(239,68,68,0.8); margin-bottom: 8px;">
+      DUNKED! 6 STRIKES REACHED!
+    </div>
+    <div style="font-size: 14px; font-weight: 800; color: #94a3b8; letter-spacing: 2px; margin-bottom: 6px;">
+      THE SECRET WORD WAS:
+    </div>
+    <div id="loss-revealed-word" style="font-family: var(--font-display); font-size: 36px; font-weight: 900; color: #ffffff; letter-spacing: 4px; margin-bottom: 12px;">
+      "JERK CHICKEN"
+    </div>
+    <div style="font-size: 14px; font-weight: 800; color: #fca5a5; background: rgba(239,68,68,0.2); border: 1px solid #ef4444; padding: 6px 20px; border-radius: 999px;">
+      BETTER LUCK NEXT ROUND!
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../sounds.js"></script>
+  <script src="../shared/stream-games-data.js"></script>
+  <script src="data/categories.js"></script>
+  <script src="data/words.js"></script>
+  <script src="data/hints.js"></script>
+  <script src="js/hangman-visual.js"></script>
+  <script src="js/hangman-audio.js"></script>
+  <script src="js/hangman-live.js"></script>
+  <script src="../shared/heart-power-system.js"></script>
+</body>
+</html>

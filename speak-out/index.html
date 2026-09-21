@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dionlyonee Speak Out! | Live Speaking Challenge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Cabinet+Grotesk:wght@800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/playground.css" />
+  <link rel="stylesheet" href="css/speak-common.css" />
+</head>
+<body>
+  <header class="main-header">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon">🎤</div>
+      <div>
+        <div class="brand-title">DIONLYONEE SPEAK OUT!</div>
+        <div class="brand-tag">FAST-PACED LIVE STREAM CHALLENGE</div>
+      </div>
+    </a>
+    <div id="header-hud"></div>
+  </header>
+
+  <main class="hub-container">
+    <div class="hub-hero">
+      <div class="hub-hero-badge">OFFICIAL BROADCAST EXPERIENCE</div>
+      <h1 class="hub-hero-title">DIONLYONEE SPEAK OUT!</h1>
+      <p class="hub-hero-subtitle">
+        Keep the host talking, beat the buzzer, and eliminate dead air! 650+ stream-ready challenges across 7 dynamic modes with real-time room synchronization.
+      </p>
+    </div>
+
+    <!-- Active Room Selector Form -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 1.25rem 1.75rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <span style="font-size: 1.5rem;">📡</span>
+        <div>
+          <div style="font-weight: 800; font-size: 0.95rem;">STREAM ROOM SYNC</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Current Active Room Code</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <input type="text" id="customRoomInput" placeholder="ROOM CODE" maxlength="12" style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-subtle); color: #fff; padding: 0.6rem 1rem; border-radius: 10px; font-weight: 800; text-transform: uppercase; font-family: var(--font-display); letter-spacing: 0.05em; width: 140px; text-align: center;" />
+        <button id="btnSetRoom" class="game-btn game-btn-host" style="padding: 0.6rem 1.25rem; font-size: 0.85rem;">UPDATE ROOM</button>
+      </div>
+    </div>
+
+    <!-- Screen Role Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+      <!-- Host Console -->
+      <a href="host/" id="linkHost" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">👑</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">HOST CONSOLE</div>
+            <div class="game-card-genre">PRIMARY TELEPROMPTER DESK</div>
+          </div>
+        </div>
+        <p class="game-card-desc">
+          Giant teleprompter challenges, precision timer controls, Pass/Fail adjudication, streak multiplier tracker, and live soundpad.
+        </p>
+        <span class="game-btn game-btn-host">OPEN HOST CONSOLE →</span>
+      </a>
+
+      <!-- Co-Host Adjudicator -->
+      <a href="cohost/" id="linkCohost" target="_blank" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">⚖️</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">CO-HOST JUDGE</div>
+            <div class="game-card-genre">STREAM ASSISTANT & ADJUDICATOR</div>
+          </div>
+        </div>
+        <p class="game-card-desc">
+          Secret answers visible, rapid fire clicker, forbidden word buzzers, pronunciation judge, and entertainment bonus points.
+        </p>
+        <span class="game-btn game-btn-primary">OPEN JUDGE PANEL ↗</span>
+      </a>
+
+      <!-- Live Stage (OBS) -->
+      <a href="live/" id="linkLive" target="_blank" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">📺</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">LIVE STAGE</div>
+            <div class="game-card-genre">OBS OVERLAY / BIG SCREEN</div>
+          </div>
+        </div>
+        <p class="game-card-desc">
+          High-contrast spectator board, glowing timer countdown, streak fire animations, revealed answer banners, and celebration alerts.
+        </p>
+        <span class="game-btn game-btn-secondary">LAUNCH LIVE STAGE ↗</span>
+      </a>
+
+      <!-- Waiting / Intermission -->
+      <a href="waiting/" id="linkWaiting" target="_blank" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">⏳</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">INTERMISSION SCREEN</div>
+            <div class="game-card-genre">WAITING ROOM & RULES</div>
+          </div>
+        </div>
+        <p class="game-card-desc">
+          Pre-round briefing, stream rules capsules, active room code display, and intermission standby screen.
+        </p>
+        <span class="game-btn" style="background: rgba(255,255,255,0.08); color: #fff;">VIEW WAITING SCREEN ↗</span>
+      </a>
+    </div>
+
+    <!-- 7 Game Modes Showcase -->
+    <div style="margin-top: 3.5rem;">
+      <div class="section-label" style="margin-bottom: 1rem; font-size: 0.9rem;">7 STREAM-TESTED SPEAKING MODES</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 16px;">
+          <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">👅</div>
+          <div style="font-weight: 800; font-size: 0.95rem; color: #ec4899;">TONGUE TWISTER</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">105 twisting phrases. Say 3 times fast with zero stumbling!</div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 16px;">
+          <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">⚡</div>
+          <div style="font-weight: 800; font-size: 0.95rem; color: #f59e0b;">RAPID FIRE</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">105 listing prompts. Name 5 items in 15 seconds!</div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 16px;">
+          <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🚫</div>
+          <div style="font-weight: 800; font-size: 0.95rem; color: #ef4444;">FORBIDDEN WORDS</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">105 taboo words. Describe the secret without saying the 4 traps!</div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 16px;">
+          <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🎭</div>
+          <div style="font-weight: 800; font-size: 0.95rem; color: #a855f7;">VOICE CHALLENGE</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">80 character personas. Never break character!</div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 16px;">
+          <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🗣️</div>
+          <div style="font-weight: 800; font-size: 0.95rem; color: #3b82f6;">KEEP TALKING</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">155 stream topics. 30s continuous speech - zero dead air!</div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 16px;">
+          <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🧩</div>
+          <div style="font-weight: 800; font-size: 0.95rem; color: #10b981;">FINISH THE PHRASE</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">105 famous idioms & catchphrases. Complete before the buzzer!</div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 16px;">
+          <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🎲</div>
+          <div style="font-weight: 800; font-size: 0.95rem; color: #f59e0b;">RANDOM MODE</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Shuffles all 6 modes dynamically on every single card!</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../shared/firebase-config.js"></script>
+  <script src="../shared/room-manager.js"></script>
+  <script src="../shared/firebase-room.js"></script>
+  <script src="../shared/game-session.js"></script>
+  <script src="../shared/room-ui.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.RoomUI) {
+        window.RoomUI.renderHeaderHud('header-hud');
+      }
+
+      const input = document.getElementById('customRoomInput');
+      const currentRoom = (window.RoomManager ? window.RoomManager.getRoomId() : null) || 'DIONLIVE';
+      if (input) input.value = currentRoom;
+
+      function updateLinks(roomId) {
+        document.getElementById('linkHost').href = `host/index.html?room=${roomId}`;
+        document.getElementById('linkCohost').href = `cohost/index.html?room=${roomId}`;
+        document.getElementById('linkLive').href = `live/index.html?room=${roomId}`;
+        document.getElementById('linkWaiting').href = `waiting/index.html?room=${roomId}`;
+      }
+
+      updateLinks(currentRoom);
+
+      document.getElementById('btnSetRoom')?.addEventListener('click', () => {
+        const val = input.value.trim().toUpperCase() || 'DIONLIVE';
+        if (window.RoomManager) window.RoomManager.setRoomId(val);
+        updateLinks(val);
+        alert(`Room updated to: ${val}`);
+      });
+    });
+  </script>
+</body>
+</html>

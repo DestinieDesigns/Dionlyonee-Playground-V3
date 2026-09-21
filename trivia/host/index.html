@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trivia Host Desk | Dionlyonee Stream</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="trivia-host.css" />
+</head>
+<body>
+  <header class="main-header">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon" style="background: linear-gradient(135deg, #a855f7, #6366f1); color: #fff;">⚡</div>
+      <div>
+        <div class="brand-title">TRIVIA SHOWDOWN</div>
+        <div class="brand-tag">HOST CONSOLE</div>
+      </div>
+    </a>
+    <div id="header-hud"></div>
+  </header>
+
+  <main class="hub-container">
+    <div style="display: grid; grid-template-columns: 1fr 360px; gap: 24px;">
+      <!-- Active Question Area -->
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div id="trivia-active-card"></div>
+
+        <div style="display: flex; gap: 12px;">
+          <button id="btn-next-question" style="
+            flex: 1; padding: 14px; border-radius: 10px;
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            color: #fff; font-weight: 800; font-size: 14px; cursor: pointer;
+          ">
+            🎲 PICK NEXT QUESTION
+          </button>
+          <button id="btn-reveal-answer" style="
+            flex: 1; padding: 14px; border-radius: 10px;
+            background: #10b981; color: #07090e; font-weight: 800; font-size: 14px; cursor: pointer;
+          ">
+            ✨ REVEAL ANSWER
+          </button>
+          <button id="btn-start-timer" style="
+            padding: 14px 20px; border-radius: 10px;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; font-weight: 800; font-size: 14px; cursor: pointer;
+          ">
+            ⏱️ 15s TIMER
+          </button>
+        </div>
+
+        <!-- Category & Question Picker -->
+        <div class="dion-card" style="background: rgba(14, 28, 30, 0.85); border: 1px solid rgba(212, 175, 55, 0.4); padding: 18px; border-radius: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="font-family: 'Cinzel', serif; font-size: 15px; font-weight: 900; color: #f7e07d;">
+              📁 CATEGORY & QUESTION PICKER
+            </div>
+            <div id="trivia-question-count" style="font-size: 11px; font-weight: 800; color: #38bdf8;"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <select id="trivia-category-select" style="flex: 1; min-width: 180px; padding: 10px 12px; border-radius: 8px; background: #070e12; color: #fff; border: 1px solid rgba(212, 175, 55, 0.5); font-weight: 700; outline: none;">
+                <!-- Populated dynamically -->
+              </select>
+              <select id="trivia-question-select" style="flex: 2; min-width: 260px; padding: 10px 12px; border-radius: 8px; background: #070e12; color: #fff; border: 1px solid rgba(212, 175, 55, 0.5); font-weight: 700; outline: none;">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+              <button id="btn-trivia-random-cat" type="button" style="padding: 9px 16px; border-radius: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-weight: 800; font-size: 12px; cursor: pointer;">
+                🎲 RANDOM IN CATEGORY
+              </button>
+              <button id="btn-trivia-toggle-waiting" type="button" style="padding: 9px 18px; border-radius: 8px; background: linear-gradient(135deg, #10b981, #059669); color: #000; font-weight: 900; font-size: 12px; cursor: pointer; border: none;">
+                📺 PAST WAITING SCREEN (STAGE LIVE)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls & Contestants -->
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="dion-card">
+          <h3 style="font-family: 'Cinzel', serif; font-size: 16px; margin-bottom: 12px; color: #fff;">
+            TIER SELECTION
+          </h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <button class="tier-btn active" data-tier="all">ALL MIXED</button>
+            <button class="tier-btn" data-tier="easy">EASY (100)</button>
+            <button class="tier-btn" data-tier="medium">MEDIUM (200)</button>
+            <button class="tier-btn" data-tier="hard">HARD (300)</button>
+            <button class="tier-btn" data-tier="expert">EXPERT (500)</button>
+            <button class="tier-btn" data-tier="extreme">EXTREME (1000)</button>
+          </div>
+        </div>
+
+        <div class="dion-card">
+          <h3 style="font-family: 'Cinzel', serif; font-size: 16px; margin-bottom: 12px; color: #fff;">
+            CONTESTANT SCORES
+          </h3>
+          <div id="trivia-contestants-list"></div>
+        </div>
+
+        <div class="dion-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h3 style="font-family: 'Cinzel', serif; font-size: 15px; color: #fff; margin: 0;">
+              LIVE SFX SOUNDBOARD
+            </h3>
+            <span style="font-size: 11px; font-weight: 700; color: #38bdf8; background: rgba(56,189,248,0.15); padding: 2px 8px; border-radius: 6px;">
+              📡 STAGE BROADCAST
+            </span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+            <button class="btn-sfx-trivia" data-sound="correct" style="padding: 10px 6px; background: rgba(16,185,129,0.15); border: 1px solid #10b981; color: #34d399; font-weight: 800; font-size: 12px; border-radius: 8px; cursor: pointer;">🔔 DING</button>
+            <button class="btn-sfx-trivia" data-sound="buzzer" style="padding: 10px 6px; background: rgba(239,68,68,0.15); border: 1px solid #ef4444; color: #f87171; font-weight: 800; font-size: 12px; border-radius: 8px; cursor: pointer;">❌ BUZZER</button>
+            <button class="btn-sfx-trivia" data-sound="cheer" style="padding: 10px 6px; background: rgba(245,158,11,0.15); border: 1px solid #f59e0b; color: #fbbf24; font-weight: 800; font-size: 12px; border-radius: 8px; cursor: pointer;">👏 CHEER</button>
+            <button class="btn-sfx-trivia" data-sound="fanfare" style="padding: 10px 6px; background: rgba(168,85,247,0.15); border: 1px solid #a855f7; color: #c084fc; font-weight: 800; font-size: 12px; border-radius: 8px; cursor: pointer;">🎺 FANFARE</button>
+            <button class="btn-sfx-trivia" data-sound="reveal" style="padding: 10px 6px; background: rgba(56,189,248,0.15); border: 1px solid #38bdf8; color: #7dd3fc; font-weight: 800; font-size: 12px; border-radius: 8px; cursor: pointer;">✨ REVEAL</button>
+            <button class="btn-sfx-trivia" data-sound="tick" style="padding: 10px 6px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #e2e8f0; font-weight: 800; font-size: 12px; border-radius: 8px; cursor: pointer;">⏱️ TICK</button>
+            <button class="btn-sfx-trivia" data-sound="countdown" style="padding: 10px 6px; background: rgba(244,63,94,0.15); border: 1px solid #f43f5e; color: #fb7185; font-weight: 800; font-size: 12px; border-radius: 8px; cursor: pointer;">⏳ COUNT</button>
+            <button class="btn-sfx-trivia" data-sound="timeup" style="padding: 10px 6px; background: rgba(217,119,6,0.15); border: 1px solid #d97706; color: #fde047; font-weight: 800; font-size: 12px; border-radius: 8px; cursor: pointer;">🚨 TIME UP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../shared/sound-manager.js"></script>
+  <script src="../../shared/room-manager.js"></script>
+  <script src="../../sync-client.js"></script>
+  <script src="../../shared/firebase-room.js"></script>
+  <script src="../../shared/host-auth.js"></script>
+  <script src="../../shared/room-ui.js"></script>
+  <script src="../../shared/timer-manager.js"></script>
+  <script src="../../shared/used-content-manager.js"></script>
+  <script src="../../shared/contestant-manager.js"></script>
+  <script src="../data/trivia-helpers.js"></script>
+  <script src="../data/trivia-categories.js"></script>
+  <script src="../data/education/education-categories.js"></script>
+  <script src="../data/trivia-loader.js"></script>
+  <script src="../data/trivia-data.js"></script>
+  <script src="../js/trivia-engine.js"></script>
+  <script src="../js/trivia-randomizer.js"></script>
+  <script src="../js/trivia-ui.js"></script>
+  <script src="../js/trivia-game.js"></script>
+  <script src="trivia-host.js"></script>
+</body>
+</html>

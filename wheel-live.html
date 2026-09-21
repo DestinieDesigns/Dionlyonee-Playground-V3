@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wheel of Fortune Live Stage | Dionlyonee Stream</title>
+  <meta name="description" content="Live audience stage display for Dionlyonee Wheel of Fortune stream game show." />
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="shared/game-transitions.css" />
+  <link rel="stylesheet" href="wheel-live.css" />
+  <link rel="stylesheet" href="shared/heart-power.css" />
+</head>
+
+<body>
+
+  <!-- STAGE HEADER -->
+  <header class="live-header">
+    <div class="brand-group">
+      <div class="brand-icon">🎡</div>
+      <div>
+        <div class="brand-title">WHEEL OF FORTUNE</div>
+        <div class="brand-sub">DIONLYONEE LIVE STREAM</div>
+      </div>
+    </div>
+
+    <!-- HUD STATS -->
+    <div class="hud-stats">
+      <div class="hud-item">
+        <span class="hud-label">ROUND</span>
+        <span id="live-round-text" class="hud-val">1</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">STATUS</span>
+        <span id="live-status-tag" class="hud-status-tag waiting">WAITING</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">TIMER</span>
+        <span id="live-timer-text" class="hud-val" style="color: var(--gold-bright);">30s</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN STAGE DISPLAY (ONLY ONE ACTIVE AT A TIME) -->
+  <main id="live-stage" class="live-stage">
+
+    <!-- =====================================================
+         STATE 1: FULL WAIT SCREEN (NO GAMEPLAY SHOWN UNDERNEATH)
+    ====================================================== -->
+    <section id="wait-screen" class="live-stage-screen wait-screen active">
+      <div class="wait-screen-card">
+        <div class="wait-brand-badge">
+          <div class="wait-badge-left">
+            <span class="wait-pulse-dot"></span>
+            <span>🔴 LIVE GAME SHOW • DIONLYONEE PLAYGROUND</span>
+          </div>
+          <span class="wait-room-tag" id="waiting-room-tag">ROOM: DION1</span>
+        </div>
+
+        <div class="wait-hero-wrap">
+          <img src="/dionlyonee-pon-di-app.png" alt="Dionlyonee Pon Di App" class="wait-hero-img" onerror="this.src='assets/images/dionlyonee-pon-di-app.png'" />
+        </div>
+
+        <!-- 4 ESSENTIAL LIVE STREAM ACTION PILLS -->
+        <div class="wait-actions-carousel">
+          <div class="wait-action-pill"><span class="action-emoji">❤️</span> <span>SUPPORT THE LIVE</span></div>
+          <div class="wait-action-pill"><span class="action-emoji">⭐</span> <span>JOIN THE CLUB</span></div>
+          <div class="wait-action-pill"><span class="action-emoji">👆</span> <span>TAP UP THE LIVE</span></div>
+          <div class="wait-action-pill"><span class="action-emoji">💬</span> <span>COMMENT A QUICK HELLO</span></div>
+        </div>
+
+        <div class="wait-status-panel">
+          <h2 id="waiting-title" class="wait-title">WAITING FOR HOST TO START</h2>
+          <p id="waiting-subtitle" class="wait-subtitle">The Host is preparing the game board and contestants. Stay locked in!</p>
+        </div>
+
+        <div class="wait-rotating-ticker">
+          <span class="ticker-icon">📢</span>
+          <span id="wait-rotating-message" class="ticker-message">Tap up the live! • Comment your guesses in the chat!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         STATE 2: ACTIVE GAMEPLAY SCREEN (LARGE & CENTERED)
+    ====================================================== -->
+    <section id="game-screen" class="live-stage-screen game-screen">
+
+      <!-- CATEGORY ILLUMINATED MARQUEE SIGN -->
+      <div class="category-marquee-frame">
+        <div class="category-label">CATEGORY</div>
+        <h1 id="live-category-title" class="category-text">JAMAICAN / PATWA PHRASES</h1>
+      </div>
+
+      <!-- DYNAMIC CONTESTANTS STAGE PODIUMS -->
+      <div id="live-contestants-bar" class="stage-contestants-bar">
+        <!-- Rendered dynamically for unlimited contestants -->
+      </div>
+
+      <!-- ACTIVE TURN ACTION CALLOUT BANNER -->
+      <div id="live-action-banner" class="stage-action-callout">
+        <span class="action-icon">⏱️</span>
+        <span id="live-action-text" class="action-text">MARCUS'S TURN — SPIN OR GUESS!</span>
+        <span id="live-action-timer" class="action-timer">30s</span>
+      </div>
+
+      <!-- 4-ROW WHEEL MATRIX PUZZLE BOARD (MAIN EVENT) -->
+      <div class="wheel-board-outer-frame">
+        <div class="board-beveled-trim">
+          <div id="live-board-matrix" class="board-matrix-grid">
+            <!-- Rendered dynamically by WheelEngine -->
+          </div>
+        </div>
+      </div>
+
+      <!-- CLUE AND STATUS AREA -->
+      <div class="stage-middle-row">
+        <!-- SECRET CLUE CARD (IF REVEALED BY HOST) -->
+        <div id="live-hint-card" class="hint-card hidden">
+          <div class="hint-tag">💡 STAGE CLUE</div>
+          <div id="live-hint-text" class="hint-content">Secret clue will appear here when host reveals it.</div>
+        </div>
+
+        <!-- SOLVED CELEBRATION BANNER -->
+        <div id="live-solved-banner" class="solved-banner hidden">
+          <span class="solved-title">🎉 PUZZLE SOLVED! 🎉</span>
+          <span id="live-solved-reward" class="solved-reward-callout">💰 +$500 SOLVE REWARD</span>
+        </div>
+      </div>
+
+      <!-- TIMER PROGRESS BAR -->
+      <div class="stage-timer-bar">
+        <div id="live-progress-fill" class="stage-timer-fill" style="width: 100%;"></div>
+      </div>
+
+    </section>
+
+    <!-- =====================================================
+         🎡 BIG WHEEL MODE (MAIN EVENT WHEN CONTESTANT SPINS)
+    ====================================================== -->
+    <div id="live-big-wheel-overlay" class="big-wheel-overlay hidden">
+      <div class="big-wheel-stage-box">
+        <div class="big-wheel-top-badge">
+          <span class="wheel-badge-icon">🎡</span>
+          <span id="big-wheel-action-title" class="big-wheel-action-title">MARCUS IS SPINNING THE WHEEL!</span>
+        </div>
+
+        <div class="big-wheel-canvas-wrapper">
+          <canvas id="live-big-wheel-canvas" width="560" height="560"></canvas>
+          <div class="big-wheel-pointer-pin">▼</div>
+          <div class="big-wheel-center-emblem">🎡</div>
+        </div>
+
+        <div id="big-wheel-wedge-callout" class="big-wheel-wedge-callout">SPINNING...</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- PURE VANILLA JAVASCRIPT -->
+  <script src="shared/game-transitions.js"></script>
+  <script src="sounds.js"></script>
+  <script src="wheel-engine.js"></script>
+  <script src="wheel-puzzles-data.js"></script>
+  <script src="sync-client.js"></script>
+  <script src="shared/heart-power-system.js"></script>
+  <script src="wheel-live.js"></script>
+
+</body>
+</html>

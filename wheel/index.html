@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wheel of Fortune Show | Dionlyonee Stream</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/playground.css" />
+</head>
+<body>
+  <header class="main-header">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon">🎡</div>
+      <div>
+        <div class="brand-title">WHEEL OF FORTUNE</div>
+        <div class="brand-tag">DIONLYONEE BROADCAST</div>
+      </div>
+    </a>
+    <div id="header-hud"></div>
+  </header>
+
+  <main class="hub-container">
+    <div class="hub-hero">
+      <div class="hub-hero-badge">OFFICIAL BROADCAST EXPERIENCE</div>
+      <h1 class="hub-hero-title">WHEEL OF FORTUNE SHOW</h1>
+      <p class="hub-hero-subtitle">
+        Spin the 24-wedge wheel, reveal letters on the 4-row TV puzzle board, and coordinate with co-hosts and audience contestants across multiple devices.
+      </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+      <a href="host/?singleplayer=true" class="game-card" style="border: 2px solid rgba(16,185,129,0.5); background: linear-gradient(135deg, rgba(6,78,46,0.5), rgba(3,32,18,0.8));">
+        <div class="game-card-header">
+          <div class="game-card-icon">👤</div>
+          <div class="game-card-meta">
+            <div class="game-card-title" style="color: #34d399;">SINGLE PLAYER SOLO</div>
+            <div class="game-card-genre">SOLO ARCADE MODE</div>
+          </div>
+        </div>
+        <p class="game-card-desc">Spin the wheel, call consonants, buy vowels, and solve puzzles entirely on your own without needing room sync or remote devices.</p>
+        <span class="game-btn" style="background: linear-gradient(135deg, #10b981, #059669); color: #000; font-weight: 900;">START SOLO PLAY →</span>
+      </a>
+
+      <a href="host/" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">👑</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">HOST CONSOLE</div>
+            <div class="game-card-genre">PRIMARY CONTROL DESK</div>
+          </div>
+        </div>
+        <p class="game-card-desc">Full puzzle controller, wheel spin triggers, letter calling board, soundboard FX, and score management.</p>
+        <span class="game-btn game-btn-host">OPEN HOST CONSOLE →</span>
+      </a>
+
+      <a href="live/" target="_blank" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">📺</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">LIVE STAGE</div>
+            <div class="game-card-genre">OBS / BIG SCREEN DISPLAY</div>
+          </div>
+        </div>
+        <p class="game-card-desc">Fullscreen audience TV board, real-time rotating wheel animation with peg ticks, active contestant podiums, and banner alerts.</p>
+        <span class="game-btn game-btn-secondary">LAUNCH LIVE STAGE ↗</span>
+      </a>
+
+      <a href="cohost/" target="_blank" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">📱</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">CO-HOST COMPANION</div>
+            <div class="game-card-genre">PHONE / MOBILE REMOTE</div>
+          </div>
+        </div>
+        <p class="game-card-desc">Mobile companion for co-hosts. Remote wheel spin button, emergency buzzer, and active round puzzle cheat sheet.</p>
+        <span class="game-btn game-btn-secondary">OPEN CO-HOST PHONE ↗</span>
+      </a>
+
+      <a href="waiting/" target="_blank" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">⏳</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">INTERMISSION LOBBY</div>
+            <div class="game-card-genre">STANDBY SCREEN</div>
+          </div>
+        </div>
+        <p class="game-card-desc">Stream intermission standby card showing the room code and contestant podiums while the host sets up the next round.</p>
+        <span class="game-btn game-btn-secondary">VIEW WAITING SCREEN ↗</span>
+      </a>
+    </div>
+  </main>
+
+  <script src="../shared/sound-manager.js"></script>
+  <script src="../shared/room-manager.js"></script>
+  <script src="../shared/firebase-room.js"></script>
+  <script src="../shared/room-ui.js"></script>
+  <script>
+    if (window.RoomUI) {
+      window.RoomUI.attachHUD('.main-header', 'wheel');
+    }
+    if (new URLSearchParams(window.location.search).get('singleplayer') === 'true') {
+      window.location.replace('host/?singleplayer=true');
+    }
+  </script>
+</body>
+</html>

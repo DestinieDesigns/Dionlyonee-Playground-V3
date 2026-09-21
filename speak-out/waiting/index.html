@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intermission / Waiting - DIONLYONEE SPEAK OUT!</title>
+  <link rel="stylesheet" href="../css/speak-common.css">
+  <link rel="stylesheet" href="speak-waiting.css">
+</head>
+<body>
+  <div class="waiting-container">
+    <div class="waiting-card">
+      <div class="waiting-logo">🎤</div>
+      <h1 class="waiting-title">DIONLYONEE SPEAK OUT!</h1>
+      <p class="waiting-desc">
+        Fast-paced live stream speaking challenge. Keep talking, beat the buzzer, and stay on streak!
+      </p>
+
+      <div class="room-display-badge">
+        <span class="waiting-pulse-dot"></span>
+        <span>ROOM: <strong id="waitRoomCode" style="color: #ffffff;">DIONLIVE</strong></span>
+      </div>
+
+      <div class="rules-capsules">
+        <div class="rule-capsule">
+          <div class="rule-capsule-title">👅 Tongue Twisters</div>
+          <div class="rule-capsule-desc">3 times fast with zero stumbling or halts!</div>
+        </div>
+        <div class="rule-capsule">
+          <div class="rule-capsule-title">⚡ Rapid Fire</div>
+          <div class="rule-capsule-desc">Name 5 items before the 15s timer hits zero!</div>
+        </div>
+        <div class="rule-capsule">
+          <div class="rule-capsule-title">🚫 Forbidden Words</div>
+          <div class="rule-capsule-desc">Describe the word without saying 4 taboo terms!</div>
+        </div>
+        <div class="rule-capsule">
+          <div class="rule-capsule-title">🗣️ Keep Talking</div>
+          <div class="rule-capsule-desc">30s continuous monologue - zero dead air!</div>
+        </div>
+      </div>
+
+      <div style="font-size: 0.9rem; color: #38bdf8; font-weight: 700; margin-top: 0.5rem;" id="waitingStatusText">
+        Waiting for Host to launch challenge...
+      </div>
+
+      <div class="waiting-nav-buttons">
+        <a href="#" id="waitHostLink" class="btn-waiting-nav btn-nav-host">Host Console ↗</a>
+        <a href="#" id="waitCohostLink" class="btn-waiting-nav btn-nav-live">Co-Host Panel ↗</a>
+        <a href="#" id="waitLiveLink" class="btn-waiting-nav btn-nav-live">Live Stage ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../../shared/firebase-config.js"></script>
+  <script src="../../shared/room-manager.js"></script>
+  <script src="../../shared/firebase-room.js"></script>
+  <script src="../../shared/game-session.js"></script>
+  <script src="../../shared/sound-manager.js"></script>
+  <script src="../data/speak-out-data.js"></script>
+  <script src="../js/speak-timer.js"></script>
+  <script src="../js/streak-manager.js"></script>
+  <script src="../js/speak-scoring.js"></script>
+  <script src="../js/speak-randomizer.js"></script>
+  <script src="../js/challenge-manager.js"></script>
+  <script src="../js/speak-engine.js"></script>
+
+  <script src="speak-waiting.js"></script>
+</body>
+</html>

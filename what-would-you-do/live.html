@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dionlyonee LIVE — WHAT WOULD YOU DO?</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="live-page">
+  <div class="live-screen">
+    <div class="live-topbar">
+      <div class="live-brand">
+        <div class="live-logo">D</div>
+        <div>
+          <div class="live-brand-name">DIONLYONEE PLAYGROUND</div>
+          <div class="live-brand-game">WHAT WOULD YOU DO?</div>
+        </div>
+      </div>
+      <div class="live-status"><span class="live-dot"></span>LIVE</div>
+    </div>
+    <main class="live-main">
+      <div class="live-category-label">CATEGORY</div>
+      <div id="live-category" class="live-category">WAITING FOR HOST</div>
+      <div id="live-content" style="width: 100%; margin: 20px 0;"></div>
+      <div class="timer-label">TIME REMAINING</div>
+      <div id="live-timer" class="live-timer">—</div>
+      <div class="timer-seconds">SECONDS</div>
+      <div id="live-message" class="live-message">WAITING FOR HOST</div>
+    </main>
+    <footer class="live-footer">
+      <span>GUESS OR VOTE IN CHAT</span><b>◆</b><span>DIONLYONEE</span><b>◆</b><span>WHAT WOULD YOU DO?</span>
+    </footer>
+  </div>
+  <script src="../sounds.js"></script>
+  <script src="../shared/stream-games-data.js"></script>
+  <script src="../shared/stream-game-live.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      window.gameLive = new StreamGameLive("what-would-you-do");
+    });
+  </script>
+</body>
+</html>

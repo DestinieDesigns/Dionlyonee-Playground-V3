@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dionlyonee Jeorpardy</title>
+
+    <link
+        rel="stylesheet"
+        href="jeopardy.css"
+    >
+</head>
+
+<body>
+
+<div class="jeopardy-launcher">
+
+    <!-- LOGO -->
+    <div class="jeopardy-logo">
+        D
+    </div>
+
+
+    <!-- BRAND -->
+    <div class="brand-name">
+        DIONLYONEE
+    </div>
+
+
+    <div class="game-name">
+        JEORPARDY
+    </div>
+
+
+    <div class="game-subtitle">
+        THE DIONLYONEE GAME SHOW
+    </div>
+
+
+    <!-- DIVIDER -->
+    <div class="gold-line"></div>
+
+
+    <!-- DESCRIPTION -->
+    <p class="launcher-description">
+        Choose your screen to enter the game.
+    </p>
+
+
+    <!-- SCREEN OPTIONS -->
+    <div class="screen-options">
+
+        <!-- SINGLE PLAYER SOLO -->
+        <button
+            type="button"
+            class="screen-card solo-card"
+            onclick="openSolo()"
+            style="border: 2px solid rgba(16,185,129,0.5); background: rgba(6,78,46,0.3);"
+        >
+            <div class="card-icon">
+                👤
+            </div>
+
+            <div class="card-title" style="color: #34d399;">
+                SINGLE PLAYER
+            </div>
+
+            <div class="card-description">
+                Play jeopardy solo! Pick categories, answer clues, and track your winnings.
+            </div>
+
+            <div class="card-action" style="color: #34d399;">
+                PLAY SOLO NOW →
+            </div>
+        </button>
+
+        <!-- HOST CONTROL -->
+        <button
+            type="button"
+            class="screen-card host-card"
+            onclick="openHost()"
+        >
+
+            <div class="card-icon">
+                🎤
+            </div>
+
+            <div class="card-title">
+                HOST CONTROL
+            </div>
+
+            <div class="card-description">
+                Control the game, reveal letters,
+                manage the timer and start puzzles.
+            </div>
+
+            <div class="card-action">
+                ENTER HOST PANEL →
+            </div>
+
+        </button>
+
+
+        <!-- LIVE GAME -->
+        <button
+            type="button"
+            class="screen-card live-card"
+            onclick="openLive()"
+        >
+
+            <div class="card-icon">
+                📺
+            </div>
+
+            <div class="card-title">
+                LIVE GAME
+            </div>
+
+            <div class="card-description">
+                Open the audience screen that
+                players will see during the stream.
+            </div>
+
+            <div class="card-action">
+                ENTER LIVE SCREEN →
+            </div>
+
+        </button>
+
+
+    </div>
+
+
+    <!-- BACK TO PLAYGROUND -->
+    <button
+        type="button"
+        class="back-button"
+        onclick="goBack()"
+    >
+
+        ← BACK TO DIONLYONEE PLAYGROUND
+
+    </button>
+
+
+    <!-- FOOTER -->
+    <div class="launcher-footer">
+
+        <span>DIONLYONEE</span>
+
+        <span>◆</span>
+
+        <span>JEORPARDY</span>
+
+        <span>◆</span>
+
+        <span>GAME SHOW</span>
+
+    </div>
+
+</div>
+
+
+<script>
+
+"use strict";
+
+function openSolo() {
+    window.location.href = "jeopardy-host.html?singleplayer=true";
+}
+
+if (new URLSearchParams(window.location.search).get('singleplayer') === 'true') {
+    openSolo();
+}
+
+function openHost() {
+
+    window.open(
+        "jeopardy-host.html",
+        "_blank"
+    );
+
+}
+
+
+function openLive() {
+
+    window.open(
+        "jeopardy-live.html",
+        "_blank"
+    );
+
+}
+
+
+function goBack() {
+
+    window.location.href =
+        "../index.html";
+
+}
+
+</script>
+
+</body>
+</html>

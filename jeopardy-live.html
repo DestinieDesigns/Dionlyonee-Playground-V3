@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeopardy Live Stage | Dionlyonee Stream</title>
+  <meta name="description" content="Live audience stage display for Dionlyonee Jeopardy stream game show." />
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="jeopardy-live.css" />
+</head>
+
+<body>
+
+  <!-- STAGE HEADER -->
+  <header class="live-header">
+    <div class="brand-group">
+      <div class="brand-icon">🏆</div>
+      <div>
+        <div class="brand-title">DIONLYONEE JEOPARDY</div>
+        <div class="brand-sub">LIVE STREAM SHOWCASE</div>
+      </div>
+    </div>
+
+    <!-- HUD STATS -->
+    <div class="hud-stats">
+      <div class="hud-item">
+        <span class="hud-label">VALUE</span>
+        <span id="live-value-text" class="hud-val" style="color: var(--gold-bright);">$400</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">STATUS</span>
+        <span id="live-status-tag" class="hud-status-tag waiting">WAITING</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">TIMER</span>
+        <span id="live-timer-text" class="hud-val" style="color: #60a5fa;">30s</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN STAGE DISPLAY -->
+  <main class="live-stage">
+
+    <!-- CATEGORY ILLUMINATED MARQUEE SIGN -->
+    <div class="category-marquee-frame">
+      <div class="category-label">JEOPARDY CATEGORY</div>
+      <h1 id="live-category-title" class="category-text">JAMAICAN / PATWA PHRASES</h1>
+    </div>
+
+    <!-- PUZZLE BOARD MATRIX -->
+    <div class="jeopardy-board-outer-frame">
+      <div class="board-beveled-trim">
+        <div id="live-board-matrix" class="board-matrix-grid">
+          <!-- Rendered dynamically by WheelEngine -->
+        </div>
+      </div>
+    </div>
+
+    <!-- CLUE CARD & GAME STATUS BANNER -->
+    <div class="stage-info-container">
+      <!-- SECRET CLUE CARD (WHEN DISPLAYED) -->
+      <div id="live-hint-card" class="hint-card hidden">
+        <div class="hint-tag">💡 CLUE / QUESTION</div>
+        <div id="live-hint-text" class="hint-content">Clue will appear here when host reveals it.</div>
+      </div>
+
+      <!-- SOLVED CELEBRATION BANNER -->
+      <div id="live-solved-banner" class="solved-banner hidden">
+        🎉 CORRECT ANSWER! 🎉
+      </div>
+    </div>
+
+    <!-- CONTESTANT PODIUMS SCOREBOARD -->
+    <div class="podiums-container">
+      <div class="podium-card">
+        <div id="live-p1-name" class="podium-name">Player 1</div>
+        <div id="live-p1-score" class="podium-score">$0</div>
+      </div>
+      <div class="podium-card active">
+        <div id="live-p2-name" class="podium-name">Player 2</div>
+        <div id="live-p2-score" class="podium-score">$0</div>
+      </div>
+      <div class="podium-card">
+        <div id="live-p3-name" class="podium-name">Player 3</div>
+        <div id="live-p3-score" class="podium-score">$0</div>
+      </div>
+    </div>
+
+    <!-- TIMER PROGRESS BAR -->
+    <div class="stage-timer-bar">
+      <div id="live-progress-fill" class="stage-timer-fill" style="width: 100%;"></div>
+    </div>
+
+  </main>
+
+  <!-- PURE VANILLA JAVASCRIPT -->
+  <script src="sounds.js"></script>
+  <script src="wheel-engine.js"></script>
+  <script src="sync-client.js"></script>
+  <script src="jeopardy-live.js"></script>
+
+</body>
+</html>

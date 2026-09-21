@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dionlyonee — Hot Take</title>
+
+    <link rel="stylesheet" href="hot-take.css">
+</head>
+
+<body class="hot-take-page">
+
+<div class="hot-take-screen">
+
+    <!-- ==========================================
+         TOP BAR
+    =========================================== -->
+
+    <header class="hot-take-header">
+
+        <div class="brand-area">
+
+            <div class="brand-logo">
+                D
+            </div>
+
+            <div class="brand-text">
+
+                <div class="brand-name">
+                    DIONLYONEE
+                </div>
+
+                <div class="brand-subtitle">
+                    JUST TALKING
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="game-badge">
+            🗣️ HOT TAKE
+        </div>
+
+    </header>
+
+
+    <!-- ==========================================
+         MAIN CONTENT
+    =========================================== -->
+
+    <main class="hot-take-main">
+
+        <!-- CATEGORY -->
+
+        <div class="category-label">
+            DIONLYONEE • JUST TALKING
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1 class="game-title">
+            HOT TAKE
+        </h1>
+
+
+        <p class="game-subtitle">
+            SAY IT WITH YOUR CHEST 👀
+        </p>
+
+
+        <!-- ======================================
+             WAITING SCREEN
+        ======================================= -->
+
+        <section
+            id="waitingScreen"
+            class="waiting-screen">
+
+            <div class="waiting-icon">
+                🗣️
+            </div>
+
+            <h2>
+                GET READY...
+            </h2>
+
+            <p>
+                The host is picking a Hot Take.
+            </p>
+
+            <div class="join-message">
+
+                <span>
+                    💬
+                </span>
+
+                GET READY TO JOIN THE CONVERSATION
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             HOT TAKE CONTENT
+        ======================================= -->
+
+        <section
+            id="hotTakeContent"
+            class="hot-take-content hidden">
+
+
+            <!-- PROMPT CARD -->
+
+            <div class="prompt-card">
+
+                <div class="prompt-label">
+                    🔥 THE HOT TAKE
+                </div>
+
+
+                <div
+                    id="prompt"
+                    class="prompt">
+
+                    Your Hot Take Is Loading...
+
+                </div>
+
+            </div>
+
+
+            <!-- CHAT INSTRUCTION -->
+
+            <div class="chat-instruction">
+
+                <span class="chat-icon">
+                    💬
+                </span>
+
+                <div>
+
+                    <strong>
+                        WHAT DO YOU THINK?
+                    </strong>
+
+                    <small>
+                        Drop your opinion in chat!
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOST COMMENTARY -->
+
+            <div
+                id="hostCommentary"
+                class="host-commentary hidden">
+
+                <div class="commentary-label">
+                    🎤 HOST'S TAKE
+                </div>
+
+                <div
+                    id="commentary"
+                    class="commentary">
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ======================================
+             JOIN MESSAGE
+        ======================================= -->
+
+        <div
+            id="joinMessage"
+            class="join-message-bottom">
+
+            👀 DON'T JUST WATCH — JOIN THE CONVERSATION
+
+        </div>
+
+    </main>
+
+
+    <!-- ==========================================
+         FOOTER
+    =========================================== -->
+
+    <footer class="hot-take-footer">
+
+        <span>
+            DIONLYONEE
+        </span>
+
+        <b>◆</b>
+
+        <span>
+            HOT TAKE
+        </span>
+
+        <b>◆</b>
+
+        <span>
+            WHAT'S YOUR TAKE?
+
+        </span>
+
+    </footer>
+
+</div>
+
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    /* ==========================================
+       BROADCAST CHANNEL
+    =========================================== */
+
+    const channel =
+        new BroadcastChannel(
+            "dionlyonee-hot-take"
+        );
+
+
+    /* ==========================================
+       ELEMENTS
+    =========================================== */
+
+    const waitingScreen =
+        document.getElementById(
+            "waitingScreen"
+        );
+
+
+    const hotTakeContent =
+        document.getElementById(
+            "hotTakeContent"
+        );
+
+
+    const promptElement =
+        document.getElementById(
+            "prompt"
+        );
+
+
+    const hostCommentary =
+        document.getElementById(
+            "hostCommentary"
+        );
+
+
+    const commentaryElement =
+        document.getElementById(
+            "commentary"
+        );
+
+
+    /* ==========================================
+       SHOW WAITING SCREEN
+    =========================================== */
+
+    function showWaiting() {
+
+        waitingScreen.classList.remove(
+            "hidden"
+        );
+
+        hotTakeContent.classList.add(
+            "hidden"
+        );
+
+        hostCommentary.classList.add(
+            "hidden"
+        );
+
+    }
+
+
+    /* ==========================================
+       SHOW HOT TAKE
+    =========================================== */
+
+    function showHotTake(
+        prompt,
+        commentary
+    ) {
+
+        waitingScreen.classList.add(
+            "hidden"
+        );
+
+        hotTakeContent.classList.remove(
+            "hidden"
+        );
+
+
+        promptElement.textContent =
+            prompt ||
+            "The host hasn't selected a Hot Take yet.";
+
+
+        if (
+            commentary &&
+            commentary.trim() !== ""
+        ) {
+
+            hostCommentary.classList.remove(
+                "hidden"
+            );
+
+            commentaryElement.textContent =
+                commentary;
+
+        } else {
+
+            hostCommentary.classList.add(
+                "hidden"
+            );
+
+            commentaryElement.textContent =
+                "";
+
+        }
+
+    }
+
+
+    /* ==========================================
+       RECEIVE HOST UPDATES
+    =========================================== */
+
+    channel.onmessage =
+        function (event) {
+
+            const data =
+                event.data || {};
+
+
+            /*
+             * HOST CAN SEND:
+             *
+             * {
+             *   type: "show",
+             *   prompt: "...",
+             *   commentary: "..."
+             * }
+             *
+             * OR
+             *
+             * {
+             *   type: "waiting"
+             * }
+             */
+
+
+            if (
+                data.type === "show"
+            ) {
+
+                showHotTake(
+                    data.prompt,
+                    data.commentary
+                );
+
+            }
+
+
+            if (
+                data.type === "waiting"
+            ) {
+
+                showWaiting();
+
+            }
+
+        };
+
+
+    /* ==========================================
+       INITIAL STATE
+    =========================================== */
+
+    showWaiting();
+
+
+    /* ==========================================
+       CLEANUP
+    =========================================== */
+
+    window.addEventListener(
+        "beforeunload",
+        function () {
+
+            channel.close();
+
+        }
+    );
+
+})();
+
+</script>
+
+</body>
+</html>

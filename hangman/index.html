@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dionlyonee — HANGMAN SHOW</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="css/hangman.css">
+  <link rel="stylesheet" href="css/hangman-animations.css">
+  <style>
+    .launcher-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px 60px 24px;
+      text-align: center;
+    }
+    .launcher-hero {
+      background: radial-gradient(circle at 50% 30%, rgba(16, 185, 129, 0.15) 0%, rgba(7, 23, 26, 0.9) 70%);
+      border: 1.5px solid var(--border-gold);
+      border-radius: 28px;
+      padding: 40px 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      margin-bottom: 36px;
+    }
+    .feature-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: #f7e07d;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin: 4px;
+    }
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .portal-card {
+      background: rgba(14, 28, 30, 0.9);
+      border: 1.5px solid rgba(212, 175, 55, 0.35);
+      border-radius: 20px;
+      padding: 30px 24px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .portal-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold-light);
+      box-shadow: 0 16px 45px rgba(212, 175, 55, 0.3);
+    }
+    .portal-card.live-glow:hover {
+      border-color: var(--emerald-light);
+      box-shadow: 0 16px 45px rgba(16, 185, 129, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="launcher-wrap">
+    <!-- Hero Header -->
+    <div class="launcher-hero">
+      <div style="font-size: 54px; margin-bottom: 8px;">🎭</div>
+      <div style="font-family: var(--font-display); font-size: 14px; font-weight: 900; color: #d4af37; letter-spacing: 4px; margin-bottom: 6px;">
+        DIONLYONEE STREAM SHOW
+      </div>
+      <h1 style="font-family: var(--font-display); font-size: 44px; font-weight: 900; color: #ffffff; letter-spacing: 3px; text-shadow: 0 0 25px rgba(212, 175, 55, 0.4); margin-bottom: 12px;">
+        HANGMAN SHOWDOWN
+      </h1>
+      <p style="color: #94a3b8; font-size: 16px; max-width: 680px; margin: 0 auto 20px auto; line-height: 1.6;">
+        The interactive word guesser built for livestreams. Features 250+ thematic puzzles across 12 categories, tiered clues, Slime Dunk visuals, and Stream Autopilot for hands-free chat play.
+      </p>
+
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;">
+        <span class="feature-badge">🌴 12 CURATED CATEGORIES</span>
+        <span class="feature-badge">📚 250+ PUZZLES WITH HINTS</span>
+        <span class="feature-badge">🧪 SIGNATURE SLIME DUNK TANK</span>
+        <span class="feature-badge">⏱️ HANDS-FREE STREAM AUTOPILOT</span>
+        <span class="feature-badge">💬 CHAT GUESS & LEADERBOARD</span>
+      </div>
+    </div>
+
+    <!-- 2 Portal Launch Cards -->
+    <div class="cards-row">
+      <!-- Host Card -->
+      <div class="portal-card" onclick="window.location.href='host.html'">
+        <div>
+          <div style="font-size: 38px; margin-bottom: 14px;">🎤</div>
+          <h2 style="font-family: var(--font-display); font-size: 22px; font-weight: 900; color: var(--gold-light); margin-bottom: 8px;">
+            HOST CONTROL PANEL
+          </h2>
+          <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin-bottom: 18px;">
+            Full broadcast command station. Toggle Secret Words, navigate 250+ prompts, drop tiered clues, grant free vowels, trigger soundboard FX, and manage the stream autopilot timer.
+          </p>
+        </div>
+        <button type="button" class="btn-action btn-gold" style="width: 100%; justify-content: center;">
+          OPEN HOST CONTROL →
+        </button>
+      </div>
+
+      <!-- Live Broadcast Screen Card -->
+      <div class="portal-card live-glow" onclick="window.location.href='live.html'">
+        <div>
+          <div style="font-size: 38px; margin-bottom: 14px;">📺</div>
+          <h2 style="font-family: var(--font-display); font-size: 22px; font-weight: 900; color: #34d399; margin-bottom: 8px;">
+            LIVE STREAM DISPLAY
+          </h2>
+          <p style="color: #94a3b8; font-size: 14px; line-height: 1.6; margin-bottom: 18px;">
+            Clean, high-visibility broadcast layout designed for OBS Studio Browser Sources and secondary monitors. Features dynamic animated SVGs, 3D flipping tiles, and real-time chat guess ticker.
+          </p>
+        </div>
+        <button type="button" class="btn-action btn-emerald" style="width: 100%; justify-content: center;">
+          OPEN LIVE DISPLAY →
+        </button>
+      </div>
+    </div>
+
+    <!-- Back to Main Playground -->
+    <div>
+      <a href="../index.html" class="btn-action btn-subtle" style="text-decoration: none; padding: 12px 28px; font-size: 14px;">
+        ← RETURN TO DIONLYONEE PLAYGROUND
+      </a>
+    </div>
+  </div>
+</body>
+</html>

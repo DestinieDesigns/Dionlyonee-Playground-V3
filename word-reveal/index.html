@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Reveal Show | Dionlyonee Stream</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/playground.css" />
+</head>
+<body>
+  <header class="main-header">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon" style="background: linear-gradient(135deg, #10b981, #047857); color: #fff;">🔤</div>
+      <div>
+        <div class="brand-title">WORD REVEAL & MOST LIKELY</div>
+        <div class="brand-tag">DIONLYONEE BROADCAST</div>
+      </div>
+    </a>
+    <div id="header-hud"></div>
+  </header>
+
+  <main class="hub-container">
+    <div class="hub-hero">
+      <div class="hub-hero-badge" style="border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.15); color: #34d399;">
+        LETTER FLIPS & SOCIAL STREAM PROMPTS
+      </div>
+      <h1 class="hub-hero-title">WORD REVEAL & MOST LIKELY</h1>
+      <p class="hub-hero-subtitle">
+        Progressive letter flips, clue unlocks, and stream chat social games across host desk and live stage displays.
+      </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+      <a href="host/" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">👑</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">HOST CONSOLE</div>
+            <div class="game-card-genre">REVEAL CONTROLLER</div>
+          </div>
+        </div>
+        <p class="game-card-desc">Letter-by-letter reveal, clue unveil, solve checking, and audience vote tally.</p>
+        <span class="game-btn game-btn-host">OPEN HOST CONSOLE →</span>
+      </a>
+
+      <a href="live/" target="_blank" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">📺</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">LIVE STAGE</div>
+            <div class="game-card-genre">AUDIENCE DISPLAY</div>
+          </div>
+        </div>
+        <p class="game-card-desc">Large animated letter cards that flip in real-time as the host uncovers hints and letters.</p>
+        <span class="game-btn game-btn-secondary">LAUNCH LIVE STAGE ↗</span>
+      </a>
+
+      <a href="cohost/" target="_blank" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">📱</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">CO-HOST REMOTE</div>
+            <div class="game-card-genre">PHONE COMPANION</div>
+          </div>
+        </div>
+        <p class="game-card-desc">Mobile clue reader, remote letter uncover, and speed buzzer companion.</p>
+        <span class="game-btn game-btn-secondary">OPEN PHONE REMOTE ↗</span>
+      </a>
+
+      <a href="waiting/" target="_blank" class="game-card">
+        <div class="game-card-header">
+          <div class="game-card-icon">⏳</div>
+          <div class="game-card-meta">
+            <div class="game-card-title">WAITING SCREEN</div>
+            <div class="game-card-genre">STANDBY LOBBY</div>
+          </div>
+        </div>
+        <p class="game-card-desc">Standby screen showing contestants and room code before the next phrase starts.</p>
+        <span class="game-btn game-btn-secondary">VIEW WAITING LOBBY ↗</span>
+      </a>
+    </div>
+  </main>
+
+  <script src="../shared/sound-manager.js"></script>
+  <script src="../shared/room-manager.js"></script>
+  <script src="../shared/firebase-room.js"></script>
+  <script src="../shared/room-ui.js"></script>
+  <script>
+    if (window.RoomUI) {
+      window.RoomUI.attachHUD('.main-header', 'word-reveal');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dionlyonee Jeopardy — Live Game</title>
+
+    <link
+        rel="stylesheet"
+        href="jeopardy-live.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           PON DI APP WAITING SCREEN
+        ===================================================== */
+
+        .pon-di-waiting {
+
+            width: 100%;
+            min-height: 520px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 18px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #061519,
+                    #0b2227
+                );
+
+            border: 2px solid
+                rgba(212, 175, 55, .45);
+
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,.04),
+                0 25px 70px rgba(0,0,0,.55),
+                inset 0 0 40px rgba(0,0,0,.35);
+
+            overflow: hidden;
+
+            position: relative;
+
+        }
+
+
+        /* Gold decorative frame */
+
+        .pon-di-waiting::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 8px;
+
+            border: 1px solid
+                rgba(212,175,55,.25);
+
+            border-radius: 18px;
+
+            pointer-events: none;
+
+        }
+
+
+        /* Image */
+
+        .pon-di-image {
+
+            display: block;
+
+            width: 100%;
+            max-width: 1100px;
+
+            height: auto;
+
+            max-height: 600px;
+
+            object-fit: contain;
+
+            border-radius: 16px;
+
+            position: relative;
+
+            z-index: 2;
+
+            box-shadow:
+                0 15px 45px rgba(0,0,0,.45);
+
+        }
+
+
+        /* =====================================================
+           WAITING TEXT UNDER IMAGE
+        ===================================================== */
+
+        .pon-di-message {
+
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #d4af37;
+
+            font-size: 12px;
+
+            font-weight: 900;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .pon-di-submessage {
+
+            margin-top: 8px;
+
+            color: #829596;
+
+            font-size: 10px;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        /* =====================================================
+           HIDDEN
+        ===================================================== */
+
+        .hidden {
+
+            display: none !important;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media(max-width:700px) {
+
+            .pon-di-waiting {
+
+                min-height: 320px;
+
+                padding: 10px;
+
+            }
+
+            .pon-di-message {
+
+                font-size: 9px;
+
+                letter-spacing: 2px;
+
+            }
+
+            .pon-di-submessage {
+
+                font-size: 8px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="live-game">
+
+
+    <!-- =====================================================
+         TOP HEADER
+    ====================================================== -->
+
+    <header class="live-header">
+
+        <div class="live-brand">
+
+            <div class="live-logo">
+                D
+            </div>
+
+            <div class="live-brand-text">
+
+                <div class="live-brand-name">
+                    DIONLYONEE
+                </div>
+
+                <div class="live-game-name">
+                    JEOPARDY
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="live-header-center">
+
+            <div class="show-label">
+                THE DIONLYONEE GAME SHOW
+            </div>
+
+        </div>
+
+
+        <div class="live-status">
+
+            <span
+                id="liveStatusDot"
+                class="live-status-dot">
+            </span>
+
+            <div>
+
+                <span class="live-status-label">
+                    GAME STATUS
+                </span>
+
+                <strong id="liveStatusText">
+                    WAITING
+                </strong>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="live-main">
+
+
+        <!-- =================================================
+             WAITING SCREEN
+        ================================================== -->
+
+        <section
+            id="waitingScreen"
+            class="waiting-container"
+        >
+
+            <div class="pon-di-waiting">
+
+                <img
+                    src="dionlyonee-pon-di-app.png"
+                    alt="Dionlyonee Pon Di App"
+                    class="pon-di-image"
+                    referrerPolicy="no-referrer"
+                >
+
+            </div>
+
+
+            <div class="pon-di-message">
+
+                DIONLYONEE PON DI APP
+
+            </div>
+
+
+            <div class="pon-di-submessage">
+
+                WAITING FOR THE HOST TO START THE GAME
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             GAME SCREEN
+        ================================================== -->
+
+        <section
+            id="gameScreen"
+            class="game-screen hidden"
+        >
+
+
+            <!-- TOP GAME INFORMATION -->
+
+            <section class="live-top-info">
+
+                <div class="live-round">
+
+                    <span>
+                        DIONLYONEE
+                    </span>
+
+                    <strong>
+                        GAME SHOW
+                    </strong>
+
+                </div>
+
+
+                <div
+                    id="category"
+                    class="live-category">
+
+                    WAITING FOR CATEGORY
+
+                </div>
+
+
+                <div class="live-round">
+
+                    <span>
+                        ROUND
+                    </span>
+
+                    <strong>
+                        01
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <!-- GAME BOARD -->
+
+            <section class="live-board">
+
+
+                <div class="category-banner">
+
+                    <div class="category-line"></div>
+
+                    <div>
+
+                        <span class="category-small">
+                            CATEGORY
+                        </span>
+
+                        <h1 id="categoryTitle">
+                            READY TO PLAY
+                        </h1>
+
+                    </div>
+
+                    <div class="category-line"></div>
+
+                </div>
+
+
+                <div
+                    id="puzzle"
+                    class="live-puzzle">
+                </div>
+
+
+                <div
+                    id="gameMessage"
+                    class="live-message">
+
+                    WAITING FOR THE HOST TO START THE GAME
+
+                </div>
+
+
+            </section>
+
+
+            <!-- TIMER -->
+
+            <section class="live-bottom-area">
+
+
+                <div class="timer-card">
+
+                    <span class="timer-label">
+                        NEXT LETTER
+                    </span>
+
+                    <div
+                        id="timer"
+                        class="live-timer">
+
+                        30
+
+                    </div>
+
+                    <span class="timer-unit">
+                        SECONDS
+                    </span>
+
+                </div>
+
+
+                <div class="instructions-card">
+
+                    <div class="instructions-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <span class="instructions-label">
+                            HOW TO PLAY
+                        </span>
+
+                        <p id="instructionText">
+                            Guess the hidden word or phrase!
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- COMPLETION OVERLAY -->
+
+            <div
+                id="completeOverlay"
+                class="complete-overlay"
+            >
+
+                <div class="complete-box">
+
+                    <div class="complete-stars">
+                        ◆ ◆ ◆
+                    </div>
+
+                    <div class="complete-label">
+                        PUZZLE COMPLETE
+                    </div>
+
+                    <div
+                        id="completeAnswer"
+                        class="complete-answer">
+                    </div>
+
+                    <div id="completeWinnerNotice" style="margin-top: 14px; font-size: 20px; font-weight: 900; color: #fbbf24; text-shadow: 0 0 16px rgba(251, 191, 36, 0.6);">
+                        GREAT JOB!
+                    </div>
+
+                    <div id="completeAutoCountdownNotice" style="margin-top: 10px; font-size: 14px; font-weight: 700; color: #34d399; letter-spacing: 1px;">
+                        ⚡ NEXT PUZZLE STARTING SOON
+                    </div>
+
+                    <div class="complete-stars">
+                        ◆ ◆ ◆
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- AUTO-STREAM INTERMISSION FLOATING BANNER -->
+            <div id="liveIntermissionBanner" style="display: none; position: absolute; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100; background: rgba(6, 21, 25, 0.95); border: 2px solid #10b981; border-radius: 9999px; padding: 8px 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 20px rgba(16, 185, 129, 0.35); align-items: center; gap: 12px;">
+                <span style="font-size: 18px; animation: pulse 1s infinite;">⚡</span>
+                <span style="font-size: 13px; font-weight: 900; letter-spacing: 1.5px; color: #fff; text-transform: uppercase;">
+                    AUTOPILOT: NEXT PUZZLE IN <strong id="liveIntermissionCountdown" style="color: #34d399; font-size: 16px;">5s</strong>
+                </span>
+            </div>
+
+            <!-- INTERACTIVE CHAT GUESS BAR FOR STREAM VIEWERS -->
+            <div id="liveChatWidget" style="margin-top: 24px; background: rgba(11, 34, 39, 0.85); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 16px; padding: 12px 18px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 18px;">💬</span>
+                    <div>
+                        <div style="font-size: 12px; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px;">Chat Viewer Guess</div>
+                        <div style="font-size: 10px; color: #94a3b8;">Guess in real-time — instant winner detection!</div>
+                    </div>
+                </div>
+                <form id="liveChatForm" style="display: flex; gap: 8px; flex: 1; max-width: 480px; min-width: 260px; margin: 0;">
+                    <input id="liveChatterName" type="text" placeholder="@YourName" style="width: 110px; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 12px; font-weight: 700; padding: 6px 10px;" required />
+                    <input id="liveChatterGuess" type="text" placeholder="Type your guess here..." style="flex: 1; background: rgba(0,0,0,0.6); border: 1px solid rgba(212,175,55,0.4); border-radius: 8px; color: #fff; font-size: 12px; font-weight: 700; padding: 6px 10px;" required />
+                    <button type="submit" style="background: linear-gradient(135deg, #d4af37, #b8860b); color: #000; font-weight: 900; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; border: none; border-radius: 8px; padding: 0 14px; cursor: pointer; transition: transform 0.15s;">
+                        GUESS
+                    </button>
+                </form>
+                <div id="liveChatFeedback" style="font-size: 11px; font-weight: 800; color: #34d399; display: none; width: 100%; text-align: center; margin-top: 4px;"></div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="live-footer">
+
+        <span>
+            DIONLYONEE JEOPARDY
+        </span>
+
+        <span>
+            ◆
+        </span>
+
+        <span>
+            LIVE GAME
+        </span>
+
+        <span>
+            ◆
+        </span>
+
+        <span>
+            GUESS THE ANSWER
+        </span>
+
+    </footer>
+
+
+</div>
+
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    /* =====================================================
+       BROADCAST CHANNELS & SYNC
+    ===================================================== */
+
+    const channel =
+        new BroadcastChannel(
+            "dionlyonee-jeorpardy-game"
+        );
+    const channelAlt =
+        new BroadcastChannel(
+            "dionlyonee-jeopardy-game"
+        );
+
+    /* =====================================================
+       AUDIO SYNTHESIS FOR LIVE STAGE
+    ===================================================== */
+
+    let liveAudioCtx = null;
+    function getLiveAudio() {
+        if (!liveAudioCtx) {
+            const AudioClass = window.AudioContext || window.webkitAudioContext;
+            if (AudioClass) liveAudioCtx = new AudioClass();
+        }
+        if (liveAudioCtx && liveAudioCtx.state === "suspended") {
+            liveAudioCtx.resume();
+        }
+        return liveAudioCtx;
+    }
+
+    function playLiveFanfare() {
+        try {
+            const ctx = getLiveAudio();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                const t = now + (i * 0.08);
+                osc.type = "triangle";
+                osc.frequency.setValueAtTime(freq, t);
+                gain.gain.setValueAtTime(0.2, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(t);
+                osc.stop(t + 0.4);
+            });
+        } catch(e) {}
+    }
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const waitingScreen =
+        document.getElementById(
+            "waitingScreen"
+        );
+
+    const gameScreen =
+        document.getElementById(
+            "gameScreen"
+        );
+
+    const puzzleElement =
+        document.getElementById(
+            "puzzle"
+        );
+
+    const categoryElement =
+        document.getElementById(
+            "category"
+        );
+
+    const categoryTitle =
+        document.getElementById(
+            "categoryTitle"
+        );
+
+    const timerElement =
+        document.getElementById(
+            "timer"
+        );
+
+    const gameMessage =
+        document.getElementById(
+            "gameMessage"
+        );
+
+    const statusDot =
+        document.getElementById(
+            "liveStatusDot"
+        );
+
+    const statusText =
+        document.getElementById(
+            "liveStatusText"
+        );
+
+    const instructionText =
+        document.getElementById(
+            "instructionText"
+        );
+
+    const completeOverlay =
+        document.getElementById(
+            "completeOverlay"
+        );
+
+    const completeAnswer =
+        document.getElementById(
+            "completeAnswer"
+        );
+
+    const completeWinnerNotice =
+        document.getElementById(
+            "completeWinnerNotice"
+        );
+
+    const completeAutoCountdownNotice =
+        document.getElementById(
+            "completeAutoCountdownNotice"
+        );
+
+    const liveIntermissionBanner =
+        document.getElementById(
+            "liveIntermissionBanner"
+        );
+
+    const liveIntermissionCountdown =
+        document.getElementById(
+            "liveIntermissionCountdown"
+        );
+
+    const liveChatForm =
+        document.getElementById(
+            "liveChatForm"
+        );
+
+    const liveChatterName =
+        document.getElementById(
+            "liveChatterName"
+        );
+
+    const liveChatterGuess =
+        document.getElementById(
+            "liveChatterGuess"
+        );
+
+    const liveChatFeedback =
+        document.getElementById(
+            "liveChatFeedback"
+        );
+
+
+    /* =====================================================
+       SHOW WAITING SCREEN
+    ===================================================== */
+
+    function showWaiting() {
+
+        waitingScreen.classList.remove(
+            "hidden"
+        );
+
+        gameScreen.classList.add(
+            "hidden"
+        );
+
+        statusDot.className =
+            "live-status-dot";
+
+        statusText.textContent =
+            "WAITING";
+
+    }
+
+
+    /* =====================================================
+       CREATE PUZZLE
+    ===================================================== */
+
+    function renderPuzzle(
+        answer,
+        revealed
+    ) {
+
+        puzzleElement.innerHTML = "";
+
+
+        if (!answer) {
+
+            const waiting =
+                document.createElement(
+                    "div"
+                );
+
+            waiting.className =
+                "puzzle-waiting";
+
+            waiting.innerHTML = `
+                <div class="waiting-symbol">?</div>
+                <div>WAITING FOR PUZZLE</div>
+            `;
+
+            puzzleElement.appendChild(
+                waiting
+            );
+
+            return;
+
+        }
+
+
+        const revealSet =
+            new Set(
+                revealed || []
+            );
+
+
+        answer
+            .split("")
+            .forEach(
+                function(character) {
+
+
+                    /* SPACE */
+
+                    if (
+                        character === " "
+                    ) {
+
+                        const space =
+                            document.createElement(
+                                "div"
+                            );
+
+                        space.className =
+                            "puzzle-space";
+
+                        puzzleElement.appendChild(
+                            space
+                        );
+
+                        return;
+
+                    }
+
+
+                    /* LETTER */
+
+                    const tile =
+                        document.createElement(
+                            "div"
+                        );
+
+                    tile.className =
+                        "puzzle-letter";
+
+
+                    if (
+                        revealSet.has(
+                            character
+                        )
+                    ) {
+
+                        tile.classList.add(
+                            "revealed"
+                        );
+
+                        tile.textContent =
+                            character;
+
+                    }
+
+
+                    puzzleElement.appendChild(
+                        tile
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       UPDATE GAME STATUS
+    ===================================================== */
+
+    function updateStatus(
+        phase
+    ) {
+
+        statusDot.className =
+            "live-status-dot";
+
+
+        if (
+            phase === "playing"
+        ) {
+
+            statusDot.classList.add(
+                "active"
+            );
+
+            statusText.textContent =
+                "LIVE";
+
+            gameMessage.textContent =
+                "GUESS THE ANSWER!";
+
+            instructionText.textContent =
+                "Guess the hidden word or phrase before the next letter is revealed.";
+
+            return;
+
+        }
+
+
+        if (
+            phase === "paused"
+        ) {
+
+            statusDot.classList.add(
+                "paused"
+            );
+
+            statusText.textContent =
+                "PAUSED";
+
+            gameMessage.textContent =
+                "GAME PAUSED";
+
+            instructionText.textContent =
+                "The host has temporarily paused the game.";
+
+            return;
+
+        }
+
+
+        statusText.textContent =
+            "WAITING";
+
+        gameMessage.textContent =
+            "WAITING FOR THE HOST TO START THE GAME";
+
+        instructionText.textContent =
+            "Guess the hidden word or phrase!";
+
+    }
+
+
+    /* =====================================================
+       RECEIVE HOST STATE
+    ===================================================== */
+
+    function handleState(state) {
+        if (!state) {
+            return;
+        }
+
+
+            /*
+             * If the host has not started,
+             * show the Pon Di App artwork.
+             */
+
+            if (
+                !state.answer ||
+                state.phase === "waiting" ||
+                state.phase === "cooldown" ||
+                Boolean(state.isCooldown) ||
+                Boolean(state.showWaitingScreen)
+            ) {
+
+                showWaiting();
+
+                return;
+
+            }
+
+
+            /*
+             * Hide waiting artwork.
+             */
+
+            waitingScreen.classList.add(
+                "hidden"
+            );
+
+            gameScreen.classList.remove(
+                "hidden"
+            );
+
+
+            /* DATA */
+
+            const answer =
+                state.answer || "";
+
+
+            const revealed =
+                Array.isArray(
+                    state.revealed
+                )
+                    ? state.revealed
+                    : [];
+
+
+            const category =
+                state.category || "";
+
+
+            const seconds =
+                Number.isFinite(
+                    Number(state.seconds)
+                )
+                    ? Number(state.seconds)
+                    : 30;
+
+
+            const phase =
+                state.phase || "waiting";
+
+
+            /* CATEGORY */
+
+            categoryElement.textContent =
+                category
+                    ? category.toUpperCase()
+                    : "WAITING FOR CATEGORY";
+
+
+            categoryTitle.textContent =
+                category
+                    ? category.toUpperCase()
+                    : "READY TO PLAY";
+
+
+            /* TIMER */
+
+            timerElement.textContent =
+                seconds;
+
+
+            timerElement.classList.remove(
+                "warning",
+                "danger"
+            );
+
+
+            if (
+                seconds <= 10
+            ) {
+
+                timerElement.classList.add(
+                    "danger"
+                );
+
+            }
+            else if (
+                seconds <= 20
+            ) {
+
+                timerElement.classList.add(
+                    "warning"
+                );
+
+            }
+
+
+            /* PUZZLE */
+
+            renderPuzzle(
+                answer,
+                revealed
+            );
+
+
+            /* AUTO-STREAM & INTERMISSION */
+
+            if (state.intermission && state.intermissionSeconds !== undefined) {
+                if (liveIntermissionBanner) {
+                    liveIntermissionBanner.style.display = "flex";
+                }
+                if (liveIntermissionCountdown) {
+                    liveIntermissionCountdown.textContent = `${state.intermissionSeconds}s`;
+                }
+                if (completeAutoCountdownNotice) {
+                    completeAutoCountdownNotice.style.display = "block";
+                    completeAutoCountdownNotice.textContent = `⚡ NEXT PUZZLE STARTING IN ${state.intermissionSeconds}s`;
+                }
+            } else {
+                if (liveIntermissionBanner) {
+                    liveIntermissionBanner.style.display = "none";
+                }
+                if (completeAutoCountdownNotice) {
+                    if (state.autoStream) {
+                        completeAutoCountdownNotice.style.display = "block";
+                        completeAutoCountdownNotice.textContent = "⚡ AUTOPILOT ACTIVE • PREPARING NEXT PUZZLE";
+                    } else {
+                        completeAutoCountdownNotice.style.display = "none";
+                    }
+                }
+            }
+
+            /* STATUS */
+
+            updateStatus(
+                phase
+            );
+
+
+            /* COMPLETION & WINNER */
+
+            if (
+                answer &&
+                revealed.length
+            ) {
+
+                const uniqueLetters =
+                    [
+                        ...new Set(
+                            answer
+                                .replace(
+                                    / /g,
+                                    ""
+                                )
+                                .split("")
+                        )
+                    ];
+
+
+                const complete =
+                    uniqueLetters.every(
+                        function(letter) {
+
+                            return revealed.includes(
+                                letter
+                            );
+
+                        }
+                    );
+
+
+                if (complete || phase === "complete") {
+
+                    completeOverlay.classList.add(
+                        "show"
+                    );
+
+                    completeAnswer.textContent =
+                        answer;
+
+                    if (state.lastWinner && state.lastWinner.chatter) {
+                        gameMessage.textContent =
+                            `WINNER: @${state.lastWinner.chatter}!`;
+                        if (completeWinnerNotice) {
+                            completeWinnerNotice.textContent = `🎉 SOLVED BY @${state.lastWinner.chatter} (+${state.lastWinner.score} PTS)!`;
+                        }
+                    } else {
+                        gameMessage.textContent =
+                            "PUZZLE COMPLETE";
+                        if (completeWinnerNotice) {
+                            completeWinnerNotice.textContent = "GREAT JOB!";
+                        }
+                    }
+
+                    playLiveFanfare();
+
+                }
+                else {
+
+                    completeOverlay.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+            else {
+
+                completeOverlay.classList.remove(
+                    "show"
+                );
+
+            }
+
+    }
+
+    /* CHANNELS */
+    channel.onmessage = function (event) {
+        handleState(event.data);
+    };
+
+    channelAlt.onmessage = function (event) {
+        handleState(event.data);
+    };
+
+    window.addEventListener("message", function (event) {
+        if (event.data && (event.data.answer !== undefined || event.data.type === "STATE_UPDATE")) {
+            handleState(event.data);
+        }
+    });
+
+    window.addEventListener("storage", function (event) {
+        if (event.key === "dionlyonee_jeopardy_pulse") {
+            try {
+                const cached = sessionStorage.getItem("dionlyonee_jeorpardy_live");
+                if (cached) handleState(JSON.parse(cached));
+            } catch (e) {}
+        }
+    });
+
+    /* LIVE CHAT GUESS FORM SUBMISSION */
+    if (liveChatForm && liveChatterGuess) {
+        liveChatForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const chatter = (liveChatterName.value || "Viewer").trim();
+            const guess = liveChatterGuess.value.trim();
+            if (!guess) return;
+
+            const payload = {
+                type: "CHAT_GUESS",
+                chatter: chatter.replace(/^@/, ""),
+                guess: guess,
+                timestamp: Date.now()
+            };
+
+            // Post to both broadcast channels and windows
+            try { channel.postMessage(payload); } catch (e) {}
+            try { channelAlt.postMessage(payload); } catch (e) {}
+            try { window.postMessage(payload, "*"); } catch (e) {}
+            try {
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage(payload, "*");
+                }
+            } catch (e) {}
+
+            liveChatterGuess.value = "";
+            if (liveChatFeedback) {
+                liveChatFeedback.style.display = "block";
+                liveChatFeedback.textContent = `🎯 Sent guess: "${guess}" from @${chatter}`;
+                setTimeout(() => {
+                    liveChatFeedback.style.display = "none";
+                }, 3000);
+            }
+        });
+    }
+
+    /* =====================================================
+       INITIAL STATE
+    ===================================================== */
+
+    try {
+        const cached = sessionStorage.getItem("dionlyonee_jeorpardy_live");
+        if (cached) {
+            handleState(JSON.parse(cached));
+        } else {
+            showWaiting();
+        }
+    } catch (e) {
+        showWaiting();
+    }
+
+    try {
+        channel.postMessage({ type: "REQUEST_STATE" });
+        channelAlt.postMessage({ type: "REQUEST_STATE" });
+    } catch (e) {}
+
+
+    /* =====================================================
+       CLEANUP
+    ===================================================== */
+
+    window.addEventListener(
+        "beforeunload",
+        function() {
+
+            channel.close();
+            channelAlt.close();
+
+        }
+    );
+
+})();
+
+</script>
+
+
+</body>
+
+</html>

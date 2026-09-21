@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dual View Split Screen | Dionlyonee Playground</title>
+  <meta name="description" content="Synchronized Dual Screen console displaying Host Controls and Live Stage side-by-side in real time." />
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="dual-view.css" />
+  <link rel="stylesheet" href="shared/heart-power.css" />
+</head>
+
+<body>
+
+  <!-- TOP APP NAVIGATION -->
+  <header class="main-header">
+    <a href="index.html" class="brand">
+      <div class="brand-icon">🎛️</div>
+      <div>
+        <div class="brand-title">DIONLYONEE PLAYGROUND</div>
+        <div class="brand-tag">DUAL SCREEN CONSOLE</div>
+      </div>
+    </a>
+
+    <!-- GAME MODE SELECTOR -->
+    <div class="dual-mode-switch">
+      <button id="btn-mode-lyrics" class="mode-toggle-btn active">
+        🎤 Guess Lyrics
+      </button>
+      <button id="btn-mode-hangman" class="mode-toggle-btn">
+        🎭 Hangman
+      </button>
+      <button id="btn-mode-wheel" class="mode-toggle-btn">
+        🎡 Wheel of Fortune
+      </button>
+      <button id="btn-mode-speakout" class="mode-toggle-btn">
+        🎤 Speak Out!
+      </button>
+      <button id="btn-mode-jeopardy" class="mode-toggle-btn">
+        🏆 Jeopardy!
+      </button>
+      <button id="btn-mode-mostlikely" class="mode-toggle-btn">
+        🃏 Most Likely To
+      </button>
+    </div>
+
+    <!-- QUICK NAV LINKS -->
+    <nav class="nav-links">
+      <button type="button" id="btn-dual-storyboard" class="btn-storyboard-toggle" style="margin-right: 6px; border-color: #f43f5e; background: linear-gradient(135deg, rgba(244,63,94,0.3), rgba(16,185,129,0.25)); color: #fff; font-weight: 800;">
+        🎁 GIFT SOUNDBOARD
+      </button>
+      <a href="index.html" class="nav-btn">🏠 Hub</a>
+      <a href="guess-lyrics/host.html" target="_blank" rel="noopener noreferrer" class="nav-btn">🎤 Lyrics Host ↗</a>
+      <a href="hangman/host.html" target="_blank" rel="noopener noreferrer" class="nav-btn">🎭 Hangman Host ↗</a>
+      <a href="wheel-host.html" target="_blank" rel="noopener noreferrer" class="nav-btn">🎡 Wheel Host ↗</a>
+      <a href="jeopardy-host.html" target="_blank" rel="noopener noreferrer" class="nav-btn">🏆 Jeopardy Host ↗</a>
+      <a href="most-likely-host.html" target="_blank" rel="noopener noreferrer" class="nav-btn">🃏 Most Likely ↗</a>
+    </nav>
+  </header>
+
+  <!-- SPLIT SCREEN WRAPPER -->
+  <main class="dual-container">
+
+    <!-- LEFT PANE: HOST CONTROLS -->
+    <section class="split-pane">
+      <div class="pane-header">
+        <div class="pane-title">
+          <span class="pane-icon">🎮</span>
+          <span id="host-pane-title">HOST CONTROL PANEL</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <button type="button" id="btn-pane-soundboard" class="pane-popout-btn" style="background: linear-gradient(135deg, rgba(244,63,94,0.35), rgba(16,185,129,0.3)); color: #fecdd3; border-color: #f43f5e; font-weight: 800; cursor: pointer;">
+            🎁 SOUNDBOARD
+          </button>
+          <a href="remote.html" target="_blank" class="pane-popout-btn" title="Open Host Phone Remote in New Tab">
+            📱 Phone Remote ↗
+          </a>
+          <a id="host-popout-link" href="wheel-host.html" target="_blank" class="pane-popout-btn">
+            Open in New Tab ↗
+          </a>
+        </div>
+      </div>
+      <div class="pane-body">
+        <iframe id="host-frame" src="guess-lyrics/host.html" title="Host Controls" class="pane-frame"></iframe>
+      </div>
+    </section>
+
+    <!-- RIGHT PANE: LIVE STAGE -->
+    <section class="split-pane">
+      <div class="pane-header">
+        <div class="pane-title">
+          <span class="pane-icon">📺</span>
+          <span id="live-pane-title">GUESS THE LYRICS LIVE AUDIENCE STAGE</span>
+        </div>
+        <a id="live-popout-link" href="guess-lyrics/live.html" target="_blank" class="pane-popout-btn">
+          Open in New Tab ↗
+        </a>
+      </div>
+      <div class="pane-body">
+        <iframe id="live-frame" src="guess-lyrics/live.html" title="Live Stage" class="pane-frame"></iframe>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="sync-client.js"></script>
+  <script src="shared/heart-power-system.js"></script>
+  <script src="dual-view.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+/* Jeopardy Theme Styles */
+@import '../../css/global.css';
+
+:root {
+  --jeopardy-blue: #060ce9;
+  --jeopardy-dark: #000458;
+  --jeopardy-gold: #d69f3d;
+  --jeopardy-text: #ffffff;
+}

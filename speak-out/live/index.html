@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Stage - DIONLYONEE SPEAK OUT!</title>
+  <link rel="stylesheet" href="../css/speak-common.css">
+  <link rel="stylesheet" href="speak-live.css">
+</head>
+<body>
+  <div class="live-bg-glow"></div>
+
+  <div class="live-container" id="liveApp">
+    <!-- Broadcast Top HUD -->
+    <header class="live-header" id="liveHeader">
+      <div class="live-brand">
+        <span>🎤</span> DIONLYONEE SPEAK OUT!
+      </div>
+
+      <div class="live-metrics">
+        <div class="live-metric-box">
+          <span class="label">Total Score</span>
+          <span class="val" id="liveScoreVal" style="color: var(--gold);">0</span>
+        </div>
+        <div class="live-metric-box" id="liveStreakBox">
+          <span class="label">Streak</span>
+          <span class="val" id="liveStreakVal" style="color: #f43f5e;">0 🔥</span>
+        </div>
+        <div class="live-metric-box">
+          <span class="label">Room Code</span>
+          <span class="val" id="liveRoomVal" style="color: #38bdf8; font-size: 1.5rem;">----</span>
+        </div>
+        <button id="btnLiveConnectDevice" class="btn-live-qr" title="Connect Phone Host">
+          📱 <span>HOST ON PHONE</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 1. STANDBY / WAITING SCREEN (Shown before host starts round or during intermissions) -->
+    <main class="live-waiting-stage" id="liveWaitingStage">
+      <div class="waiting-broadcast-pill">
+        <span class="waiting-radar-dot"></span>
+        <span id="waitingStatusBadge">STANDBY • WAITING FOR HOST TO START</span>
+      </div>
+
+      <div class="waiting-hero-logo">
+        <span class="waiting-hero-icon">🎤</span>
+      </div>
+
+      <h1 class="waiting-hero-title">
+        DIONLYONEE SPEAK OUT!
+      </h1>
+      <p class="waiting-hero-tagline">
+        FAST-PACED LIVE STREAM SPEAKING CHALLENGE • 650+ STREAM-TESTED PROMPTS
+      </p>
+
+      <!-- Separate Device Phone Connect Box -->
+      <div class="waiting-connect-box" id="waitingConnectBox">
+        <div class="connect-qr-container">
+          <img id="waitingQrImg" src="" alt="Host Phone QR Code" class="waiting-qr-code" />
+        </div>
+        <div class="connect-info">
+          <div class="connect-title">📱 CONTROL FROM SEPARATE DEVICE (PHONE / IPAD)</div>
+          <p class="connect-desc">
+            Scan this QR code with your phone camera to use your phone as the wireless Host teleprompter controller while keeping this Live Stage on OBS!
+          </p>
+          <div class="connect-link-row">
+            <span class="connect-room-label">ROOM: <strong id="waitingRoomCode" style="color: #38bdf8;">DIONLIVE</strong></span>
+            <button id="btnCopyHostUrl" class="btn-copy-host-url">📋 COPY HOST LINK</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Mode Capsules Grid -->
+      <div class="waiting-modes-grid">
+        <div class="waiting-mode-pill">
+          <span class="mode-icon">👅</span>
+          <div>
+            <div class="mode-title">Tongue Twisters</div>
+            <div class="mode-desc">105 alliterative challenges</div>
+          </div>
+        </div>
+        <div class="waiting-mode-pill">
+          <span class="mode-icon">⚡</span>
+          <div>
+            <div class="mode-title">Rapid Fire</div>
+            <div class="mode-desc">Name 5 items in 15 seconds</div>
+          </div>
+        </div>
+        <div class="waiting-mode-pill">
+          <span class="mode-icon">🚫</span>
+          <div>
+            <div class="mode-title">Forbidden Words</div>
+            <div class="mode-desc">Describe without 4 taboo terms</div>
+          </div>
+        </div>
+        <div class="waiting-mode-pill">
+          <span class="mode-icon">🎭</span>
+          <div>
+            <div class="mode-title">Voice Impersonations</div>
+            <div class="mode-desc">80 characters with acting cues</div>
+          </div>
+        </div>
+        <div class="waiting-mode-pill">
+          <span class="mode-icon">🗣️</span>
+          <div>
+            <div class="mode-title">Keep Talking</div>
+            <div class="mode-desc">30s continuous - zero dead air</div>
+          </div>
+        </div>
+        <div class="waiting-mode-pill">
+          <span class="mode-icon">🧩</span>
+          <div>
+            <div class="mode-title">Finish The Phrase</div>
+            <div class="mode-desc">Beat the buzzer with correct ending</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="waiting-footer-pulse" id="waitingFooterNotice">
+        ✨ When the host launches a challenge from their phone, the live stage will activate automatically!
+      </div>
+    </main>
+
+    <!-- 2. ACTIVE CHALLENGE ARENA (Shown when game is in progress) -->
+    <main class="live-main-stage" id="liveArena" style="display: none;">
+      <div class="live-mode-banner" id="liveModeBanner">
+        <span id="liveModeIcon">👅</span>
+        <span id="liveModeName">TONGUE TWISTER</span>
+      </div>
+
+      <div class="live-prompt-instruction" id="liveInstruction">
+        REPEAT 3 TIMES CLEARLY
+      </div>
+
+      <h1 class="live-prompt-headline" id="liveHeadline">
+        Waiting for Host to start...
+      </h1>
+
+      <!-- Forbidden Words List on Live Screen -->
+      <div class="live-forbidden-grid" id="liveForbiddenGrid" style="display: none;"></div>
+
+      <!-- Synchronized Timer Float -->
+      <div class="live-timer-float" id="liveTimerFloat">
+        <span style="font-size: 1.5rem;">⏱️</span>
+        <span class="live-timer-num" id="liveTimerNum">20</span>
+      </div>
+
+      <!-- Revealed Answer Banner -->
+      <div class="live-answer-reveal" id="liveAnswerReveal" style="display: none;"></div>
+    </main>
+
+    <!-- Bottom Stream Banner Toast for Action Celebrations -->
+    <div id="liveBannerToast" class="live-banner-toast" style="display: none;">
+      <span id="liveToastIcon">🔥</span>
+      <span id="liveToastText">3X STREAK ON FIRE!</span>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../../shared/firebase-config.js"></script>
+  <script src="../../shared/room-manager.js"></script>
+  <script src="../../shared/firebase-room.js"></script>
+  <script src="../../shared/game-session.js"></script>
+  <script src="../../shared/sound-manager.js"></script>
+
+  <!-- Data Libraries -->
+  <script src="../data/tongue-twisters.js"></script>
+  <script src="../data/rapid-fire.js"></script>
+  <script src="../data/forbidden-words.js"></script>
+  <script src="../data/voice-challenges.js"></script>
+  <script src="../data/keep-talking.js"></script>
+  <script src="../data/finish-the-phrase.js"></script>
+  <script src="../data/speak-out-data.js"></script>
+
+  <!-- Logic -->
+  <script src="../js/speak-timer.js"></script>
+  <script src="../js/streak-manager.js"></script>
+  <script src="../js/speak-scoring.js"></script>
+  <script src="../js/speak-randomizer.js"></script>
+  <script src="../js/challenge-manager.js"></script>
+  <script src="../js/speak-engine.js"></script>
+
+  <!-- Live View Controller -->
+  <script src="speak-live.js"></script>
+</body>
+</html>

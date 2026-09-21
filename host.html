@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dionlyonee Playground HOST</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/shared/heart-power.css">
+</head>
+<body>
+<div class="host-screen">
+  <header class="host-header">
+    <div class="host-logo">D</div>
+    <div><h1>DIONLYONEE PLAYGROUND</h1><p>HOST CONTROL PANEL</p></div>
+    <button type="button" id="btnHostGiftSoundboard" onclick="if(window.HeartPowerSystem){window.HeartPowerSystem.injectStoryboardModal();window.HeartPowerSystem.openStoryboardModal('soundboard');}" style="margin-left: auto; background: linear-gradient(135deg, #e11d48, #be123c); color: #fff; border: 1.5px solid #fecdd3; border-radius: 8px; padding: 8px 14px; font-weight: 800; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 14px rgba(225,29,72,0.4);">
+      <span>🎁</span>
+      <span>GIFT SOUNDBOARD</span>
+    </button>
+  </header>
+  <main class="host-main">
+    <div class="host-status">HOST CONTROL</div>
+    <div class="host-label">CATEGORY & QUESTION SELECTION</div>
+    <div style="display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
+      <select id="categorySelect" style="flex: 1; min-width: 150px; padding: 10px 14px; border-radius: 8px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.25); font-weight: 700; font-size: 14px;"></select>
+      <button type="button" id="btnPickCategory" style="padding: 10px 16px; border-radius: 8px; background: linear-gradient(135deg, #10b981, #059669); color: #000; font-weight: 900; border: none; cursor: pointer; font-size: 13px;">📁 PICK CATEGORY</button>
+    </div>
+    <div style="margin-bottom: 14px;">
+      <select id="puzzleSelect" style="width: 100%; padding: 10px 14px; border-radius: 8px; background: rgba(0,0,0,0.6); color: #fff; border: 1px solid rgba(255,255,255,0.25); font-weight: 700; font-size: 14px;"></select>
+    </div>
+    <div id="hostCategory" class="host-category">READY</div>
+    <div class="host-label">ANSWER</div>
+    <div id="answer" class="host-answer">—</div>
+    <div class="host-label">REVEALED LETTERS</div>
+    <div id="revealed" class="host-revealed">NONE</div>
+    <div class="host-label">NEXT LETTER</div>
+    <div id="hostTimer" class="host-timer">30</div>
+
+    <section class="host-settings">
+      <div class="host-setting">
+        <h3>LETTER REVEAL</h3>
+        <button type="button" class="time-button" data-time="15">15 SEC</button>
+        <button type="button" class="time-button active" data-time="30">30 SEC</button>
+        <button type="button" class="time-button" data-time="60">1 MIN</button>
+      </div>
+      <div class="host-setting">
+        <h3>NEXT PUZZLE COOLDOWN</h3>
+        <button type="button" class="cooldown-button" data-time="5">5 SEC</button>
+        <button type="button" class="cooldown-button active" data-time="10">10 SEC</button>
+        <button type="button" class="cooldown-button" data-time="15">15 SEC</button>
+      </div>
+    </section>
+
+    <div class="host-controls">
+      <button type="button" id="start" class="start-game">START GAME</button>
+      <button type="button" id="next" class="next-game">NEXT PUZZLE</button>
+    </div>
+    <div id="hostMessage" class="host-message">READY TO START</div>
+  </main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const channel = new BroadcastChannel('dionlyonee-wheel-game');
+
+  const puzzles = {
+    Countries: [
+      'JAMAICA','CANADA','BRAZIL','JAPAN','MEXICO','BAHAMAS','BARBADOS','FRANCE','GERMANY','AUSTRALIA',
+      'UNITED STATES','UNITED KINGDOM','SPAIN','ITALY','PORTUGAL','ARGENTINA','CHILE','COLOMBIA','CUBA',
+      'DOMINICAN REPUBLIC','HAITI','TRINIDAD AND TOBAGO','GUYANA','COSTA RICA','PANAMA','BELIZE',
+      'SOUTH AFRICA','NIGERIA','GHANA','KENYA','EGYPT','MOROCCO','INDIA','CHINA','SOUTH KOREA',
+      'THAILAND','PHILIPPINES','INDONESIA','NEW ZEALAND','IRELAND','GREECE','TURKEY'
+    ],
+    Animals: [
+      'ELEPHANT','GIRAFFE','MONKEY','DOLPHIN','CROCODILE','KANGAROO','TIGER','GORILLA','PENGUIN','ZEBRA',
+      'LION','CHEETAH','LEOPARD','BEAR','POLAR BEAR','WOLF','FOX','RABBIT','HORSE','DONKEY','GOAT','SHEEP',
+      'COW','PIG','CHICKEN','EAGLE','PARROT','OWL','FLAMINGO','PEACOCK','OSTRICH','SNAKE','LIZARD','TURTLE',
+      'FROG','SHARK','WHALE','OCTOPUS','SEAL','BUTTERFLY','SPIDER','LOBSTER','CRAB','BAT'
+    ],
+    'Jamaican Phrases': [
+      'WAH GWAAN','WEH YUH A SEH','MI DEH YA','EVERYTING IRIE','BIG UP','WALK GOOD','NO PROBLEM','MEK WE GO',
+      'YEAH MON','MI SOON COME','WEH DI DEAL','HOW YUH MEAN','MI NUH KNOW','MI NUH CARE','NO WORRIES',
+      'ONE LOVE','RESPECT','BLESS UP','GIVE THANKS','NUFF RESPECT','IRIE VIBES','COME YA','TEK TIME',
+      'HOLD A FAITH','MEK IT GO','WHA YUH A DO','HOW TING DEH','MI GOOD','YUH GOOD','SEEN','FI REAL',
+      'NO LIE','MI TELL YUH','WAH FI DO','MI A COME','MI A GO','MEK WE LINK'
+    ],
+    Food: [
+      'JERK CHICKEN','RICE AND PEAS','PIZZA','HAMBURGER','ICE CREAM','FRIED CHICKEN','CURRY GOAT','OXTAIL',
+      'BROWN STEW CHICKEN','ESCOVITCH FISH','ACKEE AND SALTFISH','FESTIVAL','FRIED DUMPLING','BAMMY',
+      'CALLALOO','PEPPER POT SOUP','GOAT SOUP','CHICKEN SOUP','RED PEA SOUP','BEEF PATTY','COCO BREAD',
+      'CURRY CHICKEN','STEAMED FISH','JERK PORK','JERK SHRIMP','MAC AND CHEESE','FRIED FISH','FRENCH FRIES',
+      'TACOS','BURRITO','HOT DOG','CHEESEBURGER','PANCAKES','WAFFLES','CHOCOLATE CAKE','CHEESECAKE',
+      'DONUTS','COOKIES','POPCORN','CHICKEN WINGS','SPAGHETTI','LASAGNA','FRIED RICE','NOODLES','RAMEN','SUSHI'
+    ],
+    'Things You Do': [
+      'WATCH TV','PLAY VIDEO GAMES','GO SHOPPING','GO TO THE BEACH','WATCH A MOVIE','LISTEN TO MUSIC',
+      'GO TO SCHOOL','GO TO WORK','TAKE A NAP','GO TO SLEEP','BRUSH YOUR TEETH','TAKE A SHOWER','COOK DINNER',
+      'ORDER FOOD','GO TO THE GYM','PLAY BASKETBALL','PLAY FOOTBALL','PLAY SOCCER','GO SWIMMING','GO FOR A WALK',
+      'DRIVE A CAR','TAKE A FLIGHT','GO ON VACATION','CLEAN THE HOUSE','DO LAUNDRY','WASH THE DISHES',
+      'TAKE OUT THE TRASH','MAKE BREAKFAST','DRINK COFFEE','DRINK WATER','READ A BOOK','USE YOUR PHONE',
+      'TAKE A SELFIE','GO TO A PARTY','HANG OUT WITH FRIENDS','CALL YOUR FAMILY','GO TO THE STORE','GO TO THE MOVIES','GO TO A CONCERT'
+    ],
+    Music: [
+      'REGGAE MUSIC','DANCEHALL MUSIC','HIP HOP','RHYTHM AND BLUES','COUNTRY MUSIC','ROCK AND ROLL','POP MUSIC',
+      'GOSPEL MUSIC','JAZZ MUSIC','CLASSICAL MUSIC','REGGAETON','AFROBEATS','SOCA MUSIC','CALYPSO MUSIC',
+      'LIVE CONCERT','MUSIC VIDEO','DJ PARTY','SOUND SYSTEM','MUSIC FESTIVAL','DANCE FLOOR'
+    ],
+    Sports: [
+      'BASKETBALL','FOOTBALL','SOCCER','BASEBALL','CRICKET','TENNIS','GOLF','VOLLEYBALL','BOXING','WRESTLING',
+      'SWIMMING','TRACK AND FIELD','TABLE TENNIS','BADMINTON','HOCKEY','SKATEBOARDING','SURFING','CYCLING',
+      'BOWLING','GYMNASTICS','MARATHON','FORMULA ONE','CAR RACING','HORSE RACING','DARTS','KICKBOXING','MMA','STREET BASKETBALL'
+    ]
+  };
+
+  let revealTime = 30;
+  let cooldownTime = 10;
+  let answer = '';
+  let category = '';
+  let revealed = [];
+  let seconds = 30;
+  let running = false;
+  let timer = null;
+  let cooldownTimer = null;
+
+  const hostCategory = document.getElementById('hostCategory');
+  const answerElement = document.getElementById('answer');
+  const revealedElement = document.getElementById('revealed');
+  const timerElement = document.getElementById('hostTimer');
+  const messageElement = document.getElementById('hostMessage');
+  const categorySelect = document.getElementById('categorySelect');
+  const puzzleSelect = document.getElementById('puzzleSelect');
+  const btnPickCategory = document.getElementById('btnPickCategory');
+
+  function initCategories() {
+    const cats = Object.keys(puzzles);
+    categorySelect.innerHTML = cats.map(c => `<option value="${c}">${c} (${puzzles[c].length})</option>`).join('');
+    updatePuzzleSelect();
+
+    categorySelect.onchange = () => {
+      updatePuzzleSelect();
+      category = categorySelect.value;
+      const words = puzzles[category] || [];
+      answer = words[0] || '';
+      revealed = [];
+      hostCategory.textContent = category;
+      answerElement.textContent = answer;
+      sendGame({ category, answer, revealed: [] });
+    };
+
+    puzzleSelect.onchange = () => {
+      category = categorySelect.value;
+      answer = puzzleSelect.value;
+      revealed = [];
+      hostCategory.textContent = category;
+      answerElement.textContent = answer;
+      sendGame({ category, answer, revealed: [] });
+    };
+
+    if (btnPickCategory) {
+      btnPickCategory.onclick = () => {
+        category = categorySelect.value;
+        const words = puzzles[category] || [];
+        answer = words[Math.floor(Math.random() * words.length)];
+        puzzleSelect.value = answer;
+        revealed = [];
+        hostCategory.textContent = category;
+        answerElement.textContent = answer;
+        messageElement.textContent = `SELECTED CATEGORY: ${category}`;
+        sendGame({ category, answer, revealed: [] });
+      };
+    }
+  }
+
+  function updatePuzzleSelect() {
+    const selected = categorySelect.value;
+    const words = puzzles[selected] || [];
+    puzzleSelect.innerHTML = words.map(w => `<option value="${w}">${w}</option>`).join('');
+  }
+
+  function sendGame(state = {}) {
+    const payload = {
+      category: state.category || category,
+      answer: state.answer || answer,
+      revealed: state.revealed || revealed,
+      seconds: typeof state.seconds === 'number' ? state.seconds : seconds,
+      running: typeof state.running === 'boolean' ? state.running : running,
+      phase: state.phase || (running ? 'playing' : 'waiting'),
+      timestamp: Date.now()
+    };
+    try {
+      sessionStorage.setItem('dion_live_wheel', JSON.stringify(payload));
+    } catch (e) {}
+    channel.postMessage(payload);
+  }
+
+  channel.onmessage = function (event) {
+    if (event.data && event.data.type === 'REQUEST_STATE') {
+      sendGame();
+    }
+  };
+
+  function choosePuzzle() {
+    if (categorySelect && categorySelect.value) {
+      category = categorySelect.value;
+    } else {
+      const categories = Object.keys(puzzles);
+      category = categories[Math.floor(Math.random() * categories.length)];
+      if (categorySelect) categorySelect.value = category;
+    }
+    if (puzzleSelect && puzzleSelect.value) {
+      answer = puzzleSelect.value;
+    } else {
+      const words = puzzles[category] || [];
+      answer = words[Math.floor(Math.random() * words.length)];
+      if (puzzleSelect) puzzleSelect.value = answer;
+    }
+    revealed = [];
+  }
+
+  function startGame() {
+    clearInterval(timer);
+    clearTimeout(cooldownTimer);
+    choosePuzzle();
+    seconds = revealTime;
+    running = true;
+
+    hostCategory.textContent = category;
+    answerElement.textContent = answer;
+    revealedElement.textContent = 'NONE';
+    timerElement.textContent = seconds;
+    messageElement.textContent = 'GAME IS LIVE';
+
+    sendGame({ phase: 'playing' });
+    timer = setInterval(tick, 1000);
+  }
+
+  function tick() {
+    seconds--;
+    timerElement.textContent = seconds;
+    sendGame({ phase: 'playing' });
+    if (seconds <= 0) revealLetter();
+  }
+
+  function revealLetter() {
+    clearInterval(timer);
+
+    const hidden = [...new Set(answer.replace(/ /g, '').split('').filter(letter => !revealed.includes(letter)))];
+
+    if (!hidden.length) {
+      finishGame();
+      return;
+    }
+
+    const letter = hidden[Math.floor(Math.random() * hidden.length)];
+    revealed.push(letter);
+    revealedElement.textContent = revealed.join(' • ');
+    messageElement.textContent = 'REVEALED: ' + letter;
+    seconds = revealTime;
+    timerElement.textContent = seconds;
+
+    sendGame({ phase: 'playing' });
+
+    if (puzzleComplete()) {
+      finishGame();
+    } else {
+      timer = setInterval(tick, 1000);
+    }
+  }
+
+  function puzzleComplete() {
+    return [...new Set(answer.replace(/ /g, '').split(''))].every(letter => revealed.includes(letter));
+  }
+
+  function finishGame() {
+    clearInterval(timer);
+    running = false;
+    timerElement.textContent = '✓';
+    messageElement.textContent = 'PUZZLE COMPLETE';
+    sendGame({ running: false, phase: 'complete', seconds: 0 });
+
+    cooldownTimer = setTimeout(() => {
+      startGame();
+    }, cooldownTime * 1000);
+  }
+
+  document.getElementById('start').addEventListener('click', startGame);
+  document.getElementById('next').addEventListener('click', startGame);
+
+  initCategories();
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Enter' && !running) startGame();
+  });
+
+  document.querySelectorAll('.time-button').forEach(button => {
+    button.addEventListener('click', () => {
+      if (running) return;
+      document.querySelectorAll('.time-button').forEach(item => item.classList.remove('active'));
+      button.classList.add('active');
+      revealTime = Number(button.dataset.time);
+      seconds = revealTime;
+      timerElement.textContent = seconds;
+    });
+  });
+
+  document.querySelectorAll('.cooldown-button').forEach(button => {
+    button.addEventListener('click', () => {
+      if (running) return;
+      document.querySelectorAll('.cooldown-button').forEach(item => item.classList.remove('active'));
+      button.classList.add('active');
+      cooldownTime = Number(button.dataset.time);
+    });
+  });
+
+  window.addEventListener('beforeunload', () => {
+    clearInterval(timer);
+    clearTimeout(cooldownTimer);
+    channel.close();
+  });
+})();
+</script>
+<script src="/shared/heart-power-system.js"></script>
+</body>
+</html>

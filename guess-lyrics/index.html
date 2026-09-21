@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dionlyonee — GUESS THE LYRICS (R&B • REGGAE • LOVE • GOSPEL)</title>
+  <link rel="stylesheet" href="../jeopardy/jeopardy.css">
+</head>
+<body>
+  <div class="jeopardy-launcher">
+    <div class="jeopardy-logo">🎤</div>
+    <div class="brand-name">DIONLYONEE</div>
+    <div class="game-name">GUESS THE LYRICS</div>
+    <div class="game-subtitle">R&amp;B • REGGAE • DANCEHALL • LOVE SONGS • GOSPEL</div>
+    <div class="gold-line"></div>
+    <p class="launcher-description">Finish the iconic song lyrics across 90s &amp; 2000s R&amp;B, timeless Love Songs &amp; Slow Jams, Reggae &amp; Jamaican roots, Dancehall party anthems, and uplifting Gospel classics!</p>
+    <div class="screen-options">
+      <button type="button" class="screen-card host-card" onclick="openHost()">
+        <div class="card-icon">🎤</div>
+        <div class="card-title">HOST CONTROL</div>
+        <div class="card-description">Control lyric cards, reveal 1st letters or artist clues, trigger timers, reveal answers, and award points.</div>
+        <div class="card-action">ENTER HOST PANEL →</div>
+      </button>
+      <button type="button" class="screen-card live-card" onclick="openLive()">
+        <div class="card-icon">📺</div>
+        <div class="card-title">LIVE GAME</div>
+        <div class="card-description">Full screen audience broadcast stage for stream OBS and viewer sing-along chat guessing.</div>
+        <div class="card-action">ENTER LIVE SCREEN →</div>
+      </button>
+      <button type="button" class="screen-card" style="border: 2px solid #10b981; background: rgba(16,185,129,0.12);" onclick="openSolo()">
+        <div class="card-icon">👤</div>
+        <div class="card-title" style="color: #6ee7b7;">SINGLE PLAYER</div>
+        <div class="card-description">Test your music memory solo with on-screen typing inputs, instant validation, and clue reveals.</div>
+        <div class="card-action" style="color: #10b981;">PLAY SOLO MODE →</div>
+      </button>
+    </div>
+    <button type="button" class="back-button" onclick="goBack()">← BACK TO DIONLYONEE PLAYGROUND</button>
+    <div class="launcher-footer">
+      <span>DIONLYONEE</span><span>◆</span><span>GUESS THE LYRICS</span><span>◆</span><span>R&amp;B • REGGAE • LOVE • GOSPEL</span>
+    </div>
+  </div>
+  <script>
+    function openHost() { window.open("host.html", "_blank"); }
+    function openLive() { window.open("live.html", "_blank"); }
+    function openSolo() { window.open("host.html?singleplayer=true", "_blank"); }
+    function goBack() { window.location.href = "../index.html"; }
+  </script>
+</body>
+</html>

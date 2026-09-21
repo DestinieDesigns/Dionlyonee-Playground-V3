@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeopardy Co-Host Assistant | Dionlyonee Stream</title>
+  <meta name="description" content="Co-Host assist screen for Dionlyonee Jeopardy live stream game show." />
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="jeopardy-cohost.css" />
+</head>
+
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="cohost-header">
+    <div class="brand-group">
+      <div class="brand-icon">🎤</div>
+      <div>
+        <div class="brand-title">DIONLYONEE JEOPARDY</div>
+        <div class="brand-sub">CO-HOST ASSIST DESK</div>
+      </div>
+    </div>
+
+    <!-- HUD STATS -->
+    <div class="hud-stats">
+      <div id="cohost-value" class="hud-pill gold">$400</div>
+      <div id="cohost-timer" class="hud-pill">30s</div>
+      <div id="cohost-status" class="status-tag waiting">WAITING</div>
+    </div>
+  </header>
+
+  <!-- CO-HOST ASSIST DESK -->
+  <main class="cohost-container">
+
+    <!-- ACTIVE PUZZLE SECRET ANSWER KEY -->
+    <div class="secret-card">
+      <div class="secret-label">
+        <span>🔒 JEOPARDY CO-HOST CONFIDENTIAL CLUE & ANSWER</span>
+        <span class="live-pill">LIVE SYNCED</span>
+      </div>
+
+      <!-- CATEGORY -->
+      <div>
+        <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; letter-spacing: 1px;">CATEGORY</div>
+        <div id="cohost-category" class="secret-category-text">JAMAICAN / PATWA PHRASES</div>
+      </div>
+
+      <!-- UNLOCKED FULL ANSWER -->
+      <div>
+        <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; letter-spacing: 1px;">CORRECT ANSWER</div>
+        <div id="cohost-answer" class="secret-answer-text">WAH GWAAN</div>
+      </div>
+
+      <!-- SECRET CLUE -->
+      <div>
+        <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; letter-spacing: 1px;">CLUE / QUESTION NOTES</div>
+        <div id="cohost-hint" class="secret-hint-box">
+          💡 <strong>CLUE:</strong> Popular Jamaican greeting meaning what is going on
+        </div>
+      </div>
+
+      <!-- 4-ROW BOARD LETTER REVEAL STATUS -->
+      <div>
+        <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;">
+          STAGE LETTER BOARD PROGRESS (DIM = UNREVEALED TO AUDIENCE, BRIGHT = REVEALED)
+        </div>
+        <div id="cohost-tiles" class="cohost-tiles-row">
+          <!-- Rendered via jeopardy-cohost.js -->
+        </div>
+      </div>
+
+      <!-- CONTESTANT SCORE QUICK CHECK -->
+      <div>
+        <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;">
+          CONTESTANT SCORES
+        </div>
+        <div id="cohost-scores-row" style="display: flex; gap: 10px;">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- CO-HOST BUZZER TRIGGER -->
+      <div style="margin-top: 10px;">
+        <button id="btn-cohost-buzz" class="cohost-buzz-btn">
+          🚨 CO-HOST BUZZER ALERT (CHIME HOST)
+        </button>
+      </div>
+
+    </div>
+
+    <!-- QUICK RULES & HOST CO-PILOT TIPS -->
+    <div class="tips-card">
+      <h3 style="font-size: 14px; font-weight: 800; color: var(--gold-bright); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+        <span>📋</span> JEOPARDY CO-HOST RUN SHEET
+      </h3>
+      <ul style="font-size: 12px; color: var(--text-muted); line-height: 1.6; padding-left: 18px;">
+        <li>Follow along with the exact answer and question clue text above.</li>
+        <li>Watch the live letter board reveal progress as chat players call out letters or guesses.</li>
+        <li>Hit the <strong>Co-Host Buzzer Alert</strong> when a contestant buzzes in or types the winning phrase in chat!</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <!-- PURE VANILLA JAVASCRIPT -->
+  <script src="sounds.js"></script>
+  <script src="wheel-engine.js"></script>
+  <script src="sync-client.js"></script>
+  <script src="jeopardy-cohost.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+/* Word Reveal Live Styles */
+@import '../css/word-reveal.css';
+@import '../css/word-animations.css';
+
+body {
+  background: radial-gradient(circle at 50% 15%, #103338 0%, #08171a 45%, #030809 100%);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.live-stage-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* FLOATING INTERMISSION BANNER */
+.live-intermission-banner {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  background: rgba(6, 25, 28, 0.95);
+  border: 2px solid #10b981;
+  border-radius: 9999px;
+  padding: 8px 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 25px rgba(16, 185, 129, 0.4);
+  margin-bottom: 20px;
+  animation: subtleFloat 2s ease-in-out infinite;
+}
+
+/* WINNER OVERLAY POPUP */
+.live-winner-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(3, 10, 12, 0.85);
+  backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.live-winner-overlay.show {
+  display: flex;
+}
+
+.winner-modal-box {
+  background: radial-gradient(circle at 50% 0%, #204c52 0%, #0d272b 45%, #051012 100%);
+  border: 2px solid #d4af37;
+  border-radius: 24px;
+  box-shadow: 0 0 50px rgba(212, 175, 55, 0.4), 0 25px 60px rgba(0,0,0,0.9);
+  padding: 36px 40px;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.winner-answer-callout {
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 2px;
+  margin: 16px 0;
+  text-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+}
+
+/* VIEWER GUESS WIDGET */
+.viewer-guess-bar {
+  margin-top: 32px;
+  width: 100%;
+  max-width: 680px;
+  background: rgba(10, 26, 30, 0.85);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  border-radius: 16px;
+  padding: 14px 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

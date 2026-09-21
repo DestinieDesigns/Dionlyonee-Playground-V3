@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dionlyonee Hot Take</title>
+  <link rel="stylesheet" href="../jeopardy/jeopardy.css" />
+</head>
+<body>
+  <div class="jeopardy-launcher">
+    <!-- LOGO -->
+    <div class="jeopardy-logo">D</div>
+    <div class="brand-name">DIONLYONEE</div>
+    <div class="game-name">HOT TAKE</div>
+    <div class="game-subtitle">THE DIONLYONEE STREAM SHOW</div>
+    <div class="gold-line"></div>
+    <p class="launcher-description">Choose your screen to enter the game.</p>
+
+    <!-- SCREEN OPTIONS -->
+    <div class="screen-options">
+      <!-- HOST CONTROL -->
+      <button type="button" class="screen-card host-card" onclick="openHost()">
+        <div class="card-icon">🎤</div>
+        <div class="card-title">HOST CONTROL</div>
+        <div class="card-description">
+          Review controversial prompts, launch debate rounds, and manage the stream voting timer.
+        </div>
+        <div class="card-action">ENTER HOST PANEL →</div>
+      </button>
+
+      <!-- LIVE GAME -->
+      <button type="button" class="screen-card live-card" onclick="openLive()">
+        <div class="card-icon">📺</div>
+        <div class="card-title">LIVE GAME</div>
+        <div class="card-description">
+          Open the audience screen showing the hot take question, timer, and debate meter.
+        </div>
+        <div class="card-action">ENTER LIVE SCREEN →</div>
+      </button>
+    </div>
+
+    <!-- BACK TO PLAYGROUND -->
+    <button type="button" class="back-button" onclick="goBack()">
+      ← BACK TO DIONLYONEE PLAYGROUND
+    </button>
+
+    <!-- FOOTER -->
+    <div class="launcher-footer">
+      <span>DIONLYONEE</span>
+      <span>◆</span>
+      <span>HOT TAKE</span>
+      <span>◆</span>
+      <span>STREAM SHOW</span>
+    </div>
+  </div>
+
+  <script>
+    "use strict";
+    function openHost() {
+      window.open("hot-take-host.html", "_blank");
+    }
+    function openLive() {
+      window.open("hot-take.html", "_blank");
+    }
+    function goBack() {
+      window.location.href = "../index.html";
+    }
+  </script>
+</body>
+</html>
