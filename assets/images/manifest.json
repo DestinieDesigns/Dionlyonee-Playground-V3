@@ -1,0 +1,442 @@
+[
+  {
+    "file": "assets/images/backgrounds/destinie-hero.webp",
+    "width": 1920,
+    "height": 1080,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Main homepage hero (calm centre for heading/buttons)",
+    "page": "index.html (.destinie-hero)",
+    "bytes": 136990
+  },
+  {
+    "file": "assets/images/backgrounds/destinie-forest-background.webp",
+    "width": 1920,
+    "height": 1080,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Alternative section background: enchanted forest",
+    "page": "index.html / lobby & waiting screens",
+    "bytes": 87190
+  },
+  {
+    "file": "assets/images/backgrounds/destinie-moonlit-garden.webp",
+    "width": 1920,
+    "height": 1080,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Alternative section background: moonlit garden",
+    "page": "index.html / lobby & waiting screens",
+    "bytes": 134794
+  },
+  {
+    "file": "assets/images/backgrounds/destinie-crystal-cavern.webp",
+    "width": 1920,
+    "height": 1080,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Alternative section background: crystal cavern",
+    "page": "index.html / lobby & waiting screens",
+    "bytes": 111536
+  },
+  {
+    "file": "assets/images/banners/banner-enchanted-forest.webp",
+    "width": 1920,
+    "height": 600,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Section banner: enchanted forest",
+    "page": "index.html section headers / game hub banners",
+    "bytes": 67624
+  },
+  {
+    "file": "assets/images/banners/banner-moonlit-castle.webp",
+    "width": 1920,
+    "height": 600,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Section banner: moonlit castle",
+    "page": "index.html section headers / game hub banners",
+    "bytes": 72516
+  },
+  {
+    "file": "assets/images/banners/banner-magical-waterfall.webp",
+    "width": 1920,
+    "height": 600,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Section banner: magical waterfall",
+    "page": "index.html section headers / game hub banners",
+    "bytes": 73960
+  },
+  {
+    "file": "assets/images/banners/banner-crystal-kingdom.webp",
+    "width": 1920,
+    "height": 600,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Section banner: crystal kingdom",
+    "page": "index.html section headers / game hub banners",
+    "bytes": 69682
+  },
+  {
+    "file": "assets/images/characters/character-mystical-fox.webp",
+    "width": 1024,
+    "height": 1024,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Character portrait card: mystical-fox",
+    "page": "character / avatar cards (contestant pickers)",
+    "bytes": 33706
+  },
+  {
+    "file": "assets/images/characters/character-forest-fairy.webp",
+    "width": 1024,
+    "height": 1024,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Character portrait card: forest-fairy",
+    "page": "character / avatar cards (contestant pickers)",
+    "bytes": 37120
+  },
+  {
+    "file": "assets/images/characters/character-moon-rabbit.webp",
+    "width": 1024,
+    "height": 1024,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Character portrait card: moon-rabbit",
+    "page": "character / avatar cards (contestant pickers)",
+    "bytes": 28830
+  },
+  {
+    "file": "assets/images/characters/character-crystal-dragon.webp",
+    "width": 1024,
+    "height": 1024,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Character portrait card: crystal-dragon",
+    "page": "character / avatar cards (contestant pickers)",
+    "bytes": 40816
+  },
+  {
+    "file": "assets/images/characters/character-starlight-cat.webp",
+    "width": 1024,
+    "height": 1024,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Character portrait card: starlight-cat",
+    "page": "character / avatar cards (contestant pickers)",
+    "bytes": 45850
+  },
+  {
+    "file": "assets/images/characters/character-enchanted-owl.webp",
+    "width": 1024,
+    "height": 1024,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Character portrait card: enchanted-owl",
+    "page": "character / avatar cards (contestant pickers)",
+    "bytes": 38950
+  },
+  {
+    "file": "assets/images/characters/destinie-fox-fullbody.webp",
+    "width": 1024,
+    "height": 1536,
+    "format": "webp",
+    "transparent": true,
+    "purpose": "Full-body character (transparent): destinie-fox-fullbody",
+    "page": "welcome / waiting screens, mascots",
+    "bytes": 53926
+  },
+  {
+    "file": "assets/images/characters/destinie-fairy-fullbody.webp",
+    "width": 1024,
+    "height": 1536,
+    "format": "webp",
+    "transparent": true,
+    "purpose": "Full-body character (transparent): destinie-fairy-fullbody",
+    "page": "welcome / waiting screens, mascots",
+    "bytes": 43520
+  },
+  {
+    "file": "assets/images/characters/destinie-magical-companion.webp",
+    "width": 1024,
+    "height": 1536,
+    "format": "webp",
+    "transparent": true,
+    "purpose": "Full-body character (transparent): destinie-magical-companion",
+    "page": "welcome / waiting screens, mascots",
+    "bytes": 51420
+  },
+  {
+    "file": "assets/images/games/game-wheel.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: wheel",
+    "page": "wheel/index.html and index.html game card",
+    "bytes": 32866
+  },
+  {
+    "file": "assets/images/games/game-trivia.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: trivia",
+    "page": "trivia/index.html and index.html game card",
+    "bytes": 32950
+  },
+  {
+    "file": "assets/images/games/game-jeopardy.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: jeopardy",
+    "page": "jeopardy/index.html and index.html game card",
+    "bytes": 32090
+  },
+  {
+    "file": "assets/images/games/game-word-reveal.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: word-reveal",
+    "page": "word-reveal/index.html and index.html game card",
+    "bytes": 25596
+  },
+  {
+    "file": "assets/images/games/game-speak-out.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: speak-out",
+    "page": "speak-out/index.html and index.html game card",
+    "bytes": 37438
+  },
+  {
+    "file": "assets/images/games/game-charades.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: charades",
+    "page": "charades/index.html and index.html game card",
+    "bytes": 18090
+  },
+  {
+    "file": "assets/images/games/game-emoji-guess.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: emoji-guess",
+    "page": "emoji-guess/index.html and index.html game card",
+    "bytes": 33816
+  },
+  {
+    "file": "assets/images/games/game-finish-the-sentence.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: finish-the-sentence",
+    "page": "finish-the-sentence/index.html and index.html game card",
+    "bytes": 25446
+  },
+  {
+    "file": "assets/images/games/game-guess-lyrics.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: guess-lyrics",
+    "page": "guess-lyrics/index.html and index.html game card",
+    "bytes": 39768
+  },
+  {
+    "file": "assets/images/games/game-hangman.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: hangman",
+    "page": "hangman/index.html and index.html game card",
+    "bytes": 25940
+  },
+  {
+    "file": "assets/images/games/game-hot-take.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: hot-take",
+    "page": "hot-take/index.html and index.html game card",
+    "bytes": 26992
+  },
+  {
+    "file": "assets/images/games/game-most-likely.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: most-likely",
+    "page": "most-likely/index.html and index.html game card",
+    "bytes": 23166
+  },
+  {
+    "file": "assets/images/games/game-unscramble-it.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: unscramble-it",
+    "page": "unscramble-it/index.html and index.html game card",
+    "bytes": 38820
+  },
+  {
+    "file": "assets/images/games/game-what-would-you-do.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: what-would-you-do",
+    "page": "what-would-you-do/index.html and index.html game card",
+    "bytes": 30108
+  },
+  {
+    "file": "assets/images/games/game-who-dis.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: who-dis",
+    "page": "who-dis/index.html and index.html game card",
+    "bytes": 21730
+  },
+  {
+    "file": "assets/images/games/game-who-would-you-pick.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: who-would-you-pick",
+    "page": "who-would-you-pick/index.html and index.html game card",
+    "bytes": 26462
+  },
+  {
+    "file": "assets/images/games/game-would-you-rather.webp",
+    "width": 800,
+    "height": 450,
+    "format": "webp",
+    "transparent": false,
+    "purpose": "Game thumbnail: would-you-rather",
+    "page": "would-you-rather/index.html and index.html game card",
+    "bytes": 35300
+  },
+  {
+    "file": "assets/images/decorations/magic-sparkles.png",
+    "width": 640,
+    "height": 640,
+    "format": "png",
+    "transparent": true,
+    "purpose": "Transparent decorative overlay: magic-sparkles",
+    "page": "any page (overlay)",
+    "bytes": 51887
+  },
+  {
+    "file": "assets/images/decorations/floating-fireflies.png",
+    "width": 640,
+    "height": 640,
+    "format": "png",
+    "transparent": true,
+    "purpose": "Transparent decorative overlay: floating-fireflies",
+    "page": "any page (overlay)",
+    "bytes": 42475
+  },
+  {
+    "file": "assets/images/decorations/fantasy-crystal-cluster.png",
+    "width": 640,
+    "height": 640,
+    "format": "png",
+    "transparent": true,
+    "purpose": "Transparent decorative overlay: fantasy-crystal-cluster",
+    "page": "any page (overlay)",
+    "bytes": 111617
+  },
+  {
+    "file": "assets/images/decorations/fantasy-flower-vines.png",
+    "width": 640,
+    "height": 640,
+    "format": "png",
+    "transparent": true,
+    "purpose": "Transparent decorative overlay: fantasy-flower-vines",
+    "page": "any page (overlay)",
+    "bytes": 20098
+  },
+  {
+    "file": "assets/images/decorations/fantasy-golden-stars.png",
+    "width": 640,
+    "height": 640,
+    "format": "png",
+    "transparent": true,
+    "purpose": "Transparent decorative overlay: fantasy-golden-stars",
+    "page": "any page (overlay)",
+    "bytes": 71234
+  },
+  {
+    "file": "assets/images/decorations/fantasy-moon-decoration.png",
+    "width": 640,
+    "height": 640,
+    "format": "png",
+    "transparent": true,
+    "purpose": "Transparent decorative overlay: fantasy-moon-decoration",
+    "page": "any page (overlay)",
+    "bytes": 39697
+  },
+  {
+    "file": "assets/images/decorations/fantasy-cloud-overlay.png",
+    "width": 1024,
+    "height": 512,
+    "format": "png",
+    "transparent": true,
+    "purpose": "Transparent cloud overlay",
+    "page": "any page (overlay)",
+    "bytes": 357524
+  },
+  {
+    "file": "assets/images/decorations/fantasy-magical-mist.png",
+    "width": 1024,
+    "height": 512,
+    "format": "png",
+    "transparent": true,
+    "purpose": "Transparent magical mist overlay",
+    "page": "any page (overlay)",
+    "bytes": 263765
+  },
+  {
+    "file": "assets/images/branding/destinie-logo.png",
+    "width": 1200,
+    "height": 400,
+    "format": "png",
+    "transparent": true,
+    "purpose": "Destinie wordmark (transparent PNG)",
+    "page": "header / hero / waiting screens",
+    "bytes": 118784
+  },
+  {
+    "file": "assets/images/branding/destinie-logo.svg",
+    "width": 1200,
+    "height": 400,
+    "format": "svg",
+    "transparent": true,
+    "purpose": "Destinie wordmark (true vector: glyph outlines + paths)",
+    "page": "header / hero / waiting screens",
+    "bytes": 48972
+  }
+]
