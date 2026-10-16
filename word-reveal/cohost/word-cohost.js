@@ -72,7 +72,7 @@
   };
 
   if (window.FirebaseRoom) {
-    window.FirebaseRoom.onStateUpdate((state) => {
+    window.FirebaseRoom.onState((state) => {
       applyState(state);
     });
   }
