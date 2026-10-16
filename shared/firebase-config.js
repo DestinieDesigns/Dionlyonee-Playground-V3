@@ -3,7 +3,7 @@
  */
 (function () {
   const FirebaseConfig = {
-    apiKey: "AIzaSyDionlyoneePlaygroundPublicDemoKey",
+    apiKey: "",
     authDomain: "dionlyonee-playground.firebaseapp.com",
     projectId: "dionlyonee-playground",
     storageBucket: "dionlyonee-playground.appspot.com",
