@@ -202,8 +202,6 @@ def t_charades():
     for side in (0, 1):
         for k in range(9):
             x = k * 15 if side == 0 else W - 15 - k * 15
-            if k > 8:
-                continue
             c = MAGENTA if k % 2 == 0 else dk(MAGENTA, .3)
             cv.poly([(x, 0), (x + 15, 0), (x + 15 + (6 if side == 0 else -6), 170), (x + (6 if side == 0 else -6), 170)], c)
     cv.rect(0, 0, W, 16, dk(MAGENTA, .6))
@@ -240,8 +238,6 @@ def t_finish():
         cv.line([(122, y), (278, y)], H('b08a5a'))
     cv.line([(122, 130), (210, 130)], H('b08a5a'))
     cv.line([(220, 130), (278, 130)], lt(PINK, .1), 2)
-    for yy, xx in ((100, 126), (88, 160)):
-        pass
     for x in (100, 300):
         cv.ell(x, 100, 10, 62, H('d9b878'))
         cv.ell(x - 2, 100, 7, 60, H('f0d8a0'))

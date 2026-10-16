@@ -111,17 +111,17 @@ class Cv:
         arr = np.asarray(im).astype(np.float32) / 255.0
         rgb, a = arr[..., :3], arr[..., 3:4]
         P = rgb * a
-        H_, W_ = arr.shape[:2]
+        height, width = arr.shape[:2]
         for i, (fy, fh, fc, fk) in enumerate(self.fogs):
-            n = noise2d(W_, H_, 140 * scale / 4, self.seed * 31 + i, 3)
-            yy = np.arange(H_)[:, None]
+            n = noise2d(width, height, 140 * scale / 4, self.seed * 31 + i, 3)
+            yy = np.arange(height)[:, None]
             band = np.clip(1 - np.abs(yy - fy * scale) / (fh * scale), 0, 1) ** 1.5
             g = (band * (0.35 + 0.9 * n) * fk)[..., None]
             P = P * (1 - g) + np.array(fc, np.float32) / 255.0 * g
         for (x, y, r, c, k) in self.glows:
             X, Y, R = (x + pad + 0.5) * scale, (y + pad + 0.5) * scale, r * scale
-            x0, x1 = int(max(0, X - R)), int(min(W_, X + R + 1))
-            y0, y1 = int(max(0, Y - R)), int(min(H_, Y + R + 1))
+            x0, x1 = int(max(0, X - R)), int(min(width, X + R + 1))
+            y0, y1 = int(max(0, Y - R)), int(min(height, Y + R + 1))
             if x1 <= x0 or y1 <= y0:
                 continue
             yy, xx = np.mgrid[y0:y1, x0:x1]
@@ -138,8 +138,8 @@ class Cv:
             b2 = np.asarray(bi.filter(ImageFilter.GaussianBlur(10 * scale / 4 + 4))).astype(np.float32) / 255
             P = 1 - (1 - P) * (1 - np.clip(b1 * bloom + b2 * bloom, 0, 1))
         if vignette > 0:
-            yy, xx = np.mgrid[0:H_, 0:W_]
-            d = np.sqrt(((xx - W_ / 2) / (W_ / 2)) ** 2 + ((yy - H_ / 2) / (H_ / 2)) ** 2)
+            yy, xx = np.mgrid[0:height, 0:width]
+            d = np.sqrt(((xx - width / 2) / (width / 2)) ** 2 + ((yy - height / 2) / (height / 2)) ** 2)
             P = P * (1 - vignette * np.clip(d - 0.55, 0, 1.2)[..., None])
         if self.transparent:
             rgb = np.where(a > 1e-4, P / np.maximum(a, 1e-4), 0)

@@ -46,14 +46,13 @@ def main():
     # logo
     svg = logo.build_svg('Destinie')
     os.makedirs(os.path.join(OUT, 'branding'), exist_ok=True)
-    with open(os.path.join(OUT, 'branding', 'destinie-logo.svg'), 'w') as f:
+    with open(os.path.join(OUT, 'branding', 'destinie-logo.svg'), 'w', encoding='utf-8') as f:
         f.write(svg)
     import cairosvg
     cairosvg.svg2png(bytestring=svg.encode(), write_to=os.path.join(OUT, 'branding', 'destinie-logo.png'), output_width=1200, output_height=400)
-    im = Image.open(os.path.join(OUT, 'branding', 'destinie-logo.png'))
     manifest.append({'file': 'assets/images/branding/destinie-logo.png', 'width': 1200, 'height': 400, 'format': 'png', 'transparent': True, 'purpose': 'Destinie wordmark (transparent PNG)', 'page': 'header / hero / waiting screens'})
     manifest.append({'file': 'assets/images/branding/destinie-logo.svg', 'width': 1200, 'height': 400, 'format': 'svg', 'transparent': True, 'purpose': 'Destinie wordmark (true vector: glyph outlines + paths)', 'page': 'header / hero / waiting screens'})
-    with open(os.path.join(OUT, 'manifest.json'), 'w') as f:
+    with open(os.path.join(OUT, 'manifest.json'), 'w', encoding='utf-8') as f:
         json.dump(manifest, f, indent=2)
     return manifest
 

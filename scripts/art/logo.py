@@ -34,7 +34,6 @@ def build_svg(text='Destinie'):
         items.append((gn, x))
         x += gs[gn].width
     total = x
-    bp = BoundsPen(gs)
     ys = []
     for gn, ox in items:
         b = BoundsPen(gs)
@@ -78,7 +77,6 @@ def build_svg(text='Destinie'):
     parts.append(diamond(110, vy, 16, 28, '#57DDF5', '#FFFFFF'))
     parts.append(diamond(1090, vy, 16, 28, '#D94CF2', '#FFB6D9'))
     # stars / sparkles around the word
-    top = cap_top
     for sx, sy, r, c in ((left + 30, 80, 20, '#FFD166'), (1130, 96, 24, '#FFD166'), (230, 54, 12, '#FFF3DF'), (960, 58, 14, '#57DDF5'), (600, 52, 10, '#FFB6D9'), (1030, 40, 9, '#FFF3DF'), (96, 190, 9, '#57DDF5')):
         parts.append(star4(sx, sy, r + 5, '#151B3E', .45))
         parts.append(star4(sx, sy, r, c))
