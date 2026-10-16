@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+:root {
+ --destinie-forest:#244d3b; --destinie-cream:#ede4d2; --destinie-ink:#34434a; --destinie-sage:#b9c9b4; --destinie-gold:#c6a15b;
+ --font-display:'Fraunces',Georgia,serif; --font-body:'DM Sans',sans-serif;
+ --bg-deep:#192f28; --bg-main:#192f28; --bg-stage:#192f28; --bg-surface:#244235; --bg-panel:#2b493c; --bg-card:#244235;
+ --bg-glass:#244235; --text-main:#f4eddf; --text-light:#f4eddf; --text-muted:#c2cfbd; --gold-bright:#d5b67b; --gold-primary:#d5b67b; --gold-light:#e2c994; --border-gold:#8e805c;
+ --emerald-dark:#244d3b; --emerald-medium:#335b46; --emerald-bright:#b9c9b4; --emerald-primary:#b9c9b4; --emerald-light:#d2decb; --radius-card:18px; --radius-btn:9px;
+}
+html {scroll-behavior:smooth; background:#192f28}
+body {font-family:var(--font-body)!important; background:#192f28!important; color:#f4eddf; -webkit-font-smoothing:antialiased}
+h1,h2,h3,.brand-title,.brand-name,.game-card-title,.card-title,.list-title,.modal-title {font-family:var(--font-display)!important; letter-spacing:-.025em!important; text-shadow:none!important}
+button,input,select,textarea {font-family:var(--font-body)!important}
+button,a,input,select,textarea {touch-action:manipulation}
+button,a { -webkit-tap-highlight-color:transparent }
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible {outline:3px solid #d5b67b!important; outline-offset:4px}
+button:disabled {cursor:not-allowed;opacity:.55}
+button:not(:disabled),a {transition:background-color .18s,color .18s,box-shadow .18s,transform .18s}
+button:not(:disabled):active {transform:translateY(1px)}
+.host-header,.live-header,.main-header {background:#203c30!important;border-bottom:1px solid #8e805c!important;box-shadow:none!important;gap:16px;flex-wrap:wrap}
+.brand-title {color:#ede4d2!important;font-weight:500!important}
+.brand-sub,.brand-badge,.brand-tag {color:#c6d2be!important;font-size:10px;letter-spacing:.14em}
+.brand-logo,.brand-icon {background:#b9c9b4!important;color:#244d3b!important;border:1px solid #c6a15b!important;box-shadow:none!important;border-radius:50%!important}
+.panel,.host-panel,.control-panel,.game-card,.stat-pill,.contestant-card {background:#284637!important;border:1px solid #5b7058!important;border-radius:16px!important;box-shadow:0 5px 0 #142a22!important}
+.panel-header {border-color:#5b7058!important}
+.panel-title,.game-card-title {color:#ede4d2!important}
+.nav-btn,.game-btn,.btn-timer-ctrl {background:#335642!important;color:#f4eddf!important;border-color:#6e8366!important;border-radius:8px!important;box-shadow:none!important}
+.nav-btn:hover,.game-btn:hover {background:#446850!important}
+input:not([type=checkbox]):not([type=range]):not([type=color]),select,textarea {background:#1b342a!important;color:#f4eddf!important;border-color:#829379!important;border-radius:8px;max-width:100%}
+input::placeholder,textarea::placeholder {color:#bdc8b7!important;opacity:1}
+.modal-box,.room-modal-box,.qr-modal-card,.dion-host-gate-box {background:#244235!important;border:1px solid #c6a15b!important;border-radius:20px!important;box-shadow:0 24px 80px #10231cb3!important}
+.modal-btn,.modal-stream-section {background:#2b4b3b!important;border-color:#71856b!important;box-shadow:none!important}
+.modal-title,.modal-btn-title {color:#f4eddf!important}
+.modal-desc,.modal-btn-sub {color:#c6d2be!important}
+.modal-btn:hover {background:#3c6049!important;transform:translateY(-2px)}
+.game-card:hover {border-color:#d5b67b!important;transform:translateY(-3px)}
+.wait-screen-card,.waiting-card {background:#244235!important;border-color:#c6a15b!important;box-shadow:none!important}
+.wait-hero-img {border-radius:12px}
+.wheel-board-wrapper {border-color:#c6a15b!important;box-shadow:0 8px 0 #11291f!important}
+.contestant-card.active {border-color:#d5b67b!important;box-shadow:0 5px 0 #142a22,0 0 0 2px #d5b67b!important}
+.score-val,.hud-val {font-variant-numeric:tabular-nums;color:#e2c994!important}
+.host-message {color:#c2cfbd!important;letter-spacing:.08em!important}
+.destinie-home {background:#ede4d2!important;color:#34434a}
+.destinie-home .playground {background:transparent;overflow:clip}
+.destinie-home .playground-header {position:relative;min-height:100px;background:transparent;border-bottom:1px solid #244d3b30;box-shadow:none;backdrop-filter:none;padding:20px max(5vw,24px);gap:24px}
+.destinie-home .brand-mark {background:#244d3b;color:#ede4d2;border:0;border-radius:50% 50% 44% 44%;box-shadow:none;font-family:var(--font-display);font-style:italic;font-size:30px}
+.destinie-home .brand-name {font-size:31px;font-weight:500;color:#244d3b;line-height:1}
+.destinie-home .brand-subtitle {font-size:9px;color:#51634f;letter-spacing:.17em;margin-top:7px}
+.destinie-nav {display:flex;gap:28px;align-items:center;margin-right:auto;margin-left:40px}
+.destinie-nav a {color:#34434a;font-size:13px;text-decoration:none;border-bottom:1px solid transparent;padding:8px 0}
+.destinie-nav a:hover {border-color:#244d3b}
+.destinie-home .room-badge-container {background:#e2ddcb;border:1px solid #244d3b35;color:#244d3b;padding:8px 12px;box-shadow:none}
+.destinie-home .room-code-val,.destinie-home .room-label {color:#244d3b}
+.destinie-home .btn-change-room {color:#244d3b;background:transparent;border-color:#244d3b40}
+.destinie-home .header-btn {background:transparent;border:1px solid #244d3b40;color:#244d3b;border-radius:25px;padding:10px 15px}
+.destinie-hero {max-width:1440px;margin:auto;padding:62px max(5vw,24px) 68px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;position:relative}
+.destinie-eyebrow {display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#526750}
+.destinie-eyebrow:before {content:'';width:26px;height:1px;background:#9a7841}
+.destinie-hero h1 {font-size:clamp(48px,5.5vw,82px);font-weight:400;line-height:1.04;color:#244d3b;margin:23px 0 24px}
+.destinie-hero h1 em {font-weight:400;color:#8a6838}
+.destinie-hero p {max-width:390px;font-size:15px;line-height:1.85;color:#52615e;margin:0 0 27px}
+.destinie-hero-actions {display:flex;gap:12px;flex-wrap:wrap}
+.destinie-button {display:inline-flex;align-items:center;justify-content:center;gap:28px;text-decoration:none;padding:15px 24px;border-radius:8px;font-size:13px;font-weight:600;background:#244d3b;color:#f4eddf;border:1px solid #244d3b;cursor:pointer}
+.destinie-button:hover {background:#365f49;transform:translateY(-2px);box-shadow:0 5px 0 #244d3b20}
+.destinie-button.secondary {background:transparent;color:#244d3b;border-color:#244d3b50}
+.destinie-hero-note {display:block;margin-top:23px;color:#61705d;font-size:11px;letter-spacing:.03em}
+.destinie-illustration {position:relative;margin:0;transform:rotate(-2deg)}
+.destinie-illustration img {width:100%;display:block;filter:drop-shadow(0 12px 0 #244d3b0c)}
+.destinie-illustration figcaption {text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-top:16px;color:#61705d;transform:rotate(2deg)}
+.destinie-ribbon {border-top:1px solid #244d3b30;border-bottom:1px solid #244d3b30;display:flex;justify-content:center;gap:40px;padding:16px 24px;color:#526750;font-size:10px;letter-spacing:.17em;text-transform:uppercase;flex-wrap:wrap}
+.destinie-ribbon span:before {content:'✧';color:#98743d;margin-right:14px}
+.destinie-home .catalog-section {max-width:1320px;margin:auto;padding:55px max(5vw,24px) 70px}
+.destinie-home .section-heading {color:#244d3b;font-family:var(--font-display);font-weight:400;font-size:32px;letter-spacing:-.025em;margin-bottom:26px;border:0;display:flex;justify-content:space-between;align-items:center;gap:15px}
+.destinie-home .section-heading small {font-family:var(--font-body);font-size:10px;letter-spacing:.12em;color:#64705e}
+.destinie-home .catalog-toolbar {background:transparent;border:0;padding:0;box-shadow:none;margin-bottom:12px}
+.destinie-home .search-wrapper {background:#f5efdf;border:1px solid #a8b19b;border-radius:8px;box-shadow:none;max-width:550px}
+.destinie-home .search-input {background:transparent!important;color:#34434a!important;border:0!important;font-size:12px;padding:14px 12px}
+.destinie-home input::placeholder {color:#687363!important}
+.destinie-home .sort-select {background:#ede4d2!important;color:#34434a!important;border-color:#a8b19b!important;font-size:11px}
+.destinie-home .view-mode-toggle {background:transparent;border:1px solid #a8b19b;border-radius:7px}
+.destinie-home .btn-view-mode {color:#244d3b;background:transparent}
+.destinie-home .btn-view-mode.active {background:#244d3b;color:#ede4d2;box-shadow:none}
+.destinie-home .filter-pills {gap:8px;margin-top:21px}
+.destinie-home .filter-pill {background:transparent;color:#4f6153;border:1px solid #b6bba6;border-radius:30px;font-size:11px;box-shadow:none;font-weight:500;padding:9px 14px}
+.destinie-home .filter-pill.active {background:#244d3b;color:#f4eddf;border-color:#244d3b}
+.destinie-home .filter-count-badge {background:#244d3b12;color:inherit}
+.destinie-home .filter-pill.active .filter-count-badge {background:#ffffff18}
+.destinie-home .catalog-status-bar {color:#687363;border:0;font-size:10px;padding:17px 0}
+.destinie-home .catalog-status-bar b {color:#244d3b}
+.destinie-home .catalog-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:23px}
+.destinie-home .catalog-card {background:#f6efdf;border:1px solid #c8c8b2;border-radius:15px;padding:0;overflow:hidden;box-shadow:0 4px 0 #244d3b0b;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s}
+.destinie-home .catalog-card:hover {transform:translateY(-5px);border-color:#74866c;box-shadow:0 10px 0 #244d3b10;background:#f6efdf}
+.destinie-home .card-top {height:145px;background:#b9c9b4;position:relative;align-items:center;justify-content:center;margin:0 0 23px;overflow:hidden}
+.destinie-home .catalog-card:nth-child(3n+2) .card-top {background:#ded2b8}
+.destinie-home .catalog-card:nth-child(3n) .card-top {background:#bdc9c7}
+.destinie-home .card-icon {width:95px;height:95px;background:none;border:0;border-radius:0;box-shadow:none;font-size:0}
+.destinie-home .card-icon svg {width:100%;height:100%;color:#244d3b;transform:rotate(-8deg)}
+.destinie-home .card-cat-badge {position:absolute;top:13px;left:14px;border:1px solid #244d3b40;color:#244d3b;background:#ede4d280;font-size:8px;border-radius:5px;padding:5px 8px;letter-spacing:.1em}
+.destinie-home .card-title {font-size:23px;font-weight:500;color:#244d3b;padding:0 22px;margin:0 0 10px}
+.destinie-home .card-desc {font-size:12px;line-height:1.8;color:#5a685e;padding:0 22px;min-height:64px;margin-bottom:12px}
+.destinie-home .card-tags {padding:0 22px;margin-bottom:20px;gap:6px}
+.destinie-home .card-tag-pill {background:transparent;color:#61705d;border:0;font-size:9px;padding:0 7px 0 0}
+.destinie-home .card-actions {border-top:1px solid #c8c8b2;padding:13px 18px;gap:7px;background:#eee7d5}
+.destinie-home .btn-card-host,.destinie-home .btn-card-live,.destinie-home .btn-card-solo {background:transparent!important;border:1px solid #a3af96!important;color:#244d3b!important;font-size:10px!important;border-radius:6px!important;padding:8px 12px!important;font-weight:600!important;box-shadow:none!important}
+.destinie-home .btn-card-host {background:#244d3b!important;color:#f4eddf!important;border-color:#244d3b!important}
+.destinie-home .btn-card-options {background:transparent;color:#244d3b;border:1px solid #a3af96;border-radius:6px;margin-left:auto}
+.destinie-home .list-row {background:#f6efdf;border:1px solid #c8c8b2;border-radius:12px;color:#34434a;box-shadow:none}
+.destinie-home .list-title {color:#244d3b;font-size:22px}
+.destinie-home .list-desc {color:#5a685e}
+.destinie-home .list-title-row .card-cat-badge {position:static}
+.destinie-home .catalog-empty {background:#f6efdf;color:#34434a;border-color:#a3af96}
+.destinie-footer {border-top:1px solid #244d3b30;margin:0 max(5vw,24px);padding:28px 0 35px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#61705d;font-size:11px}
+.destinie-footer strong {font-family:var(--font-display);font-size:22px;font-weight:400;color:#244d3b}
+@media(min-width:1500px){.destinie-hero {padding-left:70px;padding-right:70px}}
+@media(max-width:1050px){.destinie-nav{margin-left:10px;gap:16px}.destinie-home .header-actions{gap:6px}.destinie-home .header-btn{font-size:0}.destinie-home .header-btn span{font-size:16px}.destinie-home .catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.destinie-hero{gap:20px}.destinie-hero h1{font-size:60px}}
+@media(max-width:700px){.destinie-home .playground-header{padding:18px 20px;gap:16px}.destinie-home .brand-name{font-size:27px}.destinie-nav{order:3;width:100%;margin:0;justify-content:space-between;border-top:1px solid #244d3b20;padding-top:8px}.destinie-home .header-actions{margin-left:auto}.destinie-home .header-btn{display:none}.destinie-home .room-label{display:none}.destinie-home .room-badge-container{padding:7px;font-size:10px}.destinie-hero{grid-template-columns:1fr;padding:35px 24px 35px;gap:34px}.destinie-hero h1{font-size:56px;max-width:400px}.destinie-hero p{font-size:14px}.destinie-illustration{max-width:440px;width:100%;justify-self:center}.destinie-ribbon{gap:14px;font-size:8px;padding:13px}.destinie-home .catalog-section{padding:35px 20px}.destinie-home .section-heading{font-size:29px}.destinie-home .toolbar-top{flex-direction:column;align-items:stretch}.destinie-home .toolbar-controls{justify-content:space-between}.destinie-home .search-wrapper{max-width:none;width:100%}.destinie-home .filter-pills{flex-wrap:nowrap;overflow-x:auto;padding-bottom:10px}.destinie-home .filter-pill{flex-shrink:0}.destinie-home .catalog-grid{grid-template-columns:1fr;gap:22px}.destinie-home .card-top{height:165px}.destinie-home .card-desc{min-height:0}.destinie-home .list-row{align-items:stretch;flex-direction:column;gap:15px}.host-header,.live-header,.main-header{padding:14px 16px!important}.nav-links{flex-wrap:wrap}.host-container,.host-main,.trivia-layout{max-width:100%;padding:14px!important}.modal-box{padding:22px 16px!important}.hud-stats{gap:12px}.brand-title{font-size:20px!important}.destinie-footer{margin:0 20px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+/* Game rooms share materials; each game's stage and controls retain their layout. */
+.hero-title,.waiting-title,.live-waiting-title,.live-brand-name,.host-title,.live-title,.prompt-title {font-family:var(--font-display)!important;font-weight:500!important;letter-spacing:-.025em!important;text-shadow:none!important;color:#ede4d2!important}
+.hero-title span {background:none!important;-webkit-text-fill-color:#d5b67b!important;color:#d5b67b!important}
+.hub-container .hero {text-align:left;align-items:flex-start;border-bottom:1px solid #6f8062;padding:22px 0 35px}
+.hub-container .hero-title {font-size:clamp(38px,5vw,68px);max-width:800px}
+.hero-desc,.hero-subtitle,.game-card-desc {color:#c2cfbd!important;line-height:1.8}
+.hero-badge,.game-card-genre {background:transparent!important;color:#d5b67b!important;border-color:#748361!important;box-shadow:none!important}
+.game-grid {gap:24px!important}
+.game-card {padding:25px!important;border-radius:18px!important}
+.game-card-icon {background:#b9c9b4!important;border:1px solid #c6a15b!important;box-shadow:none!important;color:#244d3b!important}
+.game-btn {padding:12px 18px!important;display:inline-flex;align-items:center;justify-content:center}
+.host-screen,.live-screen,.host-main,.live-main,.live-page {background:transparent!important}
+.live-topbar,.host-settings,.host-setting,.host-category-bar,.prompt-card,.host-sidebar,.host-card,.live-card,.clue-card,.challenge-card {background:#284637!important;border:1px solid #65795e!important;border-radius:15px!important;box-shadow:none!important}
+.host-settings {padding:20px!important}
+.host-category-bar {padding:18px!important}
+.host-action-btn,.time-button,.cooldown-button,.next-game {background:#335642!important;color:#ede4d2!important;border:1px solid #819473!important;border-radius:8px!important;box-shadow:none!important}
+.start-game,.start-button {background:#c6a15b!important;color:#1d3529!important;border:1px solid #d5b67b!important;box-shadow:0 4px 0 #142a22!important;border-radius:9px!important}
+.live-logo {background:#b9c9b4!important;color:#244d3b!important;box-shadow:none!important;border-color:#c6a15b!important}
+.live-status,.badge-status {box-shadow:none!important;border-radius:6px!important}
+.waiting-container {padding:36px 20px!important}
+.waiting-hero-img {width:min(620px,90vw)!important;max-height:48vh;object-fit:contain;border:0!important;border-radius:0!important;box-shadow:none!important;filter:none!important}
+.live-waiting-hero-img {max-height:55vh;object-fit:contain;border:0!important;box-shadow:none!important}
+.live-waiting-stage {background:#203c30!important}
+.dion-host-security-gate,.dion-host-gate-overlay {backdrop-filter:blur(6px)!important}
+.dion-gate-title,.dion-gate-desc {color:#ede4d2!important}
+.destinie-home .room-modal h2 {font-family:var(--font-display);font-weight:500!important}
+@media(max-width:700px){.host-controls{flex-wrap:wrap;gap:10px!important}.host-controls button{flex:1;min-width:120px}.host-category-row{flex-wrap:wrap}.host-category-row select{min-width:180px}.game-grid{grid-template-columns:1fr!important}.waiting-hero-img{max-height:38vh}.nav-links a{padding:9px!important;font-size:11px!important}}
+.destinie-home .section-heading span {font:inherit;color:#244d3b;letter-spacing:inherit;text-transform:none}
+.destinie-home .search-wrapper input.search-input {background:transparent!important;color:#34434a!important;border:0!important;box-shadow:none}
+.destinie-home .card-actions {display:flex;flex-wrap:nowrap}
+.destinie-home .card-actions a {white-space:nowrap;flex:1;justify-content:center}
+.destinie-home .card-actions .btn-card-options {flex:0 0 32px}
+.destinie-home footer {text-transform:none;letter-spacing:normal}
+body .dion-host-gate-overlay {background:#192f28f5!important;font-family:var(--font-body)!important}
+body .dion-host-gate-box {background:#244235!important;border:1px solid #c6a15b!important;box-shadow:0 18px 60px #10231c80!important}
+body .dion-gate-title {font-family:var(--font-display)!important;font-weight:500!important;color:#ede4d2!important;letter-spacing:-.02em!important}
+body .dion-gate-desc {color:#c2cfbd!important}
+body .dion-gate-submit {background:#c6a15b!important;color:#192f28!important;box-shadow:none!important}
+.btn-letter {background:#3b5b48!important;border-color:#7e9271!important;color:#f4eddf!important;border-radius:7px!important}
+.btn-letter.vowel {background:#786340!important;border-color:#c6a15b!important}
+.btn-letter.used,.btn-letter:disabled {opacity:.4!important}
+.btn-primary,.btn-spin,.btn-solve {background:#c6a15b!important;border-color:#d5b67b!important;color:#192f28!important;box-shadow:none!important;border-radius:8px!important}
+.btn-secondary,.btn-sfx,.btn-score-adjust {background:#335642!important;border-color:#7e9271!important;color:#ede4d2!important;box-shadow:none!important;border-radius:8px!important}
+.btn-primary:hover,.btn-spin:hover,.btn-solve:hover {background:#d5b67b!important}
+.board-tile.tile-empty {background:#264534!important;border-color:#536d51!important}
+.board-tile.tile-letter.unrevealed {background:#486b50!important;border-color:#839b76!important;box-shadow:none!important}
+.board-tile.tile-letter.revealed {background:#ede4d2!important;color:#244d3b!important;border-color:#c6a15b!important;text-shadow:none!important}
+[style*="Cinzel"] {font-family:var(--font-display)!important}
+.destinie-home .card-title {text-transform:none}
+.destinie-home .header-actions .room-indicator-dot {background:#587a52;box-shadow:none}
+.destinie-home .section-heading small,.destinie-home #activeFilterLabel {color:#59694f}
+.host-header .brand-title::before,.main-header .brand-title::before,.live-header .brand-title::before {content:'DESTINIE / THE GAMES ROOM';display:block;font:500 8px var(--font-body);letter-spacing:.17em;color:#b9c9b4;margin-bottom:6px}
+.host-action-dock {background:#203c30!important;border-color:#7e9271!important;box-shadow:0 -6px 24px #10231c40!important}
+.btn-dock-spin,.btn-dock-next,.btn-dock-pause {background:#335642!important;border-color:#8b9e7e!important;color:#ede4d2!important;box-shadow:none!important}
+.btn-dock-hint {background:#786340!important;border-color:#c6a15b!important;color:#ede4d2!important;box-shadow:none!important}
+.btn-dock-solve {background:#c6a15b!important;color:#192f28!important;box-shadow:none!important}
+body .dion-gate-btn-unlock {background:#c6a15b!important;color:#192f28!important;box-shadow:none!important}
+@keyframes destinie-arrive {from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:no-preference){.destinie-hero>div{animation:destinie-arrive .6s ease both}.destinie-illustration{animation:destinie-arrive .8s .1s ease both}}
+@media(max-width:700px){
+ body{min-width:0!important}body>*,main>*,header>*,.host-grid>*,.cohost-grid>*{min-width:0}
+ .host-layout,.host-screen,.host-container,.cohost-container,.launcher-wrap,.live-stage-wrapper{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box}
+ .host-container,.host-grid,.cohost-grid{grid-template-columns:minmax(0,1fr)!important}
+ .host-container>div,.host-grid>div,.host-sidebar,.host-stats-bar,.judge-card,.host-main-col{min-width:0;max-width:100%}
+ .cohost-header,.ml-header,.dual-header,.host-stats-bar,.dual-mode-switch,.host-status{flex-wrap:wrap!important;gap:10px!important;max-width:100%}
+ .cohost-header{padding:14px!important;background:#203c30!important}
+ .panel,.card,.host-card{min-width:0!important;max-width:100%;padding:14px!important}
+ .panel-header,.card-header{flex-wrap:wrap;gap:8px}
+ .panel-title{font-size:11px}.hint-preview-box{overflow-wrap:anywhere}
+ .wheel-board-wrapper,.jeopardy-board-wrapper{padding:7px!important;min-width:0;max-width:100%;box-sizing:border-box}
+ .board-tile{width:16px!important;height:24px!important;flex-shrink:1;font-size:12px!important}
+ .matrix-row{max-width:100%;gap:2px!important}.matrix-row>*{min-width:0;flex-shrink:1!important;width:19px!important;font-size:14px!important}
+ .host-category-row,.host-stats-bar,.host-controls-grid{max-width:100%;flex-wrap:wrap}
+ .host-status>div{flex-wrap:wrap}.host-status select{width:100%;min-width:0!important}
+ .nav-links{min-width:0}.cohost-header .brand-group{min-width:0}.cohost-header .brand-title{font-size:17px!important}
+ #dion-room-hud{max-width:100%;flex-wrap:wrap!important;font-size:10px}
+ .host-header>div[style*="display: flex"]{flex-wrap:wrap;max-width:100%}
+ .host-stats-bar .stat-pill{min-width:0;padding:8px!important}
+ .live-main,.live-stage-wrapper,.prompt-display,.ml-question-card{min-width:0;max-width:100%;overflow-wrap:anywhere}
+ .live-main div[style*="inline-block"]{max-width:100%;box-sizing:border-box;overflow-wrap:anywhere;font-size:clamp(24px,8vw,48px)!important}
+ .live-category{font-size:clamp(24px,8vw,42px)!important;overflow-wrap:anywhere}
+ .viewer-guess-bar,.prompt-main-text{max-width:100%;min-width:0;box-sizing:border-box;overflow-wrap:anywhere}
+ .live-header .hud-stats{flex-wrap:wrap;max-width:100%}
+ .host-controls-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:700px){
+ .host-settings{grid-template-columns:minmax(0,1fr)!important}
+ .hub-container>div[style*="grid-template-columns"],.host-card>div[style*="grid-template-columns: 320px"]{grid-template-columns:minmax(0,1fr)!important}
+ .hub-container>div>div{min-width:0}
+ .host-controls-grid>div{min-width:0;flex-wrap:wrap!important}
+ .host-controls-grid button{min-width:0;max-width:100%;width:100%;padding:10px!important}
+ .host-action-bar{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .host-action-bar button{min-width:0;font-size:12px!important;padding:12px!important}
+ .host-live-interaction-bar{max-width:100%;box-sizing:border-box;flex-wrap:wrap!important}
+ .dion-card{min-width:0;max-width:100%;box-sizing:border-box}
+ .hub-container .dion-card select{min-width:0!important}
+ .hub-container{width:100%;min-width:0;padding:24px 16px!important;box-sizing:border-box}
+ .host-layout .host-card [style*="grid-template-columns: 320px"]{grid-template-columns:minmax(0,1fr)!important}
+}
+@media(max-width:700px){.interaction-bar-actions{flex-wrap:wrap!important;max-width:100%;min-width:0}.interaction-bar-title{white-space:normal!important}}
+@media(max-width:700px){.host-card>div[style*="display: flex"]{flex-wrap:wrap!important;gap:10px!important}.host-card>div[style*="display: flex"]>div{max-width:100%;flex-wrap:wrap!important}}

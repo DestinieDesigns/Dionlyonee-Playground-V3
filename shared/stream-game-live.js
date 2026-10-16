@@ -157,7 +157,7 @@
       if (isWaiting) {
         contentEl.innerHTML = `
           <div class="live-waiting-stage">
-            <img src="/dionlyonee-pon-di-app.png" alt="Dionlyonee Pon Di App" class="live-waiting-hero-img" referrerPolicy="no-referrer" />
+            <img src="/assets/images/destinie-games-room.svg" alt="Destinie illustrated games room" class="live-waiting-hero-img" referrerPolicy="no-referrer" />
             <div class="live-waiting-badge">🇯🇲 DIONLYONEE PON DI APP • STANDBY LOBBY</div>
             <h2 class="live-waiting-title">GET READY!</h2>
             <p class="live-waiting-sub">Host is picking the category and next question. Stay locked in!</p>

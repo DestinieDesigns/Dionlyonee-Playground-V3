@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dionlyonee Game Show Playground</title>
+    <title>Destinie — Your little world of play</title>
     <meta name="description" content="Interactive live stream gaming hub featuring Wheel of Fortune, Jeopardy trivia, Most Likely To, Charades with host acting cues & silent signals, Hangman with PG-13 Slime Dunk visual & interactive letter board, and synchronized multi-device Host and Live Stage consoles in pure Vanilla JavaScript.">
-    <meta property="og:title" content="Dionlyonee Game Show Playground">
+    <meta property="og:title" content="Destinie Game Show Playground">
     <meta property="og:description" content="Interactive live stream gaming hub featuring Wheel of Fortune, Jeopardy trivia, Most Likely To, Charades with host acting cues & silent signals, Hangman with PG-13 Slime Dunk visual & interactive letter board, and synchronized multi-device Host and Live Stage consoles in pure Vanilla JavaScript.">
     
     <!-- FONTS -->
@@ -568,8 +568,10 @@
         box-shadow: 0 0 25px rgba(250, 204, 21, 0.3);
       }
     </style>
+<link rel="stylesheet" href="shared/destinie.css">
+<script defer src="shared/destinie-ui.js"></script>
 </head>
-<body>
+<body class="destinie-home">
 
 <div class="playground">
 
@@ -580,12 +582,13 @@
         <a href="index.html" class="brand-wrapper">
             <div class="brand-mark">D</div>
             <div>
-                <div class="brand-name">DIONLYONEE</div>
-                <div class="brand-subtitle">GAME SHOW PLAYGROUND</div>
+                <div class="brand-name">Destinie</div>
+                <div class="brand-subtitle">YOUR LITTLE WORLD OF PLAY</div>
             </div>
         </a>
 
-        <!-- Header Actions: Room Badge & Audio Test -->
+        <nav class="destinie-nav" aria-label="Main navigation"><a href="#games">The games</a><a href="leaderboard.html">Leaderboard</a><a href="#" onclick="openRoomModal(); return false;">Join a room</a></nav>
+<!-- Header Actions: Room Badge & Audio Test -->
         <div class="header-actions">
             <!-- Active Room Indicator & Switcher -->
             <div class="room-badge-container">
@@ -605,9 +608,13 @@
     <!-- =========================================
          GAME CATALOG SECTION (RESPONSIVE GRID)
     ========================================== -->
-    <section class="catalog-section">
+    <section class="destinie-hero" aria-labelledby="welcome-title">
+ <div><div class="destinie-eyebrow">Welcome to my corner of the internet</div><h1 id="welcome-title">Good company.<br>A little <em>friendly</em><br>competition.</h1><p>A place for curious minds, big laughs, and one more round. Pick a game, gather your people, and make yourself at home.</p><div class="destinie-hero-actions"><a class="destinie-button" href="#games">Find your next game <span aria-hidden="true">↗</span></a><button class="destinie-button secondary" type="button" onclick="openGame('wheel')">Spin the wheel <span aria-hidden="true">↻</span></button></div><small class="destinie-hero-note">Play solo, host your friends, or bring your stream along.</small></div>
+ <figure class="destinie-illustration"><img src="assets/images/destinie-games-room.svg" width="640" height="490" alt="An illustrated cozy games room with a prize wheel, dice, and plants"><figcaption>Come for a game. Stay for another.</figcaption></figure>
+</section><div class="destinie-ribbon" aria-label="Ways to play"><span>A game for every mood</span><span>Your people, your pace</span><span>Made for good times</span></div>
+<section class="catalog-section" id="games" aria-label="Game library">
         <div class="section-heading">
-            <span>🎮 ALL GAMES & ACTIVITIES</span>
+            <span>The game shelf</span>
             <small id="catalogHeaderStats">17 GAMES AVAILABLE</small>
         </div>
 
@@ -619,9 +626,9 @@
                     <span class="search-icon">🔍</span>
                     <input 
                         type="text" 
-                        id="gameSearchInput" 
+                        aria-label="Search games" id="gameSearchInput"
                         class="search-input" 
-                        placeholder="Search games by title, rules, keywords (e.g. wheel, buzzer, letters, debate)..."
+                        placeholder="Find your kind of fun…"
                         autocomplete="off"
                     >
                     <button type="button" id="searchClearBtn" class="search-clear" onclick="clearSearch()" title="Clear Search">✕</button>
@@ -629,7 +636,7 @@
 
                 <!-- Controls: Sort & View Toggle -->
                 <div class="toolbar-controls">
-                    <select id="sortSelect" class="sort-select" onchange="handleSortChange(this.value)">
+                    <select aria-label="Sort games" id="sortSelect" class="sort-select" onchange="handleSortChange(this.value)">
                         <option value="featured">Sort: Featured First</option>
                         <option value="az">Sort: Name (A - Z)</option>
                         <option value="category">Sort: Category</option>
@@ -693,9 +700,9 @@
          FOOTER
     ========================================== -->
     <footer>
-        <span>DIONLYONEE</span>
+        <span>DESTINIE</span>
         <b>◆</b>
-        <span>GAME SHOW PLAYGROUND</span>
+        <span>YOUR LITTLE WORLD OF PLAY</span>
         <b>◆</b>
         <span>2026 LIVE STREAM ENGINE</span>
     </footer>
@@ -707,7 +714,7 @@
 ========================================== -->
 <div id="gameLauncherModal" class="game-launcher-modal">
     <div class="modal-box">
-        <button type="button" class="modal-close" onclick="closeModal()">✕</button>
+        <button type="button" class="modal-close" aria-label="Close dialog" onclick="closeModal()">✕</button>
         
         <div class="modal-header-row">
             <span id="modalIcon" class="modal-icon-badge">🎮</span>
@@ -796,14 +803,15 @@
     </div>
 </div>
 
+<footer class="destinie-footer"><strong>Destinie</strong><span>A personal playground. Made for moments together.</span><a href="#welcome-title" style="color:inherit">Back to the top ↑</a></footer>
 <!-- =========================================
      ROOM CODE SWITCHER MODAL
 ========================================== -->
 <div id="roomSwitcherModal" class="room-modal">
     <div class="room-modal-box">
-        <button type="button" class="modal-close" onclick="closeRoomModal()">✕</button>
+        <button type="button" class="modal-close" aria-label="Close dialog" onclick="closeRoomModal()">✕</button>
         <div class="modal-badge">ROOM MANAGEMENT</div>
-        <h2 style="color:#fff; font-size:20px; font-weight:900; margin: 6px 0 10px;">CHANGE ACTIVE ROOM</h2>
+        <h2 id="roomDialogTitle" style="color:#fff; font-size:20px; font-weight:900; margin: 6px 0 10px;">CHANGE ACTIVE ROOM</h2>
         <p style="color:#8ba1a2; font-size:11.5px; line-height:1.5;">
             Enter a room code to synchronize all Host consoles, Live Stage displays, and audience buzzers together.
         </p>
@@ -850,7 +858,7 @@ const GAME_DIRECTORY = {
   },
   'jeopardy': {
     id: 'jeopardy',
-    title: 'DION JEOPARDY',
+    title: 'DESTINIE JEOPARDY',
     badge: 'MAIN EVENT',
     desc: 'Interactive 25-clue TV Jeopardy grid, buzzer lockouts, Daily Doubles, and clue reveal.',
     category: 'main',
@@ -880,7 +888,7 @@ const GAME_DIRECTORY = {
   },
   'speak-out': {
     id: 'speak-out',
-    title: 'DIONLYONEE SPEAK OUT!',
+    title: 'DESTINIE SPEAK OUT!',
     badge: 'LIVE CHALLENGE',
     status: 'ready',
     desc: 'Fast-paced live stream speaking challenge with 650+ stream-tested prompts. Eliminate dead air with Tongue Twisters, Rapid Fire, Forbidden Words, Voice Challenges, and Keep Talking.',
@@ -1081,7 +1089,7 @@ const GAME_DIRECTORY = {
     desc: 'Sing the missing line! Test your music soul across 90s & 2000s R&B, timeless Love Songs & Slow Jams, Reggae & Jamaican vibes, Dancehall party bangers, and Gospel!',
     category: 'words',
     icon: '🎤',
-    tags: ['🎵 R&B Classics', '🇯🇲 Reggae & Jamaican', '💃 Dancehall Anthems', '❤️ Love Songs', '🙌 Gospel & Praise', '👤 Solo Mode'],
+    tags: ['🎵 R&B Classics', '🇯🇲 Reggae & Jamaican', '💃 Dancehall Anthems', '❤️ Love Songs', '🙌 Gospel & Praise', 'Solo Mode'],
     host: 'guess-lyrics/host.html',
     live: 'guess-lyrics/live.html',
     split: 'dual-view.html?mode=lyrics',
@@ -1298,10 +1306,10 @@ function renderCatalog() {
       const tagsHtml = (g.tags || []).map(t => `<span class="card-tag-pill">${t}</span>`).join('');
 
       return `
-        <div class="catalog-card" onclick="handleCardClick(event, '${g.id}')">
+        <div class="catalog-card" onclick="handleCardClick(event, '${g.id}')" tabindex="0" role="button" aria-label="Launch ${g.title}" onkeydown="if(event.target===this && (event.key==='Enter' || event.key===' ')) { event.preventDefault(); openGame('${g.id}'); }">
             <div>
                 <div class="card-top">
-                    <div class="card-icon">${g.icon}</div>
+                    <div class="card-icon" data-destinie-game="${g.id}" aria-hidden="true">${g.icon}</div>
                     <span class="card-cat-badge">${g.badge}</span>
                 </div>
                 <h3 class="card-title">${g.title}</h3>
@@ -1309,10 +1317,10 @@ function renderCatalog() {
                 <div class="card-tags">${tagsHtml}</div>
             </div>
             <div class="card-actions" onclick="event.stopPropagation()">
-                <a href="${hostUrl}" target="_blank" class="btn-card-host">🎤 Host</a>
-                <a href="${liveUrl}" target="_blank" class="btn-card-live">📺 Live</a>
-                <a href="${singleUrl}" target="_blank" class="btn-card-solo" style="padding: 7px 11px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); color: #34d399; font-weight: 800; border-radius: 8px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Play Single Player Mode">👤 Solo</a>
-                <button type="button" class="btn-card-options" onclick="openGame('${g.id}')" title="More Launch Options (Remote, Co-Host, Dual)">⚙️</button>
+                <a href="${hostUrl}" target="_blank" class="btn-card-host">Host</a>
+                <a href="${liveUrl}" target="_blank" class="btn-card-live">Watch</a>
+                <a href="${singleUrl}" target="_blank" class="btn-card-solo" style="padding: 7px 11px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); color: #34d399; font-weight: 800; border-radius: 8px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Play Single Player Mode">Solo</a>
+                <button type="button" class="btn-card-options" onclick="openGame('${g.id}')" title="More Launch Options (Remote, Co-Host, Dual)">↗</button>
             </div>
         </div>
       `;
@@ -1326,7 +1334,7 @@ function renderCatalog() {
       const singleUrl = `${g.direct}${g.direct.includes('?') ? '&' : '?'}singleplayer=true`;
 
       return `
-        <div class="list-row" onclick="handleCardClick(event, '${g.id}')">
+        <div class="list-row" onclick="handleCardClick(event, '${g.id}')" tabindex="0" role="button" aria-label="Launch ${g.title}" onkeydown="if(event.target===this && (event.key==='Enter' || event.key===' ')) { event.preventDefault(); openGame('${g.id}'); }">
             <div class="list-left">
                 <div class="list-icon">${g.icon}</div>
                 <div class="list-info">
@@ -1338,10 +1346,10 @@ function renderCatalog() {
                 </div>
             </div>
             <div class="list-actions" onclick="event.stopPropagation()">
-                <a href="${hostUrl}" target="_blank" class="btn-card-host">🎤 Host</a>
-                <a href="${liveUrl}" target="_blank" class="btn-card-live">📺 Live</a>
-                <a href="${singleUrl}" target="_blank" class="btn-card-solo" style="padding: 7px 11px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); color: #34d399; font-weight: 800; border-radius: 8px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Play Single Player Mode">👤 Solo</a>
-                <button type="button" class="btn-card-options" onclick="openGame('${g.id}')" title="Launch Modal">⚙️</button>
+                <a href="${hostUrl}" target="_blank" class="btn-card-host">Host</a>
+                <a href="${liveUrl}" target="_blank" class="btn-card-live">Watch</a>
+                <a href="${singleUrl}" target="_blank" class="btn-card-solo" style="padding: 7px 11px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); color: #34d399; font-weight: 800; border-radius: 8px; font-size: 11px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Play Single Player Mode">Solo</a>
+                <button type="button" class="btn-card-options" onclick="openGame('${g.id}')" title="Launch Modal">↗</button>
             </div>
         </div>
       `;

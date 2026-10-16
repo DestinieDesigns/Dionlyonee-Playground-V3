@@ -1,6 +1,6 @@
 {
-  "name": "Dionlyonee Game Show Playground",
-  "description": "Interactive live stream gaming hub featuring Wheel of Fortune, Jeopardy trivia, Dionlyonee Speak Out live challenge, Guess the Lyrics, Most Likely To, Charades, and Hangman Show with 250+ puzzles across 12 categories, Stream Autopilot, Slime Dunk stage visuals, live chat guessing, and synchronized multi-device Host and Live consoles.",
+  "name": "Destinie Game Show Playground",
+  "description": "Interactive live stream gaming hub featuring Wheel of Fortune, Jeopardy trivia, Destinie Speak Out live challenge, Guess the Lyrics, Most Likely To, Charades, and Hangman Show with 250+ puzzles across 12 categories, Stream Autopilot, Slime Dunk stage visuals, live chat guessing, and synchronized multi-device Host and Live consoles.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

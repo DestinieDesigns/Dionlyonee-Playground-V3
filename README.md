@@ -1,4 +1,4 @@
-# Dionlyonee Stream Playground
+# Destinie
 
 A premier, multi-device live streaming gameshow platform built with HTML, CSS, and Vanilla JavaScript.
 
@@ -111,3 +111,9 @@ Dionlyonee-Playground/
 ## Security Passcode
 - **Host Console**: `Brown123`
 - **Admin Console**: `Brown123`
+
+## Visual identity
+
+Destinie uses a shared cream, forest-green, sage, charcoal-teal, and muted-gold visual system. The homepage introduces original games-room artwork and game illustrations. Shared presentation styles live in `shared/destinie.css`; `shared/destinie-ui.js` decorates dynamically rendered interfaces without changing game state, storage keys, or scoring. Existing game engines and sound assets remain in place.
+
+The Vite configuration preserves standalone game pages and classic scripts alongside its processed entry pages so the catalog remains available in static deployment output. The existing Express/WebSocket backend still requires a running server for its cross-device APIs; this visual redesign does not migrate that backend.
