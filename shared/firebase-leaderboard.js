@@ -15,7 +15,19 @@
     'hangman': { title: 'Hangman Show', icon: '🔤', badge: 'SLIME DUNK', color: '#06b6d4', scoreSuffix: ' PTS' }
   };
 
-  const AVATARS = ['👑', '🦁', '🐯', '💎', '⚡', '🎯', '🌟', '🔥', '🚀', '🌹', '🦊', '🦅', '🏆'];
+  const AVATAR_IMAGES = {
+    'https://github.com/user-attachments/assets/16c53dd4-a057-4ba5-9109-68e7f988ac80': 'Fantasy avatar 1',
+    'https://github.com/user-attachments/assets/c7c3206d-c954-48ff-b320-c1363be87948': 'Fantasy avatar 2',
+    'https://github.com/user-attachments/assets/8a62b1c2-59d1-480f-b299-c5c25782871c': 'Fantasy avatar 3',
+    'https://github.com/user-attachments/assets/d636792c-6625-4208-8ddc-009ece0991da': 'Fantasy avatar 4'
+  };
+  const AVATARS = ['👑', '🦁', '🐯', '💎', '⚡', '🎯', '🌟', '🔥', '🚀', '🌹', '🦊', '🦅', '🏆', ...Object.keys(AVATAR_IMAGES)];
+  const renderAvatar = (avatar) => {
+    const label = AVATAR_IMAGES[avatar];
+    return label
+      ? `<img class="dl-avatar-image" src="${avatar}" alt="" aria-label="${label}" />`
+      : String(avatar || '⭐').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+  };
 
   // Default seed champions per game so the board is vibrant immediately
   const DEFAULT_SEEDS = [
@@ -679,10 +691,17 @@
               <div class="dl-chat-input-container">
                 <div class="dl-chat-user-row">
                   <button type="button" class="dl-avatar-selector-btn" id="dlAvatarBtn" title="Change Avatar">
-                    ${this.currentUser.avatar}
+                    ${renderAvatar(this.currentUser.avatar)}
                   </button>
                   <input type="text" class="dl-username-input" id="dlUsernameInput" value="${this.currentUser.username}" placeholder="Username" maxlength="18" />
                   <span class="dl-chat-cmd-hint">Type /win or /cheer</span>
+                </div>
+                <div class="dl-avatar-picker" id="dlAvatarPicker" role="group" aria-label="Choose an avatar" hidden>
+                  ${AVATARS.map(avatar => `
+                    <button type="button" class="dl-avatar-option ${avatar === this.currentUser.avatar ? 'selected' : ''}" data-avatar="${avatar}" aria-label="${AVATAR_IMAGES[avatar] || avatar}" aria-pressed="${avatar === this.currentUser.avatar}">
+                      ${renderAvatar(avatar)}
+                    </button>
+                  `).join('')}
                 </div>
                 <div class="dl-chat-send-row">
                   <input type="text" class="dl-chat-text-input" id="dlChatInput" placeholder="Message stream or /win [game] [score]..." />
@@ -882,13 +901,24 @@
       }
 
       const avatarBtn = document.getElementById('dlAvatarBtn');
-      if (avatarBtn) {
+      const avatarPicker = document.getElementById('dlAvatarPicker');
+      if (avatarBtn && avatarPicker) {
         avatarBtn.addEventListener('click', () => {
-          const currentIndex = AVATARS.indexOf(this.currentUser.avatar);
-          const nextIndex = (currentIndex + 1) % AVATARS.length;
-          const nextAvatar = AVATARS[nextIndex];
-          this.saveCurrentUser(this.currentUser.username, nextAvatar);
-          avatarBtn.textContent = nextAvatar;
+          avatarPicker.hidden = !avatarPicker.hidden;
+          avatarBtn.setAttribute('aria-expanded', String(!avatarPicker.hidden));
+        });
+        avatarPicker.addEventListener('click', (event) => {
+          const option = event.target.closest('[data-avatar]');
+          if (!option) return;
+          this.saveCurrentUser(this.currentUser.username, option.dataset.avatar);
+          avatarBtn.innerHTML = renderAvatar(this.currentUser.avatar);
+          avatarPicker.querySelectorAll('[data-avatar]').forEach(button => {
+            const selected = button.dataset.avatar === this.currentUser.avatar;
+            button.classList.toggle('selected', selected);
+            button.setAttribute('aria-pressed', String(selected));
+          });
+          avatarPicker.hidden = true;
+          avatarBtn.setAttribute('aria-expanded', 'false');
         });
       }
 
@@ -1023,7 +1053,7 @@
             </td>
             <td>
               <div class="dl-player-cell">
-                <span class="dl-player-avatar">${r.avatar || '⭐'}</span>
+                <span class="dl-player-avatar">${renderAvatar(r.avatar)}</span>
                 <div class="dl-player-info">
                   <span class="dl-player-name">
                     ${r.username}
@@ -1068,7 +1098,7 @@
 
         return `
           <div class="dl-chat-msg ${typeClass}">
-            <div class="dl-msg-avatar">${msg.avatar || '👤'}</div>
+            <div class="dl-msg-avatar">${renderAvatar(msg.avatar || '👤')}</div>
             <div class="dl-msg-content">
               <div class="dl-msg-meta">
                 <span class="dl-msg-username">${msg.username}</span>
