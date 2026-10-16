@@ -53,10 +53,18 @@ input::placeholder,textarea::placeholder {color:#bdc8b7!important;opacity:1}
 .destinie-home .btn-change-room {color:#244d3b;background:transparent;border-color:#244d3b40}
 .destinie-home .header-btn {background:transparent;border:1px solid #244d3b40;color:#244d3b;border-radius:25px;padding:10px 15px}
 .destinie-hero {max-width:1440px;margin:auto;padding:62px max(5vw,24px) 68px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;position:relative;background-position:center;background-size:cover;background-repeat:no-repeat;transition:background-image .2s ease}
-.destinie-hero[data-background="hero"] {background-image:linear-gradient(90deg,#ede4d2f2 0%,#ede4d2d9 48%,#ede4d280 100%),url("../assets/images/backgrounds/destinie-hero.webp")}
-.destinie-hero[data-background="forest"] {background-image:linear-gradient(90deg,#ede4d2f2 0%,#ede4d2d9 48%,#ede4d280 100%),url("../assets/images/backgrounds/destinie-forest-background.webp")}
-.destinie-hero[data-background="garden"] {background-image:linear-gradient(90deg,#ede4d2f2 0%,#ede4d2d9 48%,#ede4d280 100%),url("../assets/images/backgrounds/destinie-moonlit-garden.webp")}
-.destinie-hero[data-background="cavern"] {background-image:linear-gradient(90deg,#ede4d2f2 0%,#ede4d2d9 48%,#ede4d280 100%),url("../assets/images/backgrounds/destinie-crystal-cavern.webp")}
+.destinie-hero[data-background^="scene-"] {background-image:linear-gradient(90deg,#111326e8 0%,#111326b8 48%,#11132626 100%);color:#f4eddf}
+.destinie-hero[data-background="scene-1"] {background-image:linear-gradient(90deg,#111326e8 0%,#111326b8 48%,#11132626 100%),url("https://github.com/user-attachments/assets/0ec75180-3d02-4af0-93d9-ad04ec95a689")}
+.destinie-hero[data-background="scene-2"] {background-image:linear-gradient(90deg,#111326e8 0%,#111326b8 48%,#11132626 100%),url("https://github.com/user-attachments/assets/706dd501-138b-4534-a90d-a14b0105482b")}
+.destinie-hero[data-background="scene-3"] {background-image:linear-gradient(90deg,#111326e8 0%,#111326b8 48%,#11132626 100%),url("https://github.com/user-attachments/assets/a33bbcdd-3bba-40b2-8a13-9983209a631e")}
+.destinie-hero[data-background="scene-4"] {background-image:linear-gradient(90deg,#111326e8 0%,#111326b8 48%,#11132626 100%),url("https://github.com/user-attachments/assets/634bc44e-932f-4d15-a713-a6cfa6de6897")}
+.destinie-hero[data-background="scene-5"] {background-image:linear-gradient(90deg,#111326e8 0%,#111326b8 48%,#11132626 100%),url("https://github.com/user-attachments/assets/6ebad442-e703-444a-8206-fd6db4efc27a")}
+.destinie-hero[data-background="scene-6"] {background-image:linear-gradient(90deg,#111326e8 0%,#111326b8 48%,#11132626 100%),url("https://github.com/user-attachments/assets/9ed1fd3b-0816-4eb2-a6a6-0f0458aa39b4")}
+.destinie-hero[data-background="scene-7"] {background-image:linear-gradient(90deg,#111326e8 0%,#111326b8 48%,#11132626 100%),url("https://github.com/user-attachments/assets/0edf3e64-a0be-4831-89f4-2b557e28ebe8")}
+.destinie-hero[data-background="scene-8"] {background-image:linear-gradient(90deg,#111326e8 0%,#111326b8 48%,#11132626 100%),url("https://github.com/user-attachments/assets/4430f01d-7dca-4fc7-be04-5f9563741d5b")}
+.destinie-hero[data-background^="scene-"] .destinie-eyebrow,.destinie-hero[data-background^="scene-"] h1,.destinie-hero[data-background^="scene-"] h1 em,.destinie-hero[data-background^="scene-"] p,.destinie-hero[data-background^="scene-"] .destinie-hero-note {color:#f4eddf}
+.destinie-hero[data-background^="scene-"] .destinie-button.secondary {color:#f4eddf;border-color:#f4eddf80}
+.destinie-hero[data-background^="scene-"] .destinie-background-picker span {color:#f4eddf}
 .destinie-eyebrow {display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#526750}
 .destinie-eyebrow:before {content:'';width:26px;height:1px;background:#9a7841}
 .destinie-hero h1 {font-size:clamp(48px,5.5vw,82px);font-weight:400;line-height:1.04;color:#244d3b;margin:23px 0 24px}
@@ -67,14 +75,18 @@ input::placeholder,textarea::placeholder {color:#bdc8b7!important;opacity:1}
 .destinie-button:hover {background:#365f49;transform:translateY(-2px);box-shadow:0 5px 0 #244d3b20}
 .destinie-button.secondary {background:transparent;color:#244d3b;border-color:#244d3b50}
 .destinie-hero-note {display:block;margin-top:23px;color:#61705d;font-size:11px;letter-spacing:.03em}
-.destinie-background-picker {display:flex;align-items:center;gap:8px;margin-top:18px}
+.destinie-background-picker {display:flex;align-items:center;gap:8px;margin-top:18px;flex-wrap:wrap}
 .destinie-background-picker span {margin-right:3px;color:#526750;font-size:9px;font-weight:700;letter-spacing:.12em}
 .destinie-background-picker button {width:38px;height:27px;padding:0;border:1px solid #244d3b70;border-radius:5px;background-position:center;background-size:cover;cursor:pointer}
 .destinie-background-picker button[aria-pressed="true"] {outline:2px solid #244d3b;outline-offset:2px}
-.destinie-background-picker button[data-destinie-background-choice="hero"] {background-image:url("../assets/images/backgrounds/destinie-hero.webp")}
-.destinie-background-picker button[data-destinie-background-choice="forest"] {background-image:url("../assets/images/backgrounds/destinie-forest-background.webp")}
-.destinie-background-picker button[data-destinie-background-choice="garden"] {background-image:url("../assets/images/backgrounds/destinie-moonlit-garden.webp")}
-.destinie-background-picker button[data-destinie-background-choice="cavern"] {background-image:url("../assets/images/backgrounds/destinie-crystal-cavern.webp")}
+.destinie-background-picker button[data-destinie-background-choice="scene-1"] {background-image:url("https://github.com/user-attachments/assets/0ec75180-3d02-4af0-93d9-ad04ec95a689")}
+.destinie-background-picker button[data-destinie-background-choice="scene-2"] {background-image:url("https://github.com/user-attachments/assets/706dd501-138b-4534-a90d-a14b0105482b")}
+.destinie-background-picker button[data-destinie-background-choice="scene-3"] {background-image:url("https://github.com/user-attachments/assets/a33bbcdd-3bba-40b2-8a13-9983209a631e")}
+.destinie-background-picker button[data-destinie-background-choice="scene-4"] {background-image:url("https://github.com/user-attachments/assets/634bc44e-932f-4d15-a713-a6cfa6de6897")}
+.destinie-background-picker button[data-destinie-background-choice="scene-5"] {background-image:url("https://github.com/user-attachments/assets/6ebad442-e703-444a-8206-fd6db4efc27a")}
+.destinie-background-picker button[data-destinie-background-choice="scene-6"] {background-image:url("https://github.com/user-attachments/assets/9ed1fd3b-0816-4eb2-a6a6-0f0458aa39b4")}
+.destinie-background-picker button[data-destinie-background-choice="scene-7"] {background-image:url("https://github.com/user-attachments/assets/0edf3e64-a0be-4831-89f4-2b557e28ebe8")}
+.destinie-background-picker button[data-destinie-background-choice="scene-8"] {background-image:url("https://github.com/user-attachments/assets/4430f01d-7dca-4fc7-be04-5f9563741d5b")}
 .destinie-illustration {position:relative;margin:0;transform:rotate(-2deg)}
 .destinie-illustration img {width:100%;display:block;filter:drop-shadow(0 12px 0 #244d3b0c)}
 .destinie-illustration figcaption {text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-top:16px;color:#61705d;transform:rotate(2deg)}
