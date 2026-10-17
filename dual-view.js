@@ -63,8 +63,8 @@
       if (liveFrame) liveFrame.src = `wheel-live.html${query}`;
       if (hostPopout) hostPopout.href = `wheel-host.html${query}`;
       if (livePopout) livePopout.href = `wheel-live.html${query}`;
-      if (hostPaneTitle) hostPaneTitle.textContent = 'WHEEL OF FORTUNE HOST PANEL';
-      if (livePaneTitle) livePaneTitle.textContent = 'WHEEL OF FORTUNE LIVE STAGE';
+      if (hostPaneTitle) hostPaneTitle.textContent = 'WHEEL OF WISHES HOST PANEL';
+      if (livePaneTitle) livePaneTitle.textContent = 'WHEEL OF WISHES LIVE STAGE';
     } else if (mode === 'jeopardy') {
       btnJeopardy?.classList.add('active');
       if (hostFrame) hostFrame.src = `jeopardy-host.html${query}`;

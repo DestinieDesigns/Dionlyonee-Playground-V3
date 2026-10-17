@@ -57,7 +57,7 @@ Dionlyonee-Playground/
 │   ├── games.css              # Game card layouts, status badges & launcher modals
 │   └── game-lobby.js          # Room lobby & contestant sync view
 │
-├── wheel/                     # Wheel of Fortune Show
+├── wheel/                     # Wheel of Wishes Show
 │   ├── index.html             # Wheel game hub / mode selector
 │   ├── host/                  # Host control console (spin, reveal, score, timer)
 │   ├── cohost/                # Co-host mobile companion & live buzzer

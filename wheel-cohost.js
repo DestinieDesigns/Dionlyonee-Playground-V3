@@ -218,7 +218,7 @@
 
     // Category & Answer
     if (cohostCategory) {
-      cohostCategory.textContent = state.category || 'WHEEL OF FORTUNE';
+      cohostCategory.textContent = state.category || 'WHEEL OF WISHES';
     }
     const cleanAnswer = (state.answer || '').toUpperCase();
     if (cohostAnswer) {

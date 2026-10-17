@@ -224,7 +224,7 @@
     if (liveTimer) liveTimer.textContent = `${state.seconds || 0}s`;
 
     if (liveCategory) {
-      liveCategory.textContent = (state.category || 'WHEEL OF FORTUNE').toUpperCase();
+      liveCategory.textContent = (state.category || 'WHEEL OF WISHES').toUpperCase();
     }
 
     // Determine if in waiting or cooldown phase

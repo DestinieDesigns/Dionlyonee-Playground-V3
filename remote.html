@@ -562,7 +562,7 @@
       <span id="roomCodeDisplay" class="room-code-val" onclick="openRoomSwitchPrompt()" style="cursor: pointer;" title="Tap to switch room">----</span>
       <button type="button" class="btn-qr-pill" onclick="openQRModal()" title="Show Connection QR Code">📱 QR / PAIR</button>
     </div>
-    <div id="gameBadge" class="game-badge">WHEEL OF FORTUNE</div>
+    <div id="gameBadge" class="game-badge">WHEEL OF WISHES</div>
   </div>
 
   <main class="container">
@@ -916,7 +916,7 @@
 
       function updateHeader() {
         const gameNames = {
-          'wheel': 'Wheel of Fortune',
+          'wheel': 'Wheel of Wishes',
           'jeopardy': 'Jeopardy Trivia',
           'trivia': 'Stream Trivia',
           'speak-out': 'Dionlyonee Speak Out',
@@ -1162,7 +1162,7 @@
         if (gameType === 'wheel') {
           elControlsContainer.innerHTML = `
             <div class="section-title">
-              <span>🎡 WHEEL OF FORTUNE CONTROLS</span>
+              <span>🎡 WHEEL OF WISHES CONTROLS</span>
             </div>
             <div class="controls-grid">
               <button type="button" class="btn-ctrl btn-spin" onclick="triggerAction('SPIN')">

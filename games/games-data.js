@@ -5,11 +5,11 @@
   const GamesData = [
     {
       id: 'wheel',
-      title: 'WHEEL OF FORTUNE',
+      title: 'WHEEL OF WISHES',
       genre: 'Classic Word & Wheel Gameshow',
       icon: '🎡',
       accent: '#d4af37',
-      desc: 'The complete broadcast Wheel experience. Live rotating 24-wedge wheel with realistic deceleration physics, 4-row TV puzzle board with letter reveals, contestant bank scores, and co-host phone companion.',
+      desc: 'The complete Wheel of Wishes broadcast experience. Live rotating 24-wedge wheel with realistic deceleration physics, 4-row TV puzzle board with letter reveals, contestant bank scores, and co-host phone companion.',
       links: {
         host: '/wheel/host/',
         cohost: '/wheel/cohost/',

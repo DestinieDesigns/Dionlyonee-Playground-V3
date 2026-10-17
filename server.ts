@@ -83,7 +83,7 @@ INITIAL_CHAMPIONS.forEach(c => leaderboardRecords.set(c.id, c));
 chatHistory.push(
   { id: 'msg_init_1', roomId: 'DION1', username: 'SYSTEM', avatar: '👑', text: 'Welcome to Dionlyonee Live Game Show Arena! Syncing real-time scores & chat.', type: 'system', timestamp: Date.now() - 300000 },
   { id: 'msg_init_2', roomId: 'DION1', username: 'TikTokFan_22', avatar: '🔥', text: 'Hyped for the next live showdown!', type: 'chat', timestamp: Date.now() - 120000 },
-  { id: 'msg_init_3', roomId: 'DION1', username: 'SpinQueen', avatar: '🎡', text: 'Just logged $38,500 on Wheel of Fortune! 🏆', type: 'win', game: 'wheel', score: 38500, timestamp: Date.now() - 60000 }
+  { id: 'msg_init_3', roomId: 'DION1', username: 'SpinQueen', avatar: '🎡', text: 'Just logged $38,500 on Wheel of Wishes! 🏆', type: 'win', game: 'wheel', score: 38500, timestamp: Date.now() - 60000 }
 );
 
 async function startServer() {
@@ -778,4 +778,3 @@ async function startServer() {
 }
 
 startServer();
-
