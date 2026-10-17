@@ -37,6 +37,17 @@
   }
   function init() {
     decorate(document);
+    const hero = document.querySelector('.destinie-hero[data-background]');
+    if (hero) {
+      document.querySelectorAll('[data-destinie-background-choice]').forEach(button => {
+        button.addEventListener('click', () => {
+          hero.dataset.background = button.dataset.destinieBackgroundChoice;
+          document.querySelectorAll('[data-destinie-background-choice]').forEach(choice => {
+            choice.setAttribute('aria-pressed', String(choice === button));
+          });
+        });
+      });
+    }
     document.querySelectorAll('.brand-logo,.brand-icon,.live-logo').forEach(el => {
       // Replace ornamental emoji badges, never emoji puzzle content.
       if (!el.querySelector('*') && el.textContent.trim().length <= 4) {
