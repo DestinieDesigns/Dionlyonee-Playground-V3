@@ -6,7 +6,7 @@
 (function () {
   const GAME_META = {
     'all': { title: 'All Games', icon: '🌐', badge: 'HALL OF FAME', color: '#facc15' },
-    'wheel': { title: 'Wheel of Fortune', icon: '🎡', badge: 'MAIN EVENT', color: '#f59e0b', scorePrefix: '$' },
+    'wheel': { title: 'Wheel of Wishes', icon: '🎡', badge: 'MAIN EVENT', color: '#f59e0b', scorePrefix: '$' },
     'trivia': { title: 'Trivia Showdown', icon: '🧠', badge: 'BUZZER ARENA', color: '#38bdf8', scoreSuffix: ' PTS' },
     'jeopardy': { title: 'Dion Jeopardy', icon: '🏆', badge: 'QUIZ SHOW', color: '#10b981', scorePrefix: '$' },
     'word-reveal': { title: 'Word Reveal', icon: '🟩', badge: 'MYSTERY TILES', color: '#4ade80', scoreSuffix: ' PTS' },
@@ -47,8 +47,8 @@
   const DEFAULT_CHAT = [
     { id: 'c1', roomId: 'DION1', username: 'SYSTEM', avatar: '👑', text: 'Welcome to Dionlyonee Live Arena! Chat, cheer, and track wins in real-time.', type: 'system', timestamp: Date.now() - 600000 },
     { id: 'c2', roomId: 'DION1', username: 'TikTokFan_22', avatar: '🔥', text: 'Ready for the next game show showdown! Let\'s go!', type: 'chat', timestamp: Date.now() - 400000 },
-    { id: 'c3', roomId: 'DION1', username: 'Dionlyonee', avatar: '👑', text: 'Wheel of Fortune spin incoming! Tap up the live!', type: 'chat', timestamp: Date.now() - 200000 },
-    { id: 'c4', roomId: 'DION1', username: 'SpinQueen', avatar: '🎡', text: 'Just logged $38,500 on Wheel of Fortune! 🏆', type: 'win', game: 'wheel', score: 38500, timestamp: Date.now() - 90000 }
+    { id: 'c3', roomId: 'DION1', username: 'Dionlyonee', avatar: '👑', text: 'Wheel of Wishes spin incoming! Tap up the live!', type: 'chat', timestamp: Date.now() - 200000 },
+    { id: 'c4', roomId: 'DION1', username: 'SpinQueen', avatar: '🎡', text: 'Just logged $38,500 on Wheel of Wishes! 🏆', type: 'win', game: 'wheel', score: 38500, timestamp: Date.now() - 90000 }
   ];
 
   class FirebaseLeaderboard {
@@ -793,7 +793,7 @@
             <div class="dl-form-group">
               <label class="dl-form-label">Select Game Show</label>
               <select class="dl-form-select" id="dlFormGame">
-                <option value="wheel">🎡 Wheel of Fortune</option>
+                <option value="wheel">🎡 Wheel of Wishes</option>
                 <option value="trivia">🧠 Trivia Showdown</option>
                 <option value="jeopardy">🏆 Dion Jeopardy</option>
                 <option value="word-reveal">🟩 Word Reveal Mystery</option>

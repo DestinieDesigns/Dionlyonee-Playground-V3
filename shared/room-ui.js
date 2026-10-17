@@ -83,7 +83,7 @@
 
     getGameName(game = 'wheel') {
       const titles = {
-        'wheel': 'WHEEL OF FORTUNE',
+        'wheel': 'WHEEL OF WISHES',
         'trivia': 'STREAM TRIVIA',
         'jeopardy': 'JEOPARDY TRIVIA',
         'word-reveal': 'WORD REVEAL',
